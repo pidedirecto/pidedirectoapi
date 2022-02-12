@@ -1,30 +1,30 @@
 # PideDirecto API
-- [Environments](#Environments)
-- [API Key](#API-Key)
-- [Store Id](#Store-Id)
-- [Webhook](#Webhook)
-- [HTTP Status Codes and Errors](#HTTP-Status-Codes-and-Errors)
-- [Getting Started](#Getting-Started)
-- [Product API](#Product-API)
-  - [POST changeProductPrice](#POST-changeProductPrice)
-- [Order API](#Order-API)
-  - [POST acceptOrder](#POST-acceptOrder)
-  - [POST rejectOrder](#POST-rejectOrder)
-  - [POST getDeliveryEstimate](#POST-getDeliveryEstimate)
-  - [POST createDeliveryOrder](#POST-createDeliveryOrder)
-  - [POST cancelOrder](#POST-cancelOrder)
-- [Webhook Events](#Webhook-Events)
-  - [Event Type ORDER_CREATED](#Event-Type-ORDER_CREATED)
-  - [Event Type ORDER_REJECTED](#Event-Type-ORDER_REJECTED)
-  - [Event Type ORDER_ACCEPTED](#Event-Type-ORDER_ACCEPTED)
-  - [Event Type ORDER_CANCELLED](#Event-Type-ORDER_CANCELLED)
-  - [Event Type DRIVER_ACCEPTED_DELIVERY](#Event-Type-DRIVER_ACCEPTED_DELIVERY)
-  - [Event Type DRIVER_ARRIVED_AT_STORE](#Event-Type-DRIVER_ARRIVED_AT_STORE)
-  - [Event Type DRIVER_PICKED_UP_DELIVERY](#Event-Type-DRIVER_PICKED_UP_DELIVERY)
-  - [Event Type DRIVER_ARRIVED_AT_CLIENT](#Event-Type-DRIVER_ARRIVED_AT_CLIENT)
-  - [Event Type DRIVER_CANCELLED](#Event-Type-DRIVER_CANCELLED)
-  - [Event Type ORDER_COMPLETED](#Event-Type-ORDER_COMPLETED)
-- [Changelog](#Changelog)
+[Environments](#Environments)
+[API Key](#API-Key)
+[Store Id](#Store-Id)
+[Webhook](#Webhook)
+[HTTP Status Codes and Errors](#HTTP-Status-Codes-and-Errors)
+[Getting Started](#Getting-Started)
+[Product API](#Product-API)
+[POST changeProductPrice](#POST-changeProductPrice)
+[Order API](#Order-API)
+&nbsp;&nbsp;[POST acceptOrder](#POST-acceptOrder)
+&nbsp;&nbsp;[POST rejectOrder](#POST-rejectOrder)
+&nbsp;&nbsp;[POST getDeliveryEstimate](#POST-getDeliveryEstimate)
+&nbsp;&nbsp;[POST createDeliveryOrder](#POST-createDeliveryOrder)
+&nbsp;&nbsp;[POST cancelOrder](#POST-cancelOrder)
+[Webhook Events](#Webhook-Events)
+&nbsp;&nbsp;[Event Type ORDER_CREATED](#Event-Type-ORDER_CREATED)
+&nbsp;&nbsp;[Event Type ORDER_REJECTED](#Event-Type-ORDER_REJECTED)
+&nbsp;&nbsp;[Event Type ORDER_ACCEPTED](#Event-Type-ORDER_ACCEPTED)
+&nbsp;&nbsp;[Event Type ORDER_CANCELLED](#Event-Type-ORDER_CANCELLED)
+&nbsp;&nbsp;[Event Type DRIVER_ACCEPTED_DELIVERY](#Event-Type-DRIVER_ACCEPTED_DELIVERY)
+&nbsp;&nbsp;[Event Type DRIVER_ARRIVED_AT_STORE](#Event-Type-DRIVER_ARRIVED_AT_STORE)
+&nbsp;&nbsp;[Event Type DRIVER_PICKED_UP_DELIVERY](#Event-Type-DRIVER_PICKED_UP_DELIVERY)
+&nbsp;&nbsp;[Event Type DRIVER_ARRIVED_AT_CLIENT](#Event-Type-DRIVER_ARRIVED_AT_CLIENT)
+&nbsp;&nbsp;[Event Type DRIVER_CANCELLED](#Event-Type-DRIVER_CANCELLED)
+&nbsp;&nbsp;[Event Type ORDER_COMPLETED](#Event-Type-ORDER_COMPLETED)
+[Changelog](#Changelog)
 
 
 
@@ -53,9 +53,9 @@ To get an API key, talk to your Account Manager.
 
 #### Example <span id="POST-API-Key-Example"/>
 ```
-  headers: {
-    'x-api-key': 'private_test_YAdrs93oY6HBX7Tws34QsLdo'
-  }
+headers: {
+  'x-api-key': 'private_test_YAdrs93oY6HBX7Tws34QsLdo'
+}
 ```
 
 ## Store Id <span id="Store-Id"/>
