@@ -34,7 +34,7 @@ There is a TEST and a PRODUCTION environment you can use to validate your integr
 You will receive a TEST version of our PideDirecto Drivers App and urls to access the test version PideDirecto Admin in our test environment.
 You will need an Android device to be able to test the delivery part.
 
-The PRODUCTION environment can't be tested without the chance of getting real drivers accepting your orders. 
+The PRODUCTION environment can't be tested without the chance of getting real drivers accepting your orders.
 If you still would like test in production you could register yourself as a driver and try to accept the deliveries before any other live drivers.
 
 Please contact your Account Manager to get your test account configured and the test version of the PideDirecto Drivers App.
@@ -46,7 +46,7 @@ You need a Private API Key that you use for accessing our API for all stores.
 API Key has to be sent in Header: 'x-api-key'
 
 There is one API Key for the TEST environment and another for PRODUCTION environment.
-The API Keys are private and should only be used from server. 
+The API Keys are private and should only be used from server.
 If your credentials gets compromised you we can create you a new one and invalidate the old one at any time.
 
 To get an API key, talk to your Account Manager.
@@ -60,10 +60,10 @@ headers: {
 
 ## Store Id <span id="Store-Id"/>
 Each unique location that needs the delivery service needs to configured in PideDirecto before it can be integrated.
-All unique locations has a unique Store Id, a UUID 4 string. 
+All unique locations has a unique Store Id, a UUID 4 string.
 This Store Id has to be provided when creating orders through the API.
 
-Please contact your Account Manager to add new locations or if you need to know what storeId you have configured.  
+Please contact your Account Manager to add new locations or if you need to know what storeId you have configured.
 
 
 
@@ -116,7 +116,7 @@ To configure a general webhook please contact your account manager and send him 
 
 
 ## Getting Started <span id="Getting-Started"/>
-To test the order/delivery status updates you will need install a test version of 
+To test the order/delivery status updates you will need install a test version of
 the PideDirecto Drivers App and register as a driver.
 
 Just follow the signup process in the drivers app and when you are done make sure to tell your Account Manager so he can verify the driver registered.
@@ -170,7 +170,7 @@ Request:
 
 
 ### POST acceptOrder <span id="POST-acceptOrder"/>
-Use this API method to accept an order that was ordered from PideDirecto webpage or app. 
+Use this API method to accept an order that was ordered from PideDirecto webpage or app.
 Orders can only be accepted as long as the customer did not cancel the order (as long as order status is NEW).
 If store cannot accept an order it has to be rejected, see [POST rejectOrder](#POST rejectOrder) api call.
 
@@ -257,8 +257,8 @@ Request:
 
 ### POST getDeliveryEstimate <span id="POST-getDeliveryEstimate"/>
 If you want to create a delivery order you can use this API method to get a delivery estimate with driving duration or delivery cost before creating the order with [createDeliveryOrder](#POST createDeliveryOrder) API method.
-Then pass the `deliveryEstimateId` when calling the [createDeliveryOrder](#POST createDeliveryOrder) API method to create an order with the guaranteed the delivery cost. 
-If you don't care about the driving duration or a guaranteed delivery cost you can skip calling this API and call [createDeliveryOrder](#POST createDeliveryOrder) without passing a `deliveryEstimateId`.  
+Then pass the `deliveryEstimateId` when calling the [createDeliveryOrder](#POST createDeliveryOrder) API method to create an order with the guaranteed the delivery cost.
+If you don't care about the driving duration or a guaranteed delivery cost you can skip calling this API and call [createDeliveryOrder](#POST createDeliveryOrder) without passing a `deliveryEstimateId`.
 
 #### Request
 | Body Parameter                                       | Type                           | Description |
@@ -299,7 +299,7 @@ Here is a list of unique errors that be returned for this API endpoint.
 Use this API method to request a delivery.  
 Make sure to call [getDeliveryEstimate](#POST getDeliveryEstimate) in advance if you wish to confirm the delivery cost with your customer before creating the order.
 Then when creating order pass the `deliveryEstimateId`.
-If you have a fixed agreed delivery cost you can omit calling [getDeliveryEstimate](#POST getDeliveryEstimate) and skip passing any `deliveryEstimateId`. 
+If you have a fixed agreed delivery cost you can omit calling [getDeliveryEstimate](#POST getDeliveryEstimate) and skip passing any `deliveryEstimateId`.
 
 #### Request
 | Body Parameter               | Type                                                               | Description                                                                                                                                                                                                                                        |
@@ -383,7 +383,7 @@ Response
 
 
 ### POST cancelOrder <span id="POST-cancelOrder"/>
-Use this API method to cancel an order. Orders can only be cancelled if no driver has accepted the order. 
+Use this API method to cancel an order. Orders can only be cancelled if no driver has accepted the order.
 As soon as a driver has accepted the order or order is already cancelled/rejected/completed/delivered an error with name `OrderCannotBeCancelledError` will be returned.
 
 #### Request
@@ -431,8 +431,13 @@ This event is will be emitted when a new order is created.
 | Body Parameter                                       | Type                               | Description |
 | ---------------------------------------------------- | ---------------------------------- | ----------- |
 | orderId                                              | string (UUID)                      | Unique identifier of the order in pidedirecto |
+| app                                                  | string (<br/>"PIDEDIRECTO", <br/>"UBER_EATS", <br/>"RAPPI",<br/> "DIDI_FOOD"<br/>)      | Name of the App where the order was created |
 | storeId                                              | string (UUID)                      | The Store Id for the store that is sending the delivery |
 | externalOrderId                                      | string &#124; undefined            | The external order id sent when creating a order. If no external order id was sent it will be undefined |
+| didiFoodOrderId                                      | string &#124; undefined            | Unique Identifier from Didi Food order. If not a Didi Food order it will be undefined |
+| didiFoodOrderIndex                                   | string &#124; undefined            | Order Index provided by Didi Food. If not a Didi Food order it will be undefined |
+| rappiOrderId                                         | string &#124; undefined            | Unique Identifier from Rappi order. If not a Rappi order it will be undefined |
+| uberEatsOrderId                                      | string &#124; undefined            | Unique Identifier from Uber Eats order. If not an Uber Eats order it will be undefined |
 | eventType                                            | string ("ORDER_CREATED")           | Type of the event |
 | occurredAt                                           | string (Date)                      | The date time when the event occurred |
 | orderStatus                                          | string ( <br/> &nbsp;&nbsp;"NEW" <br/> &nbsp;&nbsp;"ACCEPTED" <br/> ) | Order status. If order is made from PideDirecto webpage or app it will be in status "NEW" and needs to be either accepted or rejected by API acceptOrder or rejectOrder or in PideDirecto Admin. Otherwise if created by the API createDeliveryOrder or from PideDirecto Admin by the store it will have status "ACCEPTED". |
@@ -538,7 +543,7 @@ This event is will be emitted when a new order is created.
 
 
 ### Event Type ORDER_REJECTED <span id="Event-Type-ORDER_REJECTED"/>
-This event is will be emitted when an order with status NEW is rejected by the store. 
+This event is will be emitted when an order with status NEW is rejected by the store.
 Note that this event is not emitted for delivery orders since they are already in state ACCEPTED when created.
 
 | Body Parameter                                       | Type                      | Description |
@@ -790,7 +795,7 @@ This event is emitted when a driver pressed delivered to client button in driver
 ### 2021-10-20
 - API - Added new reason REJECTED_BY_ADMIN for webhook event types ORDER_CANCELLED abd ORDER_REJECTED
 - DOCS - Correct some descriptions
- 
+
 
 ### 2021-10-04
 - API - Added reason parameter to request in cancelOrder API
@@ -821,7 +826,7 @@ This event is emitted when a driver pressed delivered to client button in driver
 - DOCS - Updated tables and moved the required column into type column
 - DOCS - Removed Examples for webhooks from index
 - DOCS - Described webhook events more in details
-- DOCS - Corrected error docs. Error json returned contains field `name` and not `error` as written in old docs.    
+- DOCS - Corrected error docs. Error json returned contains field `name` and not `error` as written in old docs.
 - DOCS - Added more details about errors in docs to section "HTTP Status Codes and Errors"
 - DOCS - Added more details about errors in docs to each API endoint section "Response Error"
 - DOCS - Updated cancelDelivery section to explain when cancelling is posible
@@ -829,3 +834,7 @@ This event is emitted when a driver pressed delivered to client button in driver
 ### 2021-12-01
 - API - Added externalProductId to changeProductPrice api
 - DOCS - Updated changeProductPrice section with the externalProductId information
+
+### 2022-03-15
+- API - Added didiFoodOrderId, uberEatsOrderId, rappiOrderId and app to orderCreated event
+- DOCS - Updated orderCreated section with the didiFoodOrderId, uberEatsOrderId, rappiOrderId and app information
