@@ -218,7 +218,7 @@ If store cannot reject an order it has to be accepted, see [POST rejectOrder](#P
 | Body Parameter                                       | Type   | Description |
 | ---------------------------------------------------- | ------ | ----------- |
 | orderId                                              | string | Unique identifier of the order in PideDirecto |
-| reason                                               | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"OTHER" <br/> ) | Reason why the order is rejected |
+| reason                                               | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/>  &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/>  &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/>   &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/>   &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order is rejected |
 
 #### Response Success
 Response Status Code 200
@@ -391,7 +391,7 @@ As soon as a driver has accepted the order or order is already cancelled/rejecte
 | Body Parameter                                       | Type   | Description |
 | ---------------------------------------------------- | ------ | ----------- |
 | orderId                                              | string | Unique identifier of the order in PideDirecto |
-| reason                                               | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"OTHER" <br/> ) | Reason why the order is cancelled |
+| reason                                               | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/>  &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/>  &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/>   &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/>   &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order is cancelled |
 
 #### Response Success
 Response Status Code 200
@@ -553,7 +553,7 @@ Note that this event is not emitted for delivery orders since they are already i
 | externalOrderId                                      | string &#124; undefined   | The external order id sent when creating a order. If no external order id was sent it will be undefined |
 | eventType                                            | string ("ORDER_REJECTED") | Type of the event |
 | occurredAt                                           | string (Date)             | The date time when the event occurred |
-| reason                                               | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"OTHER" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> ) | Reason why the order was rejected |
+| reason                                               | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/>  &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/>  &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/>   &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/>   &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order was rejected |
 
 
 #### Example
@@ -608,7 +608,7 @@ This event is emitted when order is cancelled.
 | externalOrderId                                      | string &#124; undefined    | The external order id sent when creating a order. If no external order id was sent it will be undefined |
 | eventType                                            | string ("ORDER_CANCELLED") | Type of the event |
 | occurredAt                                           | string (Date)              | The date time when the event occurred |
-| reason                                               | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/>  &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"OTHER"  <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> ) | Reason why the order was cancelled |
+| reason                                               | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/>  &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/>  &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/>   &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/>   &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order was cancelled |
 
 
 #### Example
