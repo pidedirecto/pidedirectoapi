@@ -479,7 +479,7 @@ This event is will be emitted when a new order is created.
 | orderItems[i].modifiers[j].items                     | Array                              | All modifier items attached to this modifier |
 | orderItems[i].modifiers[j].items[k]                  | Object                             | A modifier item |
 | orderItems[i].modifiers[j].items[k].name             | string                             | Name of this modifier item, e.g. "Onions" |
-| orderItems[i].modifiers[j].items[k].externalOptionItemId | string                             | Name of this modifier item, e.g. "Onions" |
+| orderItems[i].modifiers[j].items[k].externalOptionItemId | string                         | External Identifier of this option item |
 | orderItems[i].modifiers[j].items[k].price            | string (number)                    | Price of this modifier item |
 
 
