@@ -466,12 +466,12 @@ This event is will be emitted when a new order is created.
 | orderItems                                           | Array                              | All order items ordered in this order |
 | orderItems[i]                                        | Object                             | An order item |
 | orderItems[i].productId                              | string (UUID)                      | Product id of this order item |
-| orderItems[i].externalProductId                      | string (UUID)                      | External Product id of this order item |
+| orderItems[i].externalProductId                      | string  &#124; undefined           | External Product id of this order item |
 | orderItems[i].name                                   | string                             | Name of this order item |
 | orderItems[i].unitPrice                              | string (number)                    | Unit price of this order item |
 | orderItems[i].discountedUnitPrice                    | string (number) &#124; undefined   | The discounted price of this order item. E.g. if product has a discount price it will be the price for customer instead of `unitPrice` |
 | orderItems[i].quantity                               | number                             | Quantity of this order item |
-| orderItems[i].note                                   | string                             | Note from customer about the order item, e.g. no ice |
+| orderItems[i].note                                   | string &#124; undefined            | Note from customer about the order item, e.g. no ice |
 | orderItems[i].modifiers                              | Array                              | All modifiers attached to this order item |
 | orderItems[i].modifiers[j]                           | Object                             | A modifier |
 | orderItems[i].modifiers[j].name                      | string                             | Name of this modifier, "Excluded ingredients" |
@@ -479,7 +479,7 @@ This event is will be emitted when a new order is created.
 | orderItems[i].modifiers[j].items                     | Array                              | All modifier items attached to this modifier |
 | orderItems[i].modifiers[j].items[k]                  | Object                             | A modifier item |
 | orderItems[i].modifiers[j].items[k].name             | string                             | Name of this modifier item, e.g. "Onions" |
-| orderItems[i].modifiers[j].items[k].externalOptionItemId | string                         | External Identifier of this option item |
+| orderItems[i].modifiers[j].items[k].externalOptionItemId | string  &#124; undefined       | External Identifier of this option item |
 | orderItems[i].modifiers[j].items[k].price            | string (number)                    | Price of this modifier item |
 
 
@@ -791,7 +791,11 @@ This event is emitted when a driver pressed delivered to client button in driver
 
 ## Changelog <span id="Changelog"/>
 
-### 2021-10-22
+### 2022-4-28
+- DOCS - Added External Modifier Id and External Option Item Id to Order Created update
+
+
+- ### 2021-10-22
 - API - Added new api endpoint for changing product price POST changeProductPrice
 
 
