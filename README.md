@@ -466,6 +466,7 @@ This event is will be emitted when a new order is created.
 | orderItems                                           | Array                              | All order items ordered in this order |
 | orderItems[i]                                        | Object                             | An order item |
 | orderItems[i].productId                              | string (UUID)                      | Product id of this order item |
+| orderItems[i].externalProductId                      | string (UUID)                      | External Product id of this order item |
 | orderItems[i].name                                   | string                             | Name of this order item |
 | orderItems[i].unitPrice                              | string (number)                    | Unit price of this order item |
 | orderItems[i].discountedUnitPrice                    | string (number) &#124; undefined   | The discounted price of this order item. E.g. if product has a discount price it will be the price for customer instead of `unitPrice` |
@@ -474,9 +475,11 @@ This event is will be emitted when a new order is created.
 | orderItems[i].modifiers                              | Array                              | All modifiers attached to this order item |
 | orderItems[i].modifiers[j]                           | Object                             | A modifier |
 | orderItems[i].modifiers[j].name                      | string                             | Name of this modifier, "Excluded ingredients" |
+| orderItems[i].modifiers[j].externalModifierId        | string (UUID)                      | External Identifier of this modifier |
 | orderItems[i].modifiers[j].items                     | Array                              | All modifier items attached to this modifier |
 | orderItems[i].modifiers[j].items[k]                  | Object                             | A modifier item |
 | orderItems[i].modifiers[j].items[k].name             | string                             | Name of this modifier item, e.g. "Onions" |
+| orderItems[i].modifiers[j].items[k].externalOptionItemId | string                             | Name of this modifier item, e.g. "Onions" |
 | orderItems[i].modifiers[j].items[k].price            | string (number)                    | Price of this modifier item |
 
 
