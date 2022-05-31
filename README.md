@@ -6,7 +6,8 @@
 - [HTTP Status Codes and Errors](#HTTP-Status-Codes-and-Errors)
 - [Getting Started](#Getting-Started)
 - [Product API](#Product-API)
-- [POST changeProductPrice](#POST-changeProductPrice)
+  - [POST uploadStoreMenu](#POST-uploadStoreMenu)
+  - [POST changeProductPrice](#POST-changeProductPrice)
 - [Order API](#Order-API)
   - [POST acceptOrder](#POST-acceptOrder)
   - [POST rejectOrder](#POST-rejectOrder)
@@ -127,6 +128,132 @@ Since you need to be a verified driver to be able to receiver deliveries to deli
 ## Product API <span id="Product-API"/>
 
 
+
+### POST uploadStoreMenu <span id="POST-uploadStoreMenu"/>
+Use this API method to change the product price.
+
+#### Request
+
+### POST uploadStoreMenu <span id="POST-uploadStoreMenu"/>
+Use this API method to upload a group of products to a store.
+
+#### Request
+| Body Parameter                                                                                               | Type                                                                           | Description                                                                                                                                                            |
+|--------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| storeId                                                                                                      | string (UUID)                                                                  | The Store Id of the store that the menu is going to be added                                                                                                           |
+| storeMenu                                                                                                    | Object                                                                         | Store Menu to be uploaded to store provided                                                                                                                            |
+| storeMenu.name                                                                                               | string                                                                         | Name of the store menu                                                                                                                                                 |
+| storeMenu.hours                                                                                              | string                                                                         | Hours that should the menu be visible.<br/> E.g. "Mo-Fr 08:00-09:00", "Sa-Su" or "Mar Mo-Fr 11:00-14:00". see https://openingh.openstreetmap.de/evaluation_tool/#check |
+| storeMenu.channels                                                                                           | Array                                                                          | Channels that this menu should be visible for                                                                                                                          |
+| storeMenu.channels[i]                                                                                        | string ( <br/> &nbsp;&nbsp;"PIDEDIRECTO" <br/> &nbsp;&nbsp;"UBER_EATS" <br/> ) | Store channel that this menu should be visible for                                                                                                                     |
+| storeMenu.categories                                                                                         | Array                                                                          | Array of categories that the menu has                                                                                                                                  |
+| storeMenu.categories[i]                                                                                      | Object                                                                         | Store Menu Category Item                                                                                                                                               |
+| storeMenu.categories[i].name                                                                                 | string                                                                         | Name of the category                                                                                                                                                   |
+| storeMenu.categories[i].products                                                                             | Array                                                                          | Array of Products that this category contains                                                                                                                          |
+| storeMenu.categories[i].products[j]                                                                          | Object                                                                         | A Product Item                                                                                                                                                         |
+| storeMenu.categories[i].products[j].externalProductId                                                        | string                                                                         | External Identifier of this product                                                                                                                                    |
+| storeMenu.categories[i].products[j].name                                                                     | string                                                                         | Name of this product                                                                                                                                                   |
+| storeMenu.categories[i].products[j].description                                                              | string &#124; undefined                                                        | Description of the product                                                                                                                                             |
+| storeMenu.categories[i].products[j].price                                                                    | string                                                                         | Price of this product                                                                                                                                                  |
+| storeMenu.categories[i].products[j].imageUrl                                                                 | string &#124; undefined                                                        | Url that contains an image of the product                                                                                                                              |
+| storeMenu.categories[i].products[j].modifiers                                                                | Array                                                                          | Array of modifier for this product                                                                                                                                     |
+| storeMenu.categories[i].products[j].modifiers[k]                                                             | Object                                                                         | A modifier                                                                                                                                                             |
+| storeMenu.categories[i].products[j].modifiers[k].externalModifierId                                          | string                                                                         | External Identifier of this modifier                                                                                                                                   |
+| storeMenu.categories[i].products[j].modifiers[k].name                                                        | string                                                                         | Name of this modifier                                                                                                                                                  |
+| storeMenu.categories[i].products[j].modifiers[k].requiredMin                                                 | number &#124; undefined                                                        | Minimum amount of selections for this modifier                                                                                                                         |
+| storeMenu.categories[i].products[j].modifiers[k].requiredMax                                                 | number &#124; undefined                                                        | Maximum amount of selections for this modifier                                                                                                                         |
+| storeMenu.categories[i].products[j].modifiers[k].items                                                       | Array                                                                          | Array of modifiers for this modifier                                                                                                                                   |
+| storeMenu.categories[i].products[j].modifiers[k].items[l]                                                    | Object                                                                         | A modifier item                                                                                                                                                        |
+| storeMenu.categories[i].products[j].modifiers[k].items[l].externalModifierItemId                             | string &#124; undefined                                                        | External Identifier of this modifier item                                                                                                                              |
+| storeMenu.categories[i].products[j].modifiers[k].items[l].name                                               | string                                                                         | Name of this modifier item                                                                                                                                             |
+| storeMenu.categories[i].products[j].modifiers[k].items[l].price                                              | number                                                                         | Price of this modifier item                                                                                                                                            |
+| storeMenu.categories[i].products[j].modifiers[k].items[l].type                                               | string ( <br/> &nbsp;&nbsp;"SINGLE" <br/> &nbsp;&nbsp;"MULTIPLE" <br/> )       | If customer is allowed to select a quantity more then 1 of the modifier item "MULTIPLE" otherwise "SINGLE"                                                             |
+| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers                                       | Array                                                                          | Array of sub-modifier for this product                                                                                                                                 |
+| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k]                                    | Object                                                                         | A sub-modifier                                                                                                                                                         |
+| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].externalSubModifierId              | string &#124; undefined                                                        | External Identifier of this sub-modifier                                                                                                                               |
+| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].name                               | string                                                                         | Name of this sub-modifier                                                                                                                                              |
+| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].requiredMin                        | number &#124; undefined                                                        | Minimum amount of selections for this sub-modifier                                                                                                                     |
+| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].requiredMax                        | number &#124; undefined                                                        | Maximum amount of selections for this sub-modifier                                                                                                                     |
+| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].items                              | Array                                                                          | Array of sub-modifiers for this sub-modifier                                                                                                                           |
+| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].items[l]                           | Object                                                                         | A sub-modifier item                                                                                                                                                    |
+| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].items[l].externalSubModifierItemId | string &#124; undefined                                                        | External Identifier of this sub-modifier item                                                                                                                          |
+| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].items[l].name                      | string                                                                         | Name of this sub-modifier item                                                                                                                                         |
+| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].items[l].price                     | number                                                                         | Price of this sub-modifier item                                                                                                                                        |
+| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].items[l].type                      | string ( <br/> &nbsp;&nbsp;"SINGLE" <br/> &nbsp;&nbsp;"MULTIPLE" <br/> )       | If customer is allowed to select a quantity more then 1 of the sub-modifier item "MULTIPLE" otherwise "SINGLE"                                                         |
+
+#### Response Success
+Response Status Code 200
+
+| Body Parameter                                       | Type   | Description |
+| ---------------------------------------------------- | ------ |-------------|
+| N/A                                                  | N/A    | N/A         |
+
+#### Response Error
+Here is a list of unique errors that be returned for this API endpoint.
+
+| HTTP Status Codes              | Event Name                      | Description                                                                                                                                                                                      |
+| ------------------------------ | ------------------------------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 400 - Bad Request              | InvalidArgumentError            | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Product with productId not found <br/> - Neither productId nor externalProductId was sent |
+| 500 - Internal Server Error    | UnknownError                    | An unknown server error has occurred, try again.                                                                                                                                                 |
+
+#### Example
+Request:
+
+```json
+{
+  "storeId": "4b825ef7-f4ac-42ec-b1bb-8eb662ef7acb",
+  "storeMenu": {
+    "name": "PideDirecto Menu",
+    "channels": [
+      "PideDirecto"
+    ],
+    "categories": [{
+      "name": "Burgers",
+      "products": [{
+        "name": "Cheeseburger",
+        "unitPrice": "129.99",
+        "modifiers": [{
+          "externalModifierId": "id-290981234234",
+          "name": "Drinks",
+          "minRequired": 1,
+          "maxRequired": 1,
+          "items": [{
+            "externalModifierItemId": "id-290981234234",
+            "name": "Coffee",
+            "price": "0",
+            "type": "SINGLE",
+            "subModifiers": [{
+              "externalSubModifierId": "id-29098102938",
+              "name": "Type of Milk",
+              "items": [{
+                "externalSubModifierItemId": "id-2909820938",
+                "name": "Oat Milk",
+                "price": "0",
+                "type": "SINGLE"
+              }]
+            }, {
+              "externalSubModifierId": "id-29098223232",
+              "name": "What type of Sugar?",
+              "maxRequired": 3,
+              "items": [{
+                "externalSubModifierItemId": "id-2909300113",
+                "name": "White Sugar",
+                "price": "0",
+                "type": "MULTIPLE"
+              }, {
+                "externalSubModifierItemId": "id-2909300123",
+                "name": "Brown Sugar",
+                "price": "0",
+                "type": "MULTIPLE"
+              }]
+            }]
+          }]
+        }]
+      }]
+    }]
+  }
+}
+```
 
 ### POST changeProductPrice <span id="POST-changeProductPrice"/>
 Use this API method to change the product price.
@@ -473,22 +600,22 @@ This event is will be emitted when a new order is created.
 | orderItems[i].quantity                                                                | number                                                                                   | Quantity of this order item                                                                                                                                                                                                                                                                                                 |
 | orderItems[i].note                                                                    | string &#124; undefined                                                                  | Note from customer about the order item, e.g. no ice                                                                                                                                                                                                                                                                        |
 | orderItems[i].modifiers                                                               | Array                                                                                    | All modifiers attached to this order item                                                                                                                                                                                                                                                                                   |
-| orderItems[i].modifiers[j]                                                            | Object                                                                                   | A modifier group                                                                                                                                                                                                                                                                                                            |
-| orderItems[i].modifiers[j].name                                                       | string                                                                                   | Name of this modifier group, "Excluded ingredients"                                                                                                                                                                                                                                                                         |
-| orderItems[i].modifiers[j].externalModifierId                                         | string (UUID) &#124; undefined                                                           | External Identifier of this modifier group                                                                                                                                                                                                                                                                                  |
-| orderItems[i].modifiers[j].items                                                      | Array                                                                                    | All modifier items attached to this modifier group                                                                                                                                                                                                                                                                          |
+| orderItems[i].modifiers[j]                                                            | Object                                                                                   | A modifier                                                                                                                                                                                                                                                                                                                  |
+| orderItems[i].modifiers[j].externalModifierId                                         | string (UUID) &#124; undefined                                                           | External Identifier of this modifier                                                                                                                                                                                                                                                                                        |
+| orderItems[i].modifiers[j].name                                                       | string                                                                                   | Name of this modifier , "Excluded ingredients"                                                                                                                                                                                                                                                                              |
+| orderItems[i].modifiers[j].items                                                      | Array                                                                                    | All modifier items attached to this modifier                                                                                                                                                                                                                                                                                |
 | orderItems[i].modifiers[j].items[k]                                                   | Object                                                                                   | A modifier item                                                                                                                                                                                                                                                                                                             |
-| orderItems[i].modifiers[j].items[k].name                                              | string                                                                                   | Name of this modifier item, e.g. "Onions"                                                                                                                                                                                                                                                                                   |
 | orderItems[i].modifiers[j].items[k].externalModifierItemId                            | string &#124; undefined                                                                  | External Identifier of this modifier item                                                                                                                                                                                                                                                                                   |
+| orderItems[i].modifiers[j].items[k].name                                              | string                                                                                   | Name of this modifier item, e.g. "Onions"                                                                                                                                                                                                                                                                                   |
 | orderItems[i].modifiers[j].items[k].price                                             | string (number)                                                                          | Price of this modifier item (Unit Price)                                                                                                                                                                                                                                                                                    |
 | orderItems[i].modifiers[j].items[k].quantity                                          | number                                                                                   | Quantity of this modifier item                                                                                                                                                                                                                                                                                              |
-| orderItems[i].modifiers[j].items[k].subModifier                                       | Array                                                                                    | A sub-modifier group                                                                                                                                                                                                                                                                                                        |
-| orderItems[i].modifiers[j].items[k].subModifier[l].name                               | string                                                                                   | Name of this sub-modifier group, "Excluded ingredients"                                                                                                                                                                                                                                                                     |
-| orderItems[i].modifiers[j].items[k].subModifier[l].externalSubModifierId              | string (UUID) &#124; undefined                                                           | External Identifier of this sub-modifier group                                                                                                                                                                                                                                                                              |
-| orderItems[i].modifiers[j].items[k].subModifier[l].items                              | Array                                                                                    | All sub-modifier items attached to this sub-modifier group                                                                                                                                                                                                                                                                  |
+| orderItems[i].modifiers[j].items[k].subModifier                                       | Array                                                                                    | A sub-modifier                                                                                                                                                                                                                                                                                                              |
+| orderItems[i].modifiers[j].items[k].subModifier[l].externalSubModifierId              | string (UUID) &#124; undefined                                                           | External Identifier of this sub-modifier                                                                                                                                                                                                                                                                                    |
+| orderItems[i].modifiers[j].items[k].subModifier[l].name                               | string                                                                                   | Name of this sub-modifier , "Excluded ingredients"                                                                                                                                                                                                                                                                          |
+| orderItems[i].modifiers[j].items[k].subModifier[l].items                              | Array                                                                                    | All sub-modifier items attached to this sub-modifier                                                                                                                                                                                                                                                                        |
 | orderItems[i].modifiers[j].items[k].subModifier[l].items[m]                           | Object                                                                                   | A sub-modifier item                                                                                                                                                                                                                                                                                                         |
-| orderItems[i].modifiers[j].items[k].subModifier[l].items[m].name                      | string                                                                                   | Name of this sub-modifier item, e.g. "Onions"                                                                                                                                                                                                                                                                               |
 | orderItems[i].modifiers[j].items[k].subModifier[l].items[m].externalSubModifierItemId | string  &#124; undefined                                                                 | External Identifier of this sub-modifier item                                                                                                                                                                                                                                                                               |
+| orderItems[i].modifiers[j].items[k].subModifier[l].items[m].name                      | string                                                                                   | Name of this sub-modifier item, e.g. "Onions"                                                                                                                                                                                                                                                                               |
 | orderItems[i].modifiers[j].items[k].subModifier[l].items[m].price                     | string (number)                                                                          | Price of this sub-modifier item (Unit Price)                                                                                                                                                                                                                                                                                |
 | orderItems[i].modifiers[j].items[k].subModifier[l].items[m].quantity                  | number                                                                                   | Quantity of this sub-modifier                                                                                                                                                                                                                                                                                               |
 
@@ -531,7 +658,7 @@ This event is will be emitted when a new order is created.
   "paymentMethod": "CARD",
   "orderItems": [{
     "productId": "42ae7980-2994-4362-8b44-8492920e8499",
-    "name": "Hamburger",
+    "name": "Cheeseburger",
     "unitPrice": "129.99",
     "quantity": "1",
     "modifiers": [{
