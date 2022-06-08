@@ -13,6 +13,7 @@
   - [POST rejectOrder](#POST-rejectOrder)
   - [POST getDeliveryEstimate](#POST-getDeliveryEstimate)
   - [POST createDeliveryOrder](#POST-createDeliveryOrder)
+  - [POST getDriverPosition (IN DEVELOPMENT)](#POST-getDriverPosition)
   - [POST cancelOrder](#POST-cancelOrder)
 - [Webhook Events](#Webhook-Events)
   - [Event Type ORDER_CREATED](#Event-Type-ORDER_CREATED)
@@ -504,6 +505,58 @@ Response
   "orderId": "37d13197-0fa5-4d0b-85ad-ae06dd40177a",
   "deliveryCost": "31",
   "trackingUrl": "https://tktsixcentenario.test.pidedirecto.mx/paymentlink/7TLvvnVAWoNwFKVJNfzFaL"
+}
+```
+
+
+### POST getDriverPosition (IN DEVELOPMENT)<span id="POST-getDriverPosition"/>
+Use this API method to retrieve the driver position of the requested orderId.
+Make sure that the orderId exists and it is not finished.
+
+#### Request
+| Body Parameter               | Type                                                               | Description                                                                                                                                                                                                                                        |
+|------------------------------|--------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| orderId                      | string (UUID)                                                      | Unique identifier of the order in PideDirecto|
+
+
+
+#### Response Success
+Response Status Code 200
+
+| Body Parameter                                       | Type                | Description |
+| ---------------------------------------------------- | ------------------- | ----------- |
+| driverId                                             | string (UUID)       | Unique identifier of the driver in PideDirecto|
+| driverPosition                                       | object              | Object containing driver position|
+| driverPosition.latitude                              | string (number)     | Current latitude of the driver |
+| driverPosition.longitude                             | string (number)     | Current longitude of the driver |
+
+#### Response Error
+Here is a list of unique errors that be returned for this API endpoint.
+
+| HTTP Status Codes              | Event Name                 | Description |
+| ------------------------------ | ---------------------------| ----------- |
+| 400 - Bad Request              | InvalidArgumentError       | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
+| 500 - Internal Server Error    | UnknownError               | An unknown server error has occurred, try again. |
+
+
+
+#### Example
+Request:
+
+```json
+{
+  "orderId": "38981f83-853c-4193-a3c2-97f05582e0ad",
+}
+```
+Response
+
+```json
+{
+  "orderId": "37d13197-0fa5-4d0b-85ad-ae06dd40177a",
+  "driverPosition": {
+    "latitude": "120.87123",
+    "longitude": "125.81233"
+  },
 }
 ```
 
