@@ -566,7 +566,7 @@ Response Status Code 200
 | Body Parameter                                       | Type                | Description |
 | ---------------------------------------------------- | ------------------- | ----------- |
 | driverId                                             | string (UUID)       | Unique identifier of the driver in PideDirecto|
-| driverPosition                                       | object              | Object containing driver position|
+| driverPosition                                       | Object              | Object containing driver position|
 | driverPosition.lat                                   | number              | Latitude GPS coordinate |
 | driverPosition.lng                                   | number              | Longitude GPS coordinate |
 
@@ -594,8 +594,8 @@ Response
 {
   "driverId": "37d13197-0fa5-4d0b-85ad-ae06dd40177a",
   "driverPosition": {
-    "lat": "120.87123",
-    "lng": "125.81233"
+    "lat": 120.87123,
+    "lng": 125.81233
   },
 }
 ```
