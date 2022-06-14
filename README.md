@@ -998,6 +998,9 @@ This event is emitted when a driver pressed delivered to client button in driver
 
 ## Changelog <span id="Changelog"/>
 
+### 2022-06-14
+- API - Added getDriverPosition endpoint and documentation
+
 ### 2022-05-20
 - DOCS - Added subModifier and subModifier items to Order docs
 
