@@ -196,6 +196,7 @@ Here is a list of unique errors that be returned for this API endpoint.
 | HTTP Status Codes              | Event Name                      | Description                                                                                                                                                                                      |
 | ------------------------------ | ------------------------------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 400 - Bad Request              | InvalidArgumentError            | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Product with productId not found <br/> - Neither productId nor externalProductId was sent |
+| 400 - Bad Request              | OrderDoesNotHaveDriverAssigned  | - Order does not have a driver assigned yet                                                                                                                                                      |
 | 500 - Internal Server Error    | UnknownError                    | An unknown server error has occurred, try again.                                                                                                                                                 |
 
 #### Example
