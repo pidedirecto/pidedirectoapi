@@ -414,6 +414,7 @@ Response Status Code 200
 | drivingDistance                                      | number                         | Driving Distance in meter calculated using Google Maps |
 | drivingDuration                                      | number                         | Driving Duration in seconds calculated using Google Maps|
 | deliveryCost                                         | string (number)                | Delivery Cost calculated |
+| isWithinDeliveryRadius                               | boolean                        | Boolean that indicates if the delivery is within the delivery radius of the store |
 
 #### Response Error
 Here is a list of unique errors that be returned for this API endpoint.
@@ -471,6 +472,7 @@ Here is a list of unique errors that be returned for this API endpoint.
 | HTTP Status Codes              | Event Name                 | Description |
 | ------------------------------ | ---------------------------| ----------- |
 | 400 - Bad Request              | InvalidArgumentError       | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
+| 400 - Bad Request              | NotWithinDeliveryRadius    | - The delivery is not within the delivery radius of the store. <br/> - Check delivery estimate before creating order |
 | 500 - Internal Server Error    | UnknownError               | An unknown server error has occurred, try again. |
 
 
