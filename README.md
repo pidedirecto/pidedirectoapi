@@ -153,35 +153,41 @@ Use this API method to upload a group of products to a store.
 | storeMenu.categories[i].name                                                                                 | string                                                                         | Name of the category                                                                                                                                                   |
 | storeMenu.categories[i].products                                                                             | Array                                                                          | Array of Products that this category contains                                                                                                                          |
 | storeMenu.categories[i].products[j]                                                                          | Object                                                                         | A Product Item                                                                                                                                                         |
-| storeMenu.categories[i].products[j].externalProductId                                                        | string                                                                         | External Identifier of this product                                                                                                                                    |
+| storeMenu.categories[i].products[j].externalProductId                                                        | string &#124; undefined                                                        | External Identifier of this product                                                                                                                                    |
 | storeMenu.categories[i].products[j].name                                                                     | string                                                                         | Name of this product                                                                                                                                                   |
-| storeMenu.categories[i].products[j].description                                                              | string &#124; undefined                                                        | Description of the product                                                                                                                                             |
+| storeMenu.categories[i].products[j].description                                                              | string                                                                         | Description of the product                                                                                                                                             |
 | storeMenu.categories[i].products[j].price                                                                    | string                                                                         | Price of this product                                                                                                                                                  |
 | storeMenu.categories[i].products[j].imageUrl                                                                 | string &#124; undefined                                                        | Url that contains an image of the product                                                                                                                              |
-| storeMenu.categories[i].products[j].modifiers                                                                | Array                                                                          | Array of modifier for this product                                                                                                                                     |
+| storeMenu.categories[i].products[j].modifiers                                                                | Array  &#124; undefined                                                        | Array of modifier for this product                                                                                                                                     |
 | storeMenu.categories[i].products[j].modifiers[k]                                                             | Object                                                                         | A modifier                                                                                                                                                             |
-| storeMenu.categories[i].products[j].modifiers[k].externalModifierId                                          | string                                                                         | External Identifier of this modifier                                                                                                                                   |
+| storeMenu.categories[i].products[j].modifiers[k].externalModifierId                                          | string &#124; undefined                                                        | External Identifier of this modifier                                                                                                                                   |
 | storeMenu.categories[i].products[j].modifiers[k].name                                                        | string                                                                         | Name of this modifier                                                                                                                                                  |
 | storeMenu.categories[i].products[j].modifiers[k].requiredMin                                                 | number &#124; undefined                                                        | Minimum amount of selections for this modifier                                                                                                                         |
 | storeMenu.categories[i].products[j].modifiers[k].requiredMax                                                 | number &#124; undefined                                                        | Maximum amount of selections for this modifier                                                                                                                         |
-| storeMenu.categories[i].products[j].modifiers[k].items                                                       | Array                                                                          | Array of modifiers for this modifier                                                                                                                                   |
-| storeMenu.categories[i].products[j].modifiers[k].items[l]                                                    | Object                                                                         | A modifier item                                                                                                                                                        |
-| storeMenu.categories[i].products[j].modifiers[k].items[l].externalModifierItemId                             | string &#124; undefined                                                        | External Identifier of this modifier item                                                                                                                              |
-| storeMenu.categories[i].products[j].modifiers[k].items[l].name                                               | string                                                                         | Name of this modifier item                                                                                                                                             |
-| storeMenu.categories[i].products[j].modifiers[k].items[l].price                                              | number                                                                         | Price of this modifier item                                                                                                                                            |
-| storeMenu.categories[i].products[j].modifiers[k].items[l].type                                               | string ( <br/> &nbsp;&nbsp;"SINGLE" <br/> &nbsp;&nbsp;"MULTIPLE" <br/> )       | If customer is allowed to select a quantity more then 1 of the modifier item "MULTIPLE" otherwise "SINGLE"                                                             |
-| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers                                       | Array                                                                          | Array of sub-modifier for this product                                                                                                                                 |
-| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k]                                    | Object                                                                         | A sub-modifier                                                                                                                                                         |
-| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].externalSubModifierId              | string &#124; undefined                                                        | External Identifier of this sub-modifier                                                                                                                               |
-| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].name                               | string                                                                         | Name of this sub-modifier                                                                                                                                              |
-| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].requiredMin                        | number &#124; undefined                                                        | Minimum amount of selections for this sub-modifier                                                                                                                     |
-| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].requiredMax                        | number &#124; undefined                                                        | Maximum amount of selections for this sub-modifier                                                                                                                     |
-| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].items                              | Array                                                                          | Array of sub-modifiers for this sub-modifier                                                                                                                           |
-| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].items[l]                           | Object                                                                         | A sub-modifier item                                                                                                                                                    |
-| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].items[l].externalSubModifierItemId | string &#124; undefined                                                        | External Identifier of this sub-modifier item                                                                                                                          |
-| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].items[l].name                      | string                                                                         | Name of this sub-modifier item                                                                                                                                         |
-| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].items[l].price                     | number                                                                         | Price of this sub-modifier item                                                                                                                                        |
-| storeMenu.categories[i].products[j].modifiers[k].items[l].subModifiers[k].items[l].type                      | string ( <br/> &nbsp;&nbsp;"SINGLE" <br/> &nbsp;&nbsp;"MULTIPLE" <br/> )       | If customer is allowed to select a quantity more then 1 of the sub-modifier item "MULTIPLE" otherwise "SINGLE"                                                         |
+| storeMenu.categories[i].products[j].modifiers[k].modifierItems                                               | Array                                                                          | Array of modifiers for this modifier                                                                                                                                   |
+| storeMenu.categories[i].products[j].modifiers[k].modifierItems[l]                                            | Object                                                                         | A modifier item                                                                                                                                                        |
+| storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].modifierId                                 | string                                                                         | External Identifier of this modifier item, it is also used to map to the corresponding modifier item provided                                                                                                                             |
+| storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].overwritePrice                             | string &#124; undefined                                                        | Use this field if you want to overwrite the price of the modifier item provided                                                                                                                                         |
+| storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].type                                               | string ( <br/> &nbsp;&nbsp;"SINGLE" <br/> &nbsp;&nbsp;"MULTIPLE" <br/> )       | If customer is allowed to select a quantity more then 1 of the modifier item "MULTIPLE" otherwise "SINGLE"                                                             |
+| storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers                                       | Array &#124; undefined                                                         | Array of sub-modifier for this product                                                                                                                                 |
+| storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers[k]                                    | Object                                                                         | A sub-modifier                                                                                                                                                         |
+| storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers[k].externalSubModifierId              | string &#124; undefined                                                        | External Identifier of this sub-modifier                                                                                                                               |
+| storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers[k].name                               | string                                                                         | Name of this sub-modifier                                                                                                                                              |
+| storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers[k].requiredMin                        | number &#124; undefined                                                        | Minimum amount of selections for this sub-modifier                                                                                                                     |
+| storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers[k].requiredMax                        | number &#124; undefined                                                        | Maximum amount of selections for this sub-modifier                                                                                                                     |
+| storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers[k].subModifierItems                              | Array                                                                          | Array of sub-modifiers for this sub-modifier                                                                                                                           |
+| storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers[k].subModifierItems[l]                           | Object                                                                         | A sub-modifier item                                                                                                                                                    |
+| storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers[k].subModifierItems[l].externalSubModifierItemId | string &#124; undefined                                                        | External Identifier of this sub-modifier item                                                                                                                          |
+| storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers[k].subModifierItems[l].name                      | string                                                                         | Name of this sub-modifier item                                                                                                                                         |
+| storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers[k].subModifierItems[l].price                     | number                                                                         | Price of this sub-modifier item                                                                                                                                        |
+| storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers[k].subModifierItems[l].type                      | string ( <br/> &nbsp;&nbsp;"SINGLE" <br/> &nbsp;&nbsp;"MULTIPLE" <br/> )       | If customer is allowed to select a quantity more then 1 of the sub-modifier item "MULTIPLE" otherwise "SINGLE"                                                         |
+| storeMenu.modifierItems                                                                                                         | Array                                                                          | Array of modifierItems used in the storeMenu                                                          |
+| storeMenu.modifierItems[i]                                                                                                      | Object                                                                         | ModifierItem Object that can be reused in storeMenu using externalModifierId                                                        |
+| storeMenu.modifierItems[i].externalModifierId                                                                                   | string                                                                         | External identifier of this modifierItem, this id is also used for identifying the modifier in storeMenu                                                     |
+| storeMenu.modifierItems[i].name                                                                                                 | string                                                                         | Name of this modifier item                                                                                                                                                  |
+| storeMenu.modifierItems[i].description                                                                                          | string &#124; undefined                                                        | Description of the modifier item                                                  |
+| storeMenu.modifierItems[i].price                                                                                                | string                                                                         | Price of the modifier item                                                      |
+| storeMenu.modifierItems[i].imageUrl                                                                                             | string &#124; undefined                                                        | Url that contains an image of the modifier item                                                        |
 
 #### Response Success
 Response Status Code 200
@@ -207,53 +213,64 @@ Request:
   "storeId": "4b825ef7-f4ac-42ec-b1bb-8eb662ef7acb",
   "storeMenu": {
     "name": "PideDirecto Menu",
+    "hours": "Mo-Fr 08:00-09:00",
     "channels": [
       "PideDirecto"
     ],
-    "categories": [{
-      "name": "Burgers",
-      "products": [{
-        "name": "Cheeseburger",
-        "unitPrice": "129.99",
-        "modifiers": [{
-          "externalModifierId": "id-290981234234",
-          "name": "Drinks",
-          "minRequired": 1,
-          "maxRequired": 1,
-          "items": [{
-            "externalModifierItemId": "id-290981234234",
-            "name": "Coffee",
-            "price": "0",
-            "type": "SINGLE",
-            "subModifiers": [{
-              "externalSubModifierId": "id-29098102938",
-              "name": "Type of Milk",
-              "items": [{
-                "externalSubModifierItemId": "id-2909820938",
-                "name": "Oat Milk",
-                "price": "0",
-                "type": "SINGLE"
-              }]
-            }, {
-              "externalSubModifierId": "id-29098223232",
-              "name": "What type of Sugar?",
-              "maxRequired": 3,
-              "items": [{
-                "externalSubModifierItemId": "id-2909300113",
-                "name": "White Sugar",
-                "price": "0",
-                "type": "MULTIPLE"
-              }, {
-                "externalSubModifierItemId": "id-2909300123",
-                "name": "Brown Sugar",
-                "price": "0",
-                "type": "MULTIPLE"
-              }]
-            }]
-          }]
-        }]
-      }]
-    }]
+    "categories": [
+      {
+        "name": "Burgers",
+        "products": [
+          {
+            "externalProductId": "Burguer01",
+            "name": "Cheeseburger",
+            "description": "Burguer with cheese",
+            "price": "100",
+            "imageUrl": "http://routeToImage.com",
+            "modifiers": [
+              {
+                "externalModifierId": "SidersGroup01",
+                "name": "Siders",
+                "requiredMin": 0,
+                "requiredMax": 1,
+                "modifierItems": [
+                  {
+                    "modifierId": "SiderModifier01",
+                    "overwritePrice": "10",
+                    "type": "SINGLE",
+                    "subModifiers": [
+                      {
+                        "externalSubModifierId": "SubModifierGroup01",
+                        "name": "Extra Sauce",
+                        "requiredMin": 0,
+                        "requiredMax": 1,
+                        "subModifierItems": [
+                          {
+                            "externalSubModifierItemId": "Cheese01",
+                            "name": "Extra Cheese for Fries",
+                            "price": "10",
+                            "type": "SINGLE"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "modifierItems": [
+      {
+        "externalModifierId": "SiderModifier01",
+        "name": "Fries",
+        "description": "Extra fries for burguer",
+        "price": "50",
+        "imageUrl": "http://routeToImage.com"
+      }
+    ]
   }
 }
 ```
