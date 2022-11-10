@@ -229,7 +229,7 @@ Request:
                 "requiredMax": 1,
                 "modifiers": [
                   {
-                    "modifierId": "SiderModifier01",
+                    "externalModifierId": "SiderModifier01",
                     "overwritePrice": "10",
                     "type": "SINGLE",
                     "subModifierGroups": [
