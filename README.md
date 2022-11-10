@@ -221,26 +221,26 @@ Request:
             "description": "Burguer with cheese",
             "price": "100",
             "imageUrl": "http://routeToImage.com",
-            "modifiers": [
+            "modifierGroups": [
               {
-                "externalModifierId": "SidersGroup01",
+                "externalModifierGroupId": "SidersGroup01",
                 "name": "Siders",
                 "requiredMin": 0,
                 "requiredMax": 1,
-                "modifierItems": [
+                "modifiers": [
                   {
                     "modifierId": "SiderModifier01",
                     "overwritePrice": "10",
                     "type": "SINGLE",
-                    "subModifiers": [
+                    "subModifierGroups": [
                       {
-                        "externalSubModifierId": "SubModifierGroup01",
+                        "externalSubModifierGroupId": "SubModifierGroup01",
                         "name": "Extra Sauce",
                         "requiredMin": 0,
                         "requiredMax": 1,
-                        "subModifierItems": [
+                        "subModifiers": [
                           {
-                            "externalSubModifierItemId": "Cheese01",
+                            "externalSubModifierId": "Cheese01",
                             "name": "Extra Cheese for Fries",
                             "price": "10",
                             "type": "SINGLE"
@@ -256,7 +256,7 @@ Request:
         ]
       }
     ],
-    "modifierItems": [
+    "modifiers": [
       {
         "externalModifierId": "SiderModifier01",
         "name": "Fries",
@@ -729,15 +729,15 @@ This event is will be emitted when a new order is created.
     "name": "Cheeseburger",
     "unitPrice": "129.99",
     "quantity": "1",
-    "modifiers": [{
+    "modifierGroups": [{
       "name": "Drinks",
-      "items": [{
+      "modifiers": [{
         "name": "Coffee",
         "price": "0",
         "quantity": 1,
-        "subModifiers": [{
+        "subModifierGroups": [{
           "name": "Type of Milk",
-          "items": [{
+          "subModifiers": [{
             "name": "Oat Milk",
             "price": "0",
             "quantity": 1
@@ -752,9 +752,9 @@ This event is will be emitted when a new order is created.
     "discountedUnitPrice": "20",
     "quantity": "1",
     "note": "no ice",
-    "modifiers": [{
+    "modifierGroups": [{
       "name": "Excluded ingredients",
-      "items": [{
+      "modifiers": [{
         "name": "Onions",
         "price": "0"
       }]
