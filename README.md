@@ -193,10 +193,11 @@ Response Status Code 200
 #### Response Error
 Here is a list of unique errors that be returned for this API endpoint.
 
-| HTTP Status Codes           | Error Name                | Description                                                                                                                                                                                      |
-|-----------------------------|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 400 - Bad Request           | InvalidArgumentError      | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Product with productId not found <br/> - Neither productId nor externalProductId was sent |
-| 500 - Internal Server Error | UnknownError              | An unknown server error has occurred, try again.                                                                                                                                                 |
+| HTTP Status Codes           | Error Name           | Description                                                                                                                                                                                      |
+|-----------------------------|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Product with productId not found <br/> - Neither productId nor externalProductId was sent |
+| 429 - Too Many Requests     | ApiCallLimitExceeded | Occurs in case uploadStoreMenu API is called more than twice within 2 minutes                                                                                                                   |
+| 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                                                                                                                                 |
 
 #### Example
 Request:
@@ -371,11 +372,11 @@ Response Status Code 200
 #### Response Error
 Here is a list of unique errors that be returned for this API endpoint.
 
-| HTTP Status Codes           | Error Name                  | Description                                                                                    |
-|-----------------------------|-----------------------------|------------------------------------------------------------------------------------------------|
-| 400 - Bad Request           | InvalidArgumentError        | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
-| 400 - Bad Request           | OrderCannotBeCancelledError | Order cannot be rejected since current order state does not allow it                           |
-| 500 - Internal Server Error | UnknownError                | An unknown server error has occurred, try again.                                               |
+| HTTP Status Codes           | Error Name              | Description                                                                                    |
+|-----------------------------|-------------------------|------------------------------------------------------------------------------------------------|
+| 400 - Bad Request           | InvalidArgumentError    | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
+| 400 - Bad Request           | OrderCannotBeCancelled  | Order cannot be rejected since current order state does not allow it                           |
+| 500 - Internal Server Error | UnknownError            | An unknown server error has occurred, try again.                                               |
 
 
 #### Example
@@ -526,7 +527,7 @@ Response
 
 ### POST cancelOrder <span id="POST-cancelOrder"/>
 Use this API method to cancel an order. Orders can only be cancelled if no driver has accepted the order.
-As soon as a driver has accepted the order or order is already cancelled/rejected/completed/delivered an error with name `OrderCannotBeCancelledError` will be returned.
+As soon as a driver has accepted the order or order is already cancelled/rejected/completed/delivered an error with name `OrderCannotBeCancelled` will be returned.
 
 #### Request
 
@@ -546,11 +547,11 @@ Response Status Code 200
 #### Response Error
 Here is a list of unique errors that be returned for this API endpoint.
 
-| HTTP Status Codes           | Error Name                  | Description                                                                                    |
-|-----------------------------|-----------------------------|------------------------------------------------------------------------------------------------|
-| 400 - Bad Request           | InvalidArgumentError        | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
-| 400 - Bad Request           | OrderCannotBeCancelledError | Order cannot be cancelled since current order state does not allow it                          |
-| 500 - Internal Server Error | UnknownError                | An unknown server error has occurred, try again.                                               |
+| HTTP Status Codes           | Error Name             | Description                                                                                    |
+|-----------------------------|------------------------|------------------------------------------------------------------------------------------------|
+| 400 - Bad Request           | InvalidArgumentError   | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
+| 400 - Bad Request           | OrderCannotBeCancelled | Order cannot be cancelled since current order state does not allow it                          |
+| 500 - Internal Server Error | UnknownError           | An unknown server error has occurred, try again.                                               |
 
 
 #### Example
@@ -1009,6 +1010,10 @@ This event is emitted when a driver pressed delivered to client button in driver
 
 
 ## Changelog <span id="Changelog"/>
+
+### 2022-06-14
+- API - Added `ApiCallLimitExceeded` error to [POST uploadStoreMenu](#POST-uploadStoreMenu) api
+- DOCS - Renamed Error Name `OrderCannotBeCancelledError` to `OrderCannotBeCancelled` in docs since it was not correct
 
 ### 2022-11-10
 - API [BREAKING CHANGE] - Renamed the following [POST uploadStoreMenu](#POST-uploadStoreMenu) api request parameters 
