@@ -73,33 +73,33 @@ Please contact your Account Manager to add new locations or if you need to know 
 ## HTTP Status Codes and Errors <span id="HTTP-Status-Codes-and-Errors"/>
 All API endpoints return the following status codes along with the header `"Content-Type": "application/json"`.
 
-| HTTP Status Codes              | Description |
-| ------------------------------ | ------------------------ |
-| 200 - OK                       | Successful request |
-| 400 - Bad Request              | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Trying to call API when resource state does not allow it |
-| 401 - Unauthorized             | - Wrong or no API key is provided in header x-api-key <br> - API Key does not have permission to call api for specific resource  |
-| 404 - Not Found                | Invalid API endpoint |
-| 500 - Internal Server Error    | An unknown server error has occurred, try again. |
+| HTTP Status Codes           | Description                                                                                                                                                     |
+|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 200 - OK                    | Successful request                                                                                                                                              |
+| 400 - Bad Request           | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Trying to call API when resource state does not allow it |
+| 401 - Unauthorized          | - Wrong or no API key is provided in header x-api-key <br> - API Key does not have permission to call api for specific resource                                 |
+| 404 - Not Found             | Invalid API endpoint                                                                                                                                            |
+| 500 - Internal Server Error | An unknown server error has occurred, try again.                                                                                                                |
 
 <br/>
 
 All errors returned by API returns at least the following
 
-| Body Parameter          | Type   | Description |
-| ------------------------| ------ | ------------------------ |
-| name                    | string | A unique name of the error |
-| message                 | string | A readable description about the error in english |
+| Body Parameter | Type   | Description                                       |
+|----------------|--------|---------------------------------------------------|
+| name           | string | A unique name of the error                        |
+| message        | string | A readable description about the error in english |
 
 <br/>
 
 Here is a list of unique general errors that be returned in all API endpoints.
 Check the documentation for a specific endpoint to see other Error Names specific to that endpoint.
 
-| HTTP Status Codes              | Event Name                 | Description |
-| ------------------------------ | ---------------------------| ------------------------ |
-| 401 - Unauthorized             | UnauthorizedError          | - Wrong or no API key is provided in header x-api-key <br> - API Key does not have permission to call api for specific resource  |
-| 404 - Not Found                | NotFound                   | Invalid API endpoint |
-| 500 - Internal Server Error    | UnknownError               | An unknown server error has occurred, try again. |
+| HTTP Status Codes           | Error Name        | Description                                                                                                                     |
+|-----------------------------|-------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| 401 - Unauthorized          | UnauthorizedError | - Wrong or no API key is provided in header x-api-key <br> - API Key does not have permission to call api for specific resource |
+| 404 - Not Found             | NotFound          | Invalid API endpoint                                                                                                            |
+| 500 - Internal Server Error | UnknownError      | An unknown server error has occurred, try again.                                                                                |
 
 
 
@@ -186,18 +186,17 @@ Use this API method to upload a group of products to a store.
 #### Response Success
 Response Status Code 200
 
-| Body Parameter                                       | Type   | Description |
-| ---------------------------------------------------- | ------ |-------------|
-| N/A                                                  | N/A    | N/A         |
+| Body Parameter | Type | Description |
+|----------------|------|-------------|
+| N/A            | N/A  | N/A         |
 
 #### Response Error
 Here is a list of unique errors that be returned for this API endpoint.
 
-| HTTP Status Codes              | Event Name                      | Description                                                                                                                                                                                      |
-| ------------------------------ | ------------------------------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 400 - Bad Request              | InvalidArgumentError            | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Product with productId not found <br/> - Neither productId nor externalProductId was sent |
-| 400 - Bad Request              | OrderDoesNotHaveDriverAssigned  | - Order does not have a driver assigned yet                                                                                                                                                      |
-| 500 - Internal Server Error    | UnknownError                    | An unknown server error has occurred, try again.                                                                                                                                                 |
+| HTTP Status Codes           | Error Name                | Description                                                                                                                                                                                      |
+|-----------------------------|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 400 - Bad Request           | InvalidArgumentError      | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Product with productId not found <br/> - Neither productId nor externalProductId was sent |
+| 500 - Internal Server Error | UnknownError              | An unknown server error has occurred, try again.                                                                                                                                                 |
 
 #### Example
 Request:
@@ -274,26 +273,26 @@ Use this API method to change the product price.
 
 #### Request
 
-| Body Parameter                                       | Type            | Description |
-| ---------------------------------------------------- | --------------- | ----------- |
-| productId                                            | string (UUID)   | - The Product Id you want to change <br/> - Not required if you send only a externalProductId |
-| externalProductId                                    | string          | - The external product id you configured previously in the product <br/> - It is ignored if you send a productId too |
-| price                                                | string (number) | The new product price |
+| Body Parameter    | Type            | Description                                                                                                          |
+|-------------------|-----------------|----------------------------------------------------------------------------------------------------------------------|
+| productId         | string (UUID)   | - The Product Id you want to change <br/> - Not required if you send only a externalProductId                        |
+| externalProductId | string          | - The external product id you configured previously in the product <br/> - It is ignored if you send a productId too |
+| price             | string (number) | The new product price                                                                                                |
 
 #### Response Success
 Response Status Code 200
 
-| Body Parameter                                       | Type   | Description |
-| ---------------------------------------------------- | ------ | ----------- |
-| N/A                                                  | N/A    | N/A         |
+| Body Parameter | Type | Description |
+|----------------|------|-------------|
+| N/A            | N/A  | N/A         |
 
 #### Response Error
 Here is a list of unique errors that be returned for this API endpoint.
 
-| HTTP Status Codes              | Event Name                      | Description |
-| ------------------------------ | ------------------------------- | ----------- |
-| 400 - Bad Request              | InvalidArgumentError            | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Product with productId not found <br/> - Neither productId nor externalProductId was sent |
-| 500 - Internal Server Error    | UnknownError                    | An unknown server error has occurred, try again. |
+| HTTP Status Codes           | Error Name           | Description                                                                                                                                                                                      |
+|-----------------------------|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Product with productId not found <br/> - Neither productId nor externalProductId was sent |
+| 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                                                                                                                                 |
 
 #### Example
 Request:
@@ -317,26 +316,26 @@ If store cannot accept an order it has to be rejected, see [POST rejectOrder](#P
 
 #### Request
 
-| Body Parameter                                       | Type   | Description |
-| ---------------------------------------------------- | ------ | ----------- |
-| orderId                                              | string | Unique identifier of the order in PideDirecto |
+| Body Parameter | Type   | Description                                   |
+|----------------|--------|-----------------------------------------------|
+| orderId        | string | Unique identifier of the order in PideDirecto |
 
 #### Response Success
 Response Status Code 200
 
-| Body Parameter                                       | Type   | Description |
-| ---------------------------------------------------- | ------ | ----------- |
-| N/A                                                  | N/A    | N/A         |
+| Body Parameter | Type | Description |
+|----------------|------|-------------|
+| N/A            | N/A  | N/A         |
 
 
 #### Response Error
 Here is a list of unique errors that be returned for this API endpoint.
 
-| HTTP Status Codes              | Event Name                      | Description |
-| ------------------------------ | ------------------------------- | ----------- |
-| 400 - Bad Request              | InvalidArgumentError            | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
-| 400 - Bad Request              | OrderCannotBeAcceptedError      | Order cannot be accepted since current order state does not allow it |
-| 500 - Internal Server Error    | UnknownError                    | An unknown server error has occurred, try again. |
+| HTTP Status Codes           | Error Name                 | Description                                                                                    |
+|-----------------------------|----------------------------|------------------------------------------------------------------------------------------------|
+| 400 - Bad Request           | InvalidArgumentError       | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
+| 400 - Bad Request           | OrderCannotBeAcceptedError | Order cannot be accepted since current order state does not allow it                           |
+| 500 - Internal Server Error | UnknownError               | An unknown server error has occurred, try again.                                               |
 
 
 #### Example
@@ -356,27 +355,27 @@ If store cannot reject an order it has to be accepted, see [POST rejectOrder](#P
 
 #### Request
 
-| Body Parameter                                       | Type   | Description |
-| ---------------------------------------------------- | ------ | ----------- |
-| orderId                                              | string | Unique identifier of the order in PideDirecto |
-| reason                                               | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/>  &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/>  &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/>   &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/>   &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order is rejected |
+| Body Parameter | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Description                                   |
+|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
+| orderId        | string                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | Unique identifier of the order in PideDirecto |
+| reason         | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/>  &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/>  &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/>   &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/>   &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order is rejected              |
 
 #### Response Success
 Response Status Code 200
 
-| Body Parameter                                       | Type   | Description |
-| ---------------------------------------------------- | ------ | ----------- |
-| N/A                                                  | N/A    | N/A         |
+| Body Parameter | Type | Description |
+|----------------|------|-------------|
+| N/A            | N/A  | N/A         |
 
 
 #### Response Error
 Here is a list of unique errors that be returned for this API endpoint.
 
-| HTTP Status Codes              | Event Name                      | Description |
-| ------------------------------ | ------------------------------- | ----------- |
-| 400 - Bad Request              | InvalidArgumentError            | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
-| 400 - Bad Request              | OrderCannotBeCancelledError     | Order cannot be rejected since current order state does not allow it |
-| 500 - Internal Server Error    | UnknownError                    | An unknown server error has occurred, try again. |
+| HTTP Status Codes           | Error Name                  | Description                                                                                    |
+|-----------------------------|-----------------------------|------------------------------------------------------------------------------------------------|
+| 400 - Bad Request           | InvalidArgumentError        | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
+| 400 - Bad Request           | OrderCannotBeCancelledError | Order cannot be rejected since current order state does not allow it                           |
+| 500 - Internal Server Error | UnknownError                | An unknown server error has occurred, try again.                                               |
 
 
 #### Example
@@ -402,38 +401,38 @@ Then pass the `deliveryEstimateId` when calling the [createDeliveryOrder](#POST 
 If you don't care about the driving duration or a guaranteed delivery cost you can skip calling this API and call [createDeliveryOrder](#POST createDeliveryOrder) without passing a `deliveryEstimateId`.
 
 #### Request
-| Body Parameter                                       | Type                           | Description |
-| ---------------------------------------------------- | ------------------------------ | ----------- |
-| storeId                                              | string (UUID)                  | The Store Id for the store that is sending the delivery |
-| deliveryLocation                                     | Object                         | GPS coordinates of the delivery location |
-| deliveryLocation.lat                                 | number                         | Latitude GPS coordinate |
-| deliveryLocation.lng                                 | number                         | Longitude GPS coordinate |
+| Body Parameter       | Type          | Description                                             |
+|----------------------|---------------|---------------------------------------------------------|
+| storeId              | string (UUID) | The Store Id for the store that is sending the delivery |
+| deliveryLocation     | Object        | GPS coordinates of the delivery location                |
+| deliveryLocation.lat | number        | Latitude GPS coordinate                                 |
+| deliveryLocation.lng | number        | Longitude GPS coordinate                                |
 
 
 #### Response Success
 Response Status Code 200
 
-| Body Parameter                                       | Type                           | Description |
-| ---------------------------------------------------- | ------------------------------ | ----------- |
-| deliveryEstimateId                                   | string (UUID)                  | Unique identifier of the delivery estimate created, pass this to [createDeliveryOrder](#POST createDeliveryOrder) to get a guaranteed delivery cost |
-| storeLocation                                        | Object                         | GPS coordinates of the store |
-| storeLocation.lat                                    | number                         | Latitude GPS coordinate |
-| storeLocation.lng                                    | number                         | Longitude GPS coordinate |
-| deliveryLocation                                     | Object                         | GPS coordinates of the delivery location |
-| deliveryLocation.lat                                 | number                         | Latitude GPS coordinate |
-| deliveryLocation.lng                                 | number                         | Longitude GPS coordinate |
-| drivingDistance                                      | number                         | Driving Distance in meter calculated using Google Maps |
-| drivingDuration                                      | number                         | Driving Duration in seconds calculated using Google Maps|
-| deliveryCost                                         | string (number)                | Delivery Cost calculated |
-| isWithinDeliveryRadius                               | boolean                        | Boolean that indicates if the delivery is within the delivery radius of the store |
+| Body Parameter         | Type            | Description                                                                                                                                         |
+|------------------------|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| deliveryEstimateId     | string (UUID)   | Unique identifier of the delivery estimate created, pass this to [createDeliveryOrder](#POST createDeliveryOrder) to get a guaranteed delivery cost |
+| storeLocation          | Object          | GPS coordinates of the store                                                                                                                        |
+| storeLocation.lat      | number          | Latitude GPS coordinate                                                                                                                             |
+| storeLocation.lng      | number          | Longitude GPS coordinate                                                                                                                            |
+| deliveryLocation       | Object          | GPS coordinates of the delivery location                                                                                                            |
+| deliveryLocation.lat   | number          | Latitude GPS coordinate                                                                                                                             |
+| deliveryLocation.lng   | number          | Longitude GPS coordinate                                                                                                                            |
+| drivingDistance        | number          | Driving Distance in meter calculated using Google Maps                                                                                              |
+| drivingDuration        | number          | Driving Duration in seconds calculated using Google Maps                                                                                            |
+| deliveryCost           | string (number) | Delivery Cost calculated                                                                                                                            |
+| isWithinDeliveryRadius | boolean         | Boolean that indicates if the delivery is within the delivery radius of the store                                                                   |
 
 #### Response Error
 Here is a list of unique errors that be returned for this API endpoint.
 
-| HTTP Status Codes              | Event Name                         | Description |
-| ------------------------------ | ---------------------------------- | ----------- |
-| 400 - Bad Request              | InvalidArgumentError               | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
-| 500 - Internal Server Error    | UnknownError                       | An unknown server error has occurred, try again. |
+| HTTP Status Codes           | Error Name           | Description                                                                                    |
+|-----------------------------|----------------------|------------------------------------------------------------------------------------------------|
+| 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
+| 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                               |
 
 
 
@@ -471,20 +470,20 @@ If you have a fixed agreed delivery cost you can omit calling [getDeliveryEstima
 #### Response Success
 Response Status Code 200
 
-| Body Parameter                                       | Type                | Description |
-| ---------------------------------------------------- | ------------------- | ----------- |
-| orderId                                              | string (UUID)       | Unique identifier of the order in PideDirecto|
-| trackingUrl                                          | string              | A URL for tracking the delivery inside PideDirecto system |
-| deliveryCost                                         | string (number)     | The cost of the delivery |
+| Body Parameter | Type            | Description                                               |
+|----------------|-----------------|-----------------------------------------------------------|
+| orderId        | string (UUID)   | Unique identifier of the order in PideDirecto             |
+| trackingUrl    | string          | A URL for tracking the delivery inside PideDirecto system |
+| deliveryCost   | string (number) | The cost of the delivery                                  |
 
 #### Response Error
 Here is a list of unique errors that be returned for this API endpoint.
 
-| HTTP Status Codes              | Event Name                 | Description |
-| ------------------------------ | ---------------------------| ----------- |
-| 400 - Bad Request              | InvalidArgumentError       | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
-| 400 - Bad Request              | NotWithinDeliveryRadius    | - The delivery is not within the delivery radius of the store. <br/> - Check delivery estimate before creating order |
-| 500 - Internal Server Error    | UnknownError               | An unknown server error has occurred, try again. |
+| HTTP Status Codes           | Error Name              | Description                                                                                                          |
+|-----------------------------|-------------------------|----------------------------------------------------------------------------------------------------------------------|
+| 400 - Bad Request           | InvalidArgumentError    | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request                       |
+| 400 - Bad Request           | NotWithinDeliveryRadius | - The delivery is not within the delivery radius of the store. <br/> - Check delivery estimate before creating order |
+| 500 - Internal Server Error | UnknownError            | An unknown server error has occurred, try again.                                                                     |
 
 
 
@@ -531,27 +530,27 @@ As soon as a driver has accepted the order or order is already cancelled/rejecte
 
 #### Request
 
-| Body Parameter                                       | Type   | Description |
-| ---------------------------------------------------- | ------ | ----------- |
-| orderId                                              | string | Unique identifier of the order in PideDirecto |
-| reason                                               | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/>  &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/>  &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/>   &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/>   &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order is cancelled |
+| Body Parameter | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Description                                   |
+|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
+| orderId        | string                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | Unique identifier of the order in PideDirecto |
+| reason         | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/>  &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/>  &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/>   &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/>   &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order is cancelled             |
 
 #### Response Success
 Response Status Code 200
 
-| Body Parameter                                       | Type   | Description |
-| ---------------------------------------------------- | ------ | ----------- |
-| N/A                                                  | N/A    | N/A         |
+| Body Parameter | Type | Description |
+|----------------|------|-------------|
+| N/A            | N/A  | N/A         |
 
 
 #### Response Error
 Here is a list of unique errors that be returned for this API endpoint.
 
-| HTTP Status Codes              | Event Name                      | Description |
-| ------------------------------ | ------------------------------- | ----------- |
-| 400 - Bad Request              | InvalidArgumentError            | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
-| 400 - Bad Request              | OrderCannotBeCancelledError     | Order cannot be cancelled since current order state does not allow it |
-| 500 - Internal Server Error    | UnknownError                    | An unknown server error has occurred, try again. |
+| HTTP Status Codes           | Error Name                  | Description                                                                                    |
+|-----------------------------|-----------------------------|------------------------------------------------------------------------------------------------|
+| 400 - Bad Request           | InvalidArgumentError        | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
+| 400 - Bad Request           | OrderCannotBeCancelledError | Order cannot be cancelled since current order state does not allow it                          |
+| 500 - Internal Server Error | UnknownError                | An unknown server error has occurred, try again.                                               |
 
 
 #### Example
@@ -568,29 +567,29 @@ Use this API method to retrieve the driver position of the requested orderId.
 Make sure that the orderId exists, and it is not finished.
 
 #### Request
-| Body Parameter               | Type                                                               | Description                                                                                                                                                                                                                                        |
-|------------------------------|--------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| orderId                      | string (UUID)                                                      | Unique identifier of the order in PideDirecto|
+| Body Parameter | Type          | Description                                   |
+|----------------|---------------|-----------------------------------------------|
+| orderId        | string (UUID) | Unique identifier of the order in PideDirecto |
 
 
 
 #### Response Success
 Response Status Code 200
 
-| Body Parameter                                       | Type                | Description |
-| ---------------------------------------------------- | ------------------- | ----------- |
-| driverId                                             | string (UUID)       | Unique identifier of the driver in PideDirecto|
-| driverPosition                                       | Object              | Object containing driver position|
-| driverPosition.lat                                   | number              | Latitude GPS coordinate |
-| driverPosition.lng                                   | number              | Longitude GPS coordinate |
+| Body Parameter     | Type          | Description                                    |
+|--------------------|---------------|------------------------------------------------|
+| driverId           | string (UUID) | Unique identifier of the driver in PideDirecto |
+| driverPosition     | Object        | Object containing driver position              |
+| driverPosition.lat | number        | Latitude GPS coordinate                        |
+| driverPosition.lng | number        | Longitude GPS coordinate                       |
 
 #### Response Error
 Here is a list of unique errors that be returned for this API endpoint.
 
-| HTTP Status Codes              | Event Name                 | Description |
-| ------------------------------ | ---------------------------| ----------- |
-| 400 - Bad Request              | InvalidArgumentError       | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
-| 500 - Internal Server Error    | UnknownError               | An unknown server error has occurred, try again. |
+| HTTP Status Codes           | Error Name           | Description                                                                                    |
+|-----------------------------|----------------------|------------------------------------------------------------------------------------------------|
+| 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
+| 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                               |
 
 
 
@@ -599,7 +598,7 @@ Request:
 
 ```json
 {
-  "orderId": "38981f83-853c-4193-a3c2-97f05582e0ad",
+  "orderId": "38981f83-853c-4193-a3c2-97f05582e0ad"
 }
 ```
 Response
@@ -610,7 +609,7 @@ Response
   "driverPosition": {
     "lat": 120.87123,
     "lng": 125.81233
-  },
+  }
 }
 ```
 
@@ -769,14 +768,14 @@ This event is will be emitted when a new order is created.
 This event is will be emitted when an order with status NEW is rejected by the store.
 Note that this event is not emitted for delivery orders since they are already in state ACCEPTED when created.
 
-| Body Parameter                                       | Type                      | Description |
-| ---------------------------------------------------- | ------------------------- | ----------- |
-| orderId                                              | string (UUID)             | Unique identifier of the order in pidedirecto |
-| storeId                                              | string (UUID)             | The Store Id for the store that is sending the delivery |
-| externalOrderId                                      | string &#124; undefined   | The external order id sent when creating a order. If no external order id was sent it will be undefined |
-| eventType                                            | string ("ORDER_REJECTED") | Type of the event |
-| occurredAt                                           | string (Date)             | The date time when the event occurred |
-| reason                                               | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/>  &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/>  &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/>   &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/>   &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order was rejected |
+| Body Parameter  | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Description                                                                                             |
+|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| orderId         | string (UUID)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Unique identifier of the order in pidedirecto                                                           |
+| storeId         | string (UUID)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | The Store Id for the store that is sending the delivery                                                 |
+| externalOrderId | string &#124; undefined                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | The external order id sent when creating a order. If no external order id was sent it will be undefined |
+| eventType       | string ("ORDER_REJECTED")                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | Type of the event                                                                                       |
+| occurredAt      | string (Date)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | The date time when the event occurred                                                                   |
+| reason          | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/>  &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/>  &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/>   &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/>   &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order was rejected                                                                       |
 
 
 #### Example
@@ -798,13 +797,13 @@ Note that this event is not emitted for delivery orders since they are already i
 This event is will be emitted when an order with status NEW is accepted by the store.
 Note that this event is not emitted for delivery orders since they are already in state ACCEPTED when created.
 
-| Body Parameter                                       | Type                      | Description |
-| ---------------------------------------------------- | ------------------------- | ----------- |
-| orderId                                              | string (UUID)             | Unique identifier of the order in pidedirecto |
-| storeId                                              | string (UUID)             | The Store Id for the store that is sending the delivery |
-| externalOrderId                                      | string &#124; undefined   | The external order id sent when creating a order. If no external order id was sent it will be undefined |
-| eventType                                            | string ("ORDER_ACCEPTED") | Type of the event |
-| occurredAt                                           | string (Date)             | The date time when the event occurred |
+| Body Parameter  | Type                      | Description                                                                                             |
+|-----------------|---------------------------|---------------------------------------------------------------------------------------------------------|
+| orderId         | string (UUID)             | Unique identifier of the order in pidedirecto                                                           |
+| storeId         | string (UUID)             | The Store Id for the store that is sending the delivery                                                 |
+| externalOrderId | string &#124; undefined   | The external order id sent when creating a order. If no external order id was sent it will be undefined |
+| eventType       | string ("ORDER_ACCEPTED") | Type of the event                                                                                       |
+| occurredAt      | string (Date)             | The date time when the event occurred                                                                   |
 
 
 #### Example
@@ -824,14 +823,14 @@ Note that this event is not emitted for delivery orders since they are already i
 ### Event Type ORDER_CANCELLED <span id="Event-Type-ORDER_CANCELLED"/>
 This event is emitted when order is cancelled.
 
-| Body Parameter                                       | Type                       | Description |
-| ---------------------------------------------------- | -------------------------- | ----------- |
-| orderId                                              | string (UUID)              | Unique identifier of the order in pidedirecto |
-| storeId                                              | string (UUID)              | The Store Id for the store that is sending the delivery |
-| externalOrderId                                      | string &#124; undefined    | The external order id sent when creating a order. If no external order id was sent it will be undefined |
-| eventType                                            | string ("ORDER_CANCELLED") | Type of the event |
-| occurredAt                                           | string (Date)              | The date time when the event occurred |
-| reason                                               | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/>  &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/>  &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/>   &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/>   &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order was cancelled |
+| Body Parameter  | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Description                                                                                             |
+|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| orderId         | string (UUID)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Unique identifier of the order in pidedirecto                                                           |
+| storeId         | string (UUID)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | The Store Id for the store that is sending the delivery                                                 |
+| externalOrderId | string &#124; undefined                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | The external order id sent when creating a order. If no external order id was sent it will be undefined |
+| eventType       | string ("ORDER_CANCELLED")                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Type of the event                                                                                       |
+| occurredAt      | string (Date)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | The date time when the event occurred                                                                   |
+| reason          | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/>  &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/>  &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/>   &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/>   &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order was cancelled                                                                      |
 
 
 #### Example
@@ -852,16 +851,16 @@ This event is emitted when order is cancelled.
 ### Event Type DRIVER_ACCEPTED_DELIVERY <span id="Event-Type-DRIVER_ACCEPTED_DELIVERY"/>
 This event is emitted when a driver accepted the delivery of an order.
 
-| Body Parameter                                       | Type                                | Description                                                                                             |
-| ---------------------------------------------------- | ----------------------------------- |---------------------------------------------------------------------------------------------------------|
-| orderId                                              | string (UUID)                       | Unique identifier of the order in pidedirecto                                                           |
-| storeId                                              | string (UUID)                       | The Store Id for the store that is sending the delivery                                                 |
-| externalOrderId                                      | string &#124; undefined             | The external order id sent when creating a order. If no external order id was sent it will be undefined |
-| eventType                                            | string ("DRIVER_ACCEPTED_DELIVERY") | Type of the event                                                                                       |
-| occurredAt                                           | string (Date)                       | The date time when the event occurred                                                                   |
-| driverName                                           | string                              | First and last name of driver                                                                           |
-| driverPhoneNumber                                    | string                              | Phone number to driver                                                                                  |
-| deliverySecurityCode                                 | string &#124; undefined             | A pin security code made of numbers that the user must give to the driver when receiving a delivery     |
+| Body Parameter       | Type                                | Description                                                                                             |
+|----------------------|-------------------------------------|---------------------------------------------------------------------------------------------------------|
+| orderId              | string (UUID)                       | Unique identifier of the order in pidedirecto                                                           |
+| storeId              | string (UUID)                       | The Store Id for the store that is sending the delivery                                                 |
+| externalOrderId      | string &#124; undefined             | The external order id sent when creating a order. If no external order id was sent it will be undefined |
+| eventType            | string ("DRIVER_ACCEPTED_DELIVERY") | Type of the event                                                                                       |
+| occurredAt           | string (Date)                       | The date time when the event occurred                                                                   |
+| driverName           | string                              | First and last name of driver                                                                           |
+| driverPhoneNumber    | string                              | Phone number to driver                                                                                  |
+| deliverySecurityCode | string &#124; undefined             | A pin security code made of numbers that the user must give to the driver when receiving a delivery     |
 
 
 #### Example
@@ -884,13 +883,13 @@ This event is emitted when a driver accepted the delivery of an order.
 ### Event Type DRIVER_ARRIVED_AT_STORE <span id="Event-Type-DRIVER_ARRIVED_AT_STORE"/>
 This event is emitted when a driver pressed arrived at the store button in drivers app.
 
-| Body Parameter                                       | Type                               | Description |
-| ---------------------------------------------------- | ---------------------------------- | ----------- |
-| orderId                                              | string (UUID)                      | Unique identifier of the order in pidedirecto |
-| storeId                                              | string (UUID)                      | The Store Id for the store that is sending the delivery |
-| externalOrderId                                      | string &#124; undefined            | The external order id sent when creating a order. If no external order id was sent it will be undefined |
-| eventType                                            | string ("DRIVER_ARRIVED_AT_STORE") | Type of the event |
-| occurredAt                                           | string (Date)                      | The date time when the event occurred |
+| Body Parameter  | Type                               | Description                                                                                             |
+|-----------------|------------------------------------|---------------------------------------------------------------------------------------------------------|
+| orderId         | string (UUID)                      | Unique identifier of the order in pidedirecto                                                           |
+| storeId         | string (UUID)                      | The Store Id for the store that is sending the delivery                                                 |
+| externalOrderId | string &#124; undefined            | The external order id sent when creating a order. If no external order id was sent it will be undefined |
+| eventType       | string ("DRIVER_ARRIVED_AT_STORE") | Type of the event                                                                                       |
+| occurredAt      | string (Date)                      | The date time when the event occurred                                                                   |
 
 #### Example
 
@@ -909,13 +908,13 @@ This event is emitted when a driver pressed arrived at the store button in drive
 ### Event Type DRIVER_PICKED_UP_DELIVERY <span id="Event-Type-DRIVER_PICKED_UP_DELIVERY"/>
 This event is emitted when a driver pressed picked up at store button in drivers app.
 
-| Body Parameter                                       | Type                                 | Description |
-| ---------------------------------------------------- | ------------------------------------ | ----------- |
-| orderId                                              | string (UUID)                        | Unique identifier of the order in pidedirecto |
-| storeId                                              | string (UUID)                        | The Store Id for the store that is sending the delivery |
-| externalOrderId                                      | string &#124; undefined              | The external order id sent when creating a order. If no external order id was sent it will be undefined |
-| eventType                                            | string ("DRIVER_PICKED_UP_DELIVERY") | Type of the event |
-| occurredAt                                           | string (Date)                        | The date time when the event occurred |
+| Body Parameter  | Type                                 | Description                                                                                             |
+|-----------------|--------------------------------------|---------------------------------------------------------------------------------------------------------|
+| orderId         | string (UUID)                        | Unique identifier of the order in pidedirecto                                                           |
+| storeId         | string (UUID)                        | The Store Id for the store that is sending the delivery                                                 |
+| externalOrderId | string &#124; undefined              | The external order id sent when creating a order. If no external order id was sent it will be undefined |
+| eventType       | string ("DRIVER_PICKED_UP_DELIVERY") | Type of the event                                                                                       |
+| occurredAt      | string (Date)                        | The date time when the event occurred                                                                   |
 
 #### Example
 
@@ -934,13 +933,13 @@ This event is emitted when a driver pressed picked up at store button in drivers
 ### Event Type DRIVER_ARRIVED_AT_CLIENT <span id="Event-Type-DRIVER_ARRIVED_AT_CLIENT"/>
 This event is emitted when a driver pressed arrived at client button in drivers app.
 
-| Body Parameter                                       | Type                                | Description |
-| ---------------------------------------------------- | ----------------------------------- | ----------- |
-| orderId                                              | string (UUID)                       | Unique identifier of the order in pidedirecto |
-| storeId                                              | string (UUID)                       | The Store Id for the store that is sending the delivery |
-| externalOrderId                                      | string &#124; undefined             | The external order id sent when creating a order. If no external order id was sent it will be undefined |
-| eventType                                            | string ("DRIVER_ARRIVED_AT_CLIENT") | Type of the event |
-| occurredAt                                           | string (Date)                       | The date time when the event occurred |
+| Body Parameter  | Type                                | Description                                                                                             |
+|-----------------|-------------------------------------|---------------------------------------------------------------------------------------------------------|
+| orderId         | string (UUID)                       | Unique identifier of the order in pidedirecto                                                           |
+| storeId         | string (UUID)                       | The Store Id for the store that is sending the delivery                                                 |
+| externalOrderId | string &#124; undefined             | The external order id sent when creating a order. If no external order id was sent it will be undefined |
+| eventType       | string ("DRIVER_ARRIVED_AT_CLIENT") | Type of the event                                                                                       |
+| occurredAt      | string (Date)                       | The date time when the event occurred                                                                   |
 
 #### Example
 
@@ -961,13 +960,13 @@ This event is emitted when a driver who accepted the delivery for some reason wi
 It does not mean that the order is cancelled or rejected. However when order is cancelled or rejected this event will also be emitted if a driver has accepted the delivery already.
 To react on order cancelled or rejected listen to event types ORDER_CANCELLED and ORDER_REJECTED instead.
 
-| Body Parameter                                       | Type                        | Description |
-| ---------------------------------------------------- | --------------------------- | ----------- |
-| orderId                                              | string (UUID)               | Unique identifier of the order in pidedirecto |
-| storeId                                              | string (UUID)               | The Store Id for the store that is sending the delivery |
-| externalOrderId                                      | string &#124; undefined     | The external order id sent when creating a order. If no external order id was sent it will be undefined |
-| eventType                                            | string ("DRIVER_CANCELLED") | Type of the event |
-| occurredAt                                           | string (Date)               | The date time when the event occurred |
+| Body Parameter  | Type                        | Description                                                                                             |
+|-----------------|-----------------------------|---------------------------------------------------------------------------------------------------------|
+| orderId         | string (UUID)               | Unique identifier of the order in pidedirecto                                                           |
+| storeId         | string (UUID)               | The Store Id for the store that is sending the delivery                                                 |
+| externalOrderId | string &#124; undefined     | The external order id sent when creating a order. If no external order id was sent it will be undefined |
+| eventType       | string ("DRIVER_CANCELLED") | Type of the event                                                                                       |
+| occurredAt      | string (Date)               | The date time when the event occurred                                                                   |
 
 #### Example
 
@@ -986,14 +985,14 @@ To react on order cancelled or rejected listen to event types ORDER_CANCELLED an
 ### Event Type ORDER_COMPLETED <span id="Event-Type-ORDER_COMPLETED"/>
 This event is emitted when a driver pressed delivered to client button in drivers app.
 
-| Body Parameter                                       | Type                       | Description |
-| ---------------------------------------------------- | -------------------------- | ----------- |
-| orderId                                              | string (UUID)              | Unique identifier of the order in pidedirecto |
-| storeId                                              | string (UUID)              | The Store Id for the store that is sending the delivery |
-| externalOrderId                                      | string &#124; undefined    | The external order id sent when creating a order. If no external order id was sent it will be undefined |
-| eventType                                            | string                     | ORDER_COMPLETED |
-| eventType                                            | string ("ORDER_COMPLETED") | Type of the event |
-| occurredAt                                           | string (Date)              | The date time when the event occurred |
+| Body Parameter  | Type                       | Description                                                                                             |
+|-----------------|----------------------------|---------------------------------------------------------------------------------------------------------|
+| orderId         | string (UUID)              | Unique identifier of the order in pidedirecto                                                           |
+| storeId         | string (UUID)              | The Store Id for the store that is sending the delivery                                                 |
+| externalOrderId | string &#124; undefined    | The external order id sent when creating a order. If no external order id was sent it will be undefined |
+| eventType       | string                     | ORDER_COMPLETED                                                                                         |
+| eventType       | string ("ORDER_COMPLETED") | Type of the event                                                                                       |
+| occurredAt      | string (Date)              | The date time when the event occurred                                                                   |
 
 #### Example
 
