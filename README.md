@@ -14,7 +14,7 @@
   - [POST getDeliveryEstimate](#post-getdeliveryestimate)
   - [POST createDeliveryOrder](#post-createdeliveryorder)
   - [POST cancelOrder](#post-cancelorder)
-  - [POST getDriverPosition (IN DEVELOPMENT)](#post-getdriverposition)
+  - [POST getDriverPosition](#post-getdriverposition)
 
 - [Webhook Events](#webhook-events)
   - [Event Type ORDER_CREATED](#event-type-order_created)
@@ -563,7 +563,7 @@ Request:
 }
 ```
 
-### POST getDriverPosition (IN DEVELOPMENT)<a id="POST-getDriverPosition"/>
+### POST getDriverPosition
 Use this API method to retrieve the driver position of the requested orderId.
 Make sure that the orderId exists, and it is not finished.
 
