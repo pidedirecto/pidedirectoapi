@@ -1,33 +1,33 @@
 # PideDirecto API
 - [Environments](#environments)
 - [API Key](#api-key)
-- [Store Id](#Store-Id)
-- [Webhook](#Webhook)
-- [HTTP Status Codes and Errors](#HTTP-Status-Codes-and-Errors)
-- [Getting Started](#Getting-Started)
-- [Product API](#Product-API)
-  - [POST uploadStoreMenu](#POST-uploadStoreMenu)
-  - [POST changeProductPrice](#POST-changeProductPrice)
-- [Order API](#Order-API)
-  - [POST acceptOrder](#POST-acceptOrder)
-  - [POST rejectOrder](#POST-rejectOrder)
-  - [POST getDeliveryEstimate](#POST-getDeliveryEstimate)
-  - [POST createDeliveryOrder](#POST-createDeliveryOrder)
-  - [POST cancelOrder](#POST-cancelOrder)
-  - [POST getDriverPosition (IN DEVELOPMENT)](#POST-getDriverPosition)
+- [Store Id](#store-id)
+- [Webhook](#webhook)
+- [HTTP Status Codes and Errors](#http-status-codes-and-errors)
+- [Getting Started](#getting-started)
+- [Product API](#product-api)
+  - [POST uploadStoreMenu](#post-uploadstoremenu)
+  - [POST changeProductPrice](#post-changeproductprice)
+- [Order API](#order-api)
+  - [POST acceptOrder](#post-acceptorder)
+  - [POST rejectOrder](#post-rejectorder)
+  - [POST getDeliveryEstimate](#post-getdeliveryestimate)
+  - [POST createDeliveryOrder](#post-createdeliveryorder)
+  - [POST cancelOrder](#post-cancelorder)
+  - [POST getDriverPosition (IN DEVELOPMENT)](#post-getdriverposition)
 
-- [Webhook Events](#Webhook-Events)
-  - [Event Type ORDER_CREATED](#Event-Type-ORDER_CREATED)
-  - [Event Type ORDER_REJECTED](#Event-Type-ORDER_REJECTED)
-  - [Event Type ORDER_ACCEPTED](#Event-Type-ORDER_ACCEPTED)
-  - [Event Type ORDER_CANCELLED](#Event-Type-ORDER_CANCELLED)
-  - [Event Type DRIVER_ACCEPTED_DELIVERY](#Event-Type-DRIVER_ACCEPTED_DELIVERY)
-  - [Event Type DRIVER_ARRIVED_AT_STORE](#Event-Type-DRIVER_ARRIVED_AT_STORE)
-  - [Event Type DRIVER_PICKED_UP_DELIVERY](#Event-Type-DRIVER_PICKED_UP_DELIVERY)
-  - [Event Type DRIVER_ARRIVED_AT_CLIENT](#Event-Type-DRIVER_ARRIVED_AT_CLIENT)
-  - [Event Type DRIVER_CANCELLED](#Event-Type-DRIVER_CANCELLED)
-  - [Event Type ORDER_COMPLETED](#Event-Type-ORDER_COMPLETED)
-- [Changelog](#Changelog)
+- [Webhook Events](#webhook-events)
+  - [Event Type ORDER_CREATED](#event-type-order_created)
+  - [Event Type ORDER_REJECTED](#event-type-order_rejected)
+  - [Event Type ORDER_ACCEPTED](#event-type-order_accepted)
+  - [Event Type ORDER_CANCELLED](#event-type-order_cancelled)
+  - [Event Type DRIVER_ACCEPTED_DELIVERY](#event-type-driver_accepted_delivery)
+  - [Event Type DRIVER_ARRIVED_AT_STORE](#event-type-driver_arrived_at_store)
+  - [Event Type DRIVER_PICKED_UP_DELIVERY](#event-type-driver_picked_up_delivery)
+  - [Event Type DRIVER_ARRIVED_AT_CLIENT](#event-type-driver_arrived_at_client)
+  - [Event Type DRIVER_CANCELLED](#event-type-driver_cancelled)
+  - [Event Type ORDER_COMPLETED](#event-type-order_completed)
+- [Changelog](#changelog)
 
 
 
@@ -54,14 +54,14 @@ If your credentials gets compromised you we can create you a new one and invalid
 
 To get an API key, talk to your Account Manager.
 
-#### Example <a id="POST-API-Key-Example"/>
+#### Example
 ```
 headers: {
   'x-api-key': 'private_test_YAdrs93oY6HBX7Tws34QsLdo'
 }
 ```
 
-## Store Id <a id="Store-Id"/>
+## Store Id
 Each unique location that needs the delivery service needs to configured in PideDirecto before it can be integrated.
 All unique locations has a unique Store Id, a UUID 4 string.
 This Store Id has to be provided when creating orders through the API.
@@ -70,7 +70,7 @@ Please contact your Account Manager to add new locations or if you need to know 
 
 
 
-## HTTP Status Codes and Errors <a id="HTTP-Status-Codes-and-Errors"/>
+## HTTP Status Codes and Errors
 All API endpoints return the following status codes along with the header `"Content-Type": "application/json"`.
 
 | HTTP Status Codes           | Description                                                                                                                                                     |
@@ -104,7 +104,7 @@ Check the documentation for a specific endpoint to see other Error Names specifi
 
 
 
-## Webhook <a id="Webhook"/>
+## Webhook
 To receive order/delivery updates you need to configure a webhook or pass one as a parameter when creating an order through the API.
 Please note that if you choose to pass webhooks in the API calls, and do not configure a general webhook, you will not get order/delivery updates about of orders created outside this API.
 
@@ -118,7 +118,7 @@ To configure a general webhook please contact your account manager and send him 
 
 
 
-## Getting Started <a id="Getting-Started"/>
+## Getting Started
 To test the order/delivery status updates you will need install a test version of
 the PideDirecto Drivers App and register as a driver.
 
@@ -127,10 +127,10 @@ Since you need to be a verified driver to be able to receiver deliveries to deli
 
 
 
-## Product API <a id="Product-API"/>
+## Product API
 
 
-### POST uploadStoreMenu <a id="POST-uploadStoreMenu"/>
+### POST uploadStoreMenu
 Use this API method to upload a group of products to a store.
 
 #### Request
@@ -269,7 +269,7 @@ Request:
 }
 ```
 
-### POST changeProductPrice <a id="POST-changeProductPrice"/>
+### POST changeProductPrice
 Use this API method to change the product price.
 
 #### Request
@@ -306,11 +306,11 @@ Request:
 
 
 
-## Order API <a id="Order-API"/>
+## Order API
 
 
 
-### POST acceptOrder <a id="POST-acceptOrder"/>
+### POST acceptOrder
 Use this API method to accept an order that was ordered from PideDirecto webpage or app.
 Orders can only be accepted as long as the customer did not cancel the order (as long as order status is NEW).
 If store cannot accept an order it has to be rejected, see [POST rejectOrder](#POST rejectOrder) api call.
@@ -349,7 +349,7 @@ Request:
 
 
 
-### POST rejectOrder <a id="POST-rejectOrder"/>
+### POST rejectOrder
 Use this API method to reject an order that was ordered from PideDirecto webpage or app.
 Orders can only be rejected as long as the customer did not reject the order (as long as order status is NEW).
 If store cannot reject an order it has to be accepted, see [POST rejectOrder](#POST rejectOrder) api call.
@@ -396,7 +396,7 @@ Request:
 
 
 
-### POST getDeliveryEstimate <a id="POST-getDeliveryEstimate"/>
+### POST getDeliveryEstimate
 If you want to create a delivery order you can use this API method to get a delivery estimate with driving duration or delivery cost before creating the order with [createDeliveryOrder](#POST createDeliveryOrder) API method.
 Then pass the `deliveryEstimateId` when calling the [createDeliveryOrder](#POST createDeliveryOrder) API method to create an order with the guaranteed the delivery cost.
 If you don't care about the driving duration or a guaranteed delivery cost you can skip calling this API and call [createDeliveryOrder](#POST createDeliveryOrder) without passing a `deliveryEstimateId`.
@@ -437,7 +437,7 @@ Here is a list of unique errors that be returned for this API endpoint.
 
 
 
-### POST createDeliveryOrder <a id="POST-createDeliveryOrder"/>
+### POST createDeliveryOrder
 Use this API method to request a delivery.  
 Make sure to call [getDeliveryEstimate](#POST getDeliveryEstimate) in advance if you wish to confirm the delivery cost with your customer before creating the order.
 Then when creating order pass the `deliveryEstimateId`.
@@ -525,7 +525,7 @@ Response
 
 
 
-### POST cancelOrder <a id="POST-cancelOrder"/>
+### POST cancelOrder
 Use this API method to cancel an order. Orders can only be cancelled if no driver has accepted the order.
 As soon as a driver has accepted the order or order is already cancelled/rejected/completed/delivered an error with name `OrderCannotBeCancelled` will be returned.
 
@@ -618,9 +618,9 @@ Response
 
 
 
-## Webhook Events <a id="Webhook-Events"/>
+## Webhook Events
 
-### Event Type ORDER_CREATED <a id="Event-Type-ORDER_CREATED"/>
+### Event Type ORDER_CREATED
 This event is will be emitted when a new order is created.
 
 | Body Parameter                                                                                           | Type                                                                                     | Description                                                                                                                                                                                                                                                                                                                 |
@@ -765,7 +765,7 @@ This event is will be emitted when a new order is created.
 
 
 
-### Event Type ORDER_REJECTED <a id="Event-Type-ORDER_REJECTED"/>
+### Event Type ORDER_REJECTED
 This event is will be emitted when an order with status NEW is rejected by the store.
 Note that this event is not emitted for delivery orders since they are already in state ACCEPTED when created.
 
@@ -794,7 +794,7 @@ Note that this event is not emitted for delivery orders since they are already i
 
 
 
-### Event Type ORDER_ACCEPTED <a id="Event-Type-ORDER_ACCEPTED"/>
+### Event Type ORDER_ACCEPTED
 This event is will be emitted when an order with status NEW is accepted by the store.
 Note that this event is not emitted for delivery orders since they are already in state ACCEPTED when created.
 
@@ -821,7 +821,7 @@ Note that this event is not emitted for delivery orders since they are already i
 
 
 
-### Event Type ORDER_CANCELLED <a id="Event-Type-ORDER_CANCELLED"/>
+### Event Type ORDER_CANCELLED
 This event is emitted when order is cancelled.
 
 | Body Parameter  | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Description                                                                                             |
@@ -849,7 +849,7 @@ This event is emitted when order is cancelled.
 
 
 
-### Event Type DRIVER_ACCEPTED_DELIVERY <a id="Event-Type-DRIVER_ACCEPTED_DELIVERY"/>
+### Event Type DRIVER_ACCEPTED_DELIVERY
 This event is emitted when a driver accepted the delivery of an order.
 
 | Body Parameter       | Type                                | Description                                                                                             |
@@ -881,7 +881,7 @@ This event is emitted when a driver accepted the delivery of an order.
 
 
 
-### Event Type DRIVER_ARRIVED_AT_STORE <a id="Event-Type-DRIVER_ARRIVED_AT_STORE"/>
+### Event Type DRIVER_ARRIVED_AT_STORE
 This event is emitted when a driver pressed arrived at the store button in drivers app.
 
 | Body Parameter  | Type                               | Description                                                                                             |
@@ -906,7 +906,7 @@ This event is emitted when a driver pressed arrived at the store button in drive
 
 
 
-### Event Type DRIVER_PICKED_UP_DELIVERY <a id="Event-Type-DRIVER_PICKED_UP_DELIVERY"/>
+### Event Type DRIVER_PICKED_UP_DELIVERY
 This event is emitted when a driver pressed picked up at store button in drivers app.
 
 | Body Parameter  | Type                                 | Description                                                                                             |
@@ -931,7 +931,7 @@ This event is emitted when a driver pressed picked up at store button in drivers
 
 
 
-### Event Type DRIVER_ARRIVED_AT_CLIENT <a id="Event-Type-DRIVER_ARRIVED_AT_CLIENT"/>
+### Event Type DRIVER_ARRIVED_AT_CLIENT
 This event is emitted when a driver pressed arrived at client button in drivers app.
 
 | Body Parameter  | Type                                | Description                                                                                             |
@@ -956,7 +956,7 @@ This event is emitted when a driver pressed arrived at client button in drivers 
 
 
 
-### Event Type DRIVER_CANCELLED <a id="Event-Type-DRIVER_CANCELLED"/>
+### Event Type DRIVER_CANCELLED
 This event is emitted when a driver who accepted the delivery for some reason will not deliver the delivery.
 It does not mean that the order is cancelled or rejected. However when order is cancelled or rejected this event will also be emitted if a driver has accepted the delivery already.
 To react on order cancelled or rejected listen to event types ORDER_CANCELLED and ORDER_REJECTED instead.
@@ -983,7 +983,7 @@ To react on order cancelled or rejected listen to event types ORDER_CANCELLED an
 
 
 
-### Event Type ORDER_COMPLETED <a id="Event-Type-ORDER_COMPLETED"/>
+### Event Type ORDER_COMPLETED
 This event is emitted when a driver pressed delivered to client button in drivers app.
 
 | Body Parameter  | Type                       | Description                                                                                             |
@@ -1009,7 +1009,7 @@ This event is emitted when a driver pressed delivered to client button in driver
 
 
 
-## Changelog <a id="Changelog"/>
+## Changelog
 
 ### 2022-06-14
 - API - Added `ApiCallLimitExceeded` error to [POST uploadStoreMenu](#POST-uploadStoreMenu) api
