@@ -27,6 +27,8 @@
   - [Event Type DRIVER_ARRIVED_AT_CLIENT](#event-type-driver_arrived_at_client)
   - [Event Type DRIVER_CANCELLED](#event-type-driver_cancelled)
   - [Event Type ORDER_COMPLETED](#event-type-order_completed)
+- [Diagrams](#examples)
+  - [Diagram Order Creation](#diagram-order-creation)
 - [Changelog](#changelog)
 
 
@@ -413,19 +415,20 @@ If you don't care about the driving duration or a guaranteed delivery cost you c
 #### Response Success
 Response Status Code 200
 
-| Body Parameter         | Type            | Description                                                                                                                                         |
-|------------------------|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| deliveryEstimateId     | string (UUID)   | Unique identifier of the delivery estimate created, pass this to [createDeliveryOrder](#POST createDeliveryOrder) to get a guaranteed delivery cost |
-| storeLocation          | Object          | GPS coordinates of the store                                                                                                                        |
-| storeLocation.lat      | number          | Latitude GPS coordinate                                                                                                                             |
-| storeLocation.lng      | number          | Longitude GPS coordinate                                                                                                                            |
-| deliveryLocation       | Object          | GPS coordinates of the delivery location                                                                                                            |
-| deliveryLocation.lat   | number          | Latitude GPS coordinate                                                                                                                             |
-| deliveryLocation.lng   | number          | Longitude GPS coordinate                                                                                                                            |
-| drivingDistance        | number          | Driving Distance in meter calculated using Google Maps                                                                                              |
-| drivingDuration        | number          | Driving Duration in seconds calculated using Google Maps                                                                                            |
-| deliveryCost           | string (number) | Delivery Cost calculated                                                                                                                            |
-| isWithinDeliveryRadius | boolean         | Boolean that indicates if the delivery is within the delivery radius of the store                                                                   |
+| Body Parameter                 | Type                                                                                                                 | Description                                                                                                                                         |
+|--------------------------------|----------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| deliveryEstimateId             | string (UUID)                                                                                                        | Unique identifier of the delivery estimate created, pass this to [createDeliveryOrder](#POST createDeliveryOrder) to get a guaranteed delivery cost |
+| storeLocation                  | Object                                                                                                               | GPS coordinates of the store                                                                                                                        |
+| storeLocation.lat              | number                                                                                                               | Latitude GPS coordinate                                                                                                                             |
+| storeLocation.lng              | number                                                                                                               | Longitude GPS coordinate                                                                                                                            |
+| deliveryLocation               | Object                                                                                                               | GPS coordinates of the delivery location                                                                                                            |
+| deliveryLocation.lat           | number                                                                                                               | Latitude GPS coordinate                                                                                                                             |
+| deliveryLocation.lng           | number                                                                                                               | Longitude GPS coordinate                                                                                                                            |
+| drivingDistance                | number                                                                                                               | Driving Distance in meter calculated using Google Maps                                                                                              |
+| drivingDuration                | number                                                                                                               | Driving Duration in seconds calculated using Google Maps                                                                                            |
+| deliveryCost                   | string (number)                                                                                                      | Delivery Cost calculated                                                                                                                            |
+| deliveryAvailable              | boolean                                                                                                              | Boolean that indicates if PideDirecto is able to make the delivery   (isWithinDeliveryRadius new field)                                             |
+| deliveryNotAvailableReason     | string ( <br/> &nbsp;&nbsp;"NOT_WITHIN_DELIVERY_RADIUS"<br/> &nbsp;&nbsp; "DRIVERS_SHORTAGE"<br/> &nbsp;&nbsp;  )    | String that indicates why the delivery is not available                                                                                             |
 
 #### Response Error
 Here is a list of unique errors that be returned for this API endpoint.
@@ -1007,9 +1010,17 @@ This event is emitted when a driver pressed delivered to client button in driver
 }
 ```
 
+## Diagrams
+
+### Diagram Order Creation
+![plot](./images/Sequence_Diagram_Create_Delivery_Order.png)
 
 
 ## Changelog
+
+### 2023-02-20
+- API - Renamed isWithinDeliveryRadius to deliveryAvailable and added deliveryNotAvailableReason to [POST getDeliveryEstimate](#POST-getDeliveryEstimate) api
+- DOCS - Added diagram to show the sequence of a delivery made in PideDirecto External Api
 
 ### 2022-06-14
 - API - Added `ApiCallLimitExceeded` error to [POST uploadStoreMenu](#POST-uploadStoreMenu) api
