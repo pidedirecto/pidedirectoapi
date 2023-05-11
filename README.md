@@ -457,7 +457,12 @@ If you have a fixed agreed delivery cost you can omit calling [getDeliveryEstima
 | customerAddress.location     | Object                                                             | GPS coordinates of the delivery address                                                                                                                                                                                                            |
 | customerAddress.location.lat | number                                                             | Latitude GPS coordinate                                                                                                                                                                                                                            |
 | customerAddress.location.lng | number                                                             | Longitude GPS coordinate                                                                                                                                                                                                                           |
-| customerAddress.street       | string                                                             | Street name and number of the delivery address                                                                                                                                                                                                     |
+| customerAddress.street       | string                                                             | Street name and number of the delivery address  &#124; You can include the full address retrieved by Google and leave empty neighborhood, zipCode, city, state and country                                                                         |
+| customerAddress.neighborhood | string &#124; undefined                                                               | Neighborhood name of the delivery address                                                                                                                                                                                                          |
+| customerAddress.zipCode      | string &#124; undefined                                                               | ZipCode of the delivery address                                                                                                                                                                                                                    |
+| customerAddress.city         | string &#124; undefined                                                               | City of the delivery address                                                                                                                                                                                                                       |
+| customerAddress.state        | string &#124; undefined                                                               | State of the delivery address                                                                                                                                                                                                                      |
+| customerAddress.country      | string &#124; undefined                                                               | Country of the delivery address                                                                                                                                                                                                                    |
 | customerAddress.instructions | string &#124; undefined                                            | Other delivery instruction of the delivery address                                                                                                                                                                                                 |
 | paymentMethod                | string ( <br/> &nbsp;&nbsp;"CARD" <br/> &nbsp;&nbsp;"CASH" <br/> ) | The payment method of the delivery address. Can be either "CARD" or "CASH". If "CARD" the driver will not charge customer anything.                                                                                                                |
 | orderCost                    | string (number)                                                    | The cost of the order.                                                                                                                                                                                                                             |
@@ -501,10 +506,10 @@ Request:
   "customerPhoneNumber": "+521550000000",
   "customerAddress": {
     "location": {
-      "lat": 25.694577790668273,
-      "lng": -100.3163661637494
+      "lat": 25.5372793,
+      "lng": -103.4551457
     },
-    "street": "Av Alfonso Reyes 2071",
+    "street": "Av Hidalgo 265, Primero de Cobián Centro, 27000 Torreón, Coah.",
     "instructions": "Leave it at outside the door"
   },
   "paymentMethod": "CASH",
@@ -1055,6 +1060,9 @@ This event is emitted when a driver pressed delivered to client button in driver
 
 
 ### 2022-06-14
+- API - Changed createDeliveryOrder request requirements (Added Neighborhood, ZipCode, City, State, Country)
+
+- ### 2022-06-14
 - API - Added getDriverPosition endpoint and documentation
 
 ### 2022-05-20
