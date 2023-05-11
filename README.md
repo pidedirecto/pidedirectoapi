@@ -509,7 +509,7 @@ Request:
       "lat": 25.5372793,
       "lng": -103.4551457
     },
-    "street": "Av Hidalgo 265, Primero de Cobián Centro, 27000 Torreón, Coah.",
+    "street": "Rio Mississippi 250, Del Valle, 66220 Monterrey, Nuevo Leon",
     "instructions": "Leave it at outside the door"
   },
   "paymentMethod": "CASH",
