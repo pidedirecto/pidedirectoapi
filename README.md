@@ -269,6 +269,144 @@ Request:
     ]
   }
 }
+
+
+```
+### POST uploadStoreMenuV2
+Use this API method to upload a group of products to a store.
+
+#### Request
+| Body Parameter                                                              | Type                                                                                                                                                                                                             | Description                                                                                                                                                                 |
+|-----------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| storeId                                                                     | string (UUID)                                                                                                                                                                                                    | The Store Id of the store that the menu is going to be added                                                                                                                |
+| storeMenu                                                                   | Object                                                                                                                                                                                                           | Store Menu to be uploaded to store provided                                                                                                                                 |
+| storeMenu.externalMenus                                                     | Array                                                                                                                                                                                                            | Array that contains the collection of menus to upload                                                                                                                       |
+| storeMenu.externalMenus[i].externalMenuId                                   | string                                                                                                                                                                                                           | The id to reference the menu in your domain                                                                                                                                 |
+| storeMenu.externalMenus[i].name                                             | string                                                                                                                                                                                                           | Name of the menu                                                                                                                                                            |
+| storeMenu.externalMenus[i].restaurantId                                     | string (UUID)                                                                                                                                                                                                    | The Store Id of the store that the menu is going to be added                                                                                                                | 
+| storeMenu.externalMenus[i].hours                                            | string &#124; undefined                                                                                                                                                                                          | Hours that should the menu be visible.<br/> E.g. "Mo-Fr 08:00-09:00", "Sa-Su" or "Mar Mo-Fr 11:00-14:00". see https://openingh.openstreetmap.de/evaluation_tool/#check      |
+| storeMenu.externalMenus[i].channels                                         | Array  &#124; undefined                                                                                                                                                                                          | Channels that this menu should be visible for                                                                                                                               |
+| storeMenu.externalMenus[i].channels[i]                                      | string ( <br/> &nbsp;&nbsp;"PIDEDIRECTO" <br/> &nbsp;&nbsp;"UBER_EATS" <br/> )                                                                                                                                   | Store channel that this menu should be visible for                                                                                                                          |
+| storeMenu.externalMenus[i].hidden                                           | boolean                                                                                                                                                                                                          | Boolean indicating if the menu is hidden                                                                                                                                    | 
+| storeMenu.externalMenus[i].externalMenuCategoryIds                          | Array                                                                                                                                                                                                            | Array that contains the ids of the categories that belongs to the menu                                                                                                      | 
+| storeMenu.externalMenus[i].externalMenuCategoryIds[i]                       | string                                                                                                                                                                                                           | The externalMenuCategoryId should reference a category included in storeMenu.externalMenuCategories                                                                         |
+| storeMenu.externalMenuCategories                                            | Array                                                                                                                                                                                                            | Array that contains the collection of categories to upload                                                                                                                  |
+| storeMenu.externalMenuCategories[i].externalMenuCategoryId                  | string                                                                                                                                                                                                           | The id to reference the category in your domain                                                                                                                             |
+| storeMenu.externalMenuCategories[i].name                                    | string                                                                                                                                                                                                           | Name of the category                                                                                                                                                        |
+| storeMenu.externalMenuCategories[i].hidden                                  | boolean                                                                                                                                                                                                          | Boolean indicating if the category is hidden                                                                                                                                |
+| storeMenu.externalMenuCategories[i].promotion                               | boolean &#124; undefined                                                                                                                                                                                         | Boolean indicating if the category has promotion                                                                                                                            |
+| storeMenu.externalMenuCategories[i].imageUrl                                | string  &#124; undefined                                                                                                                                                                                         | Url that contains an image of the category                                                                                                                                  |
+| storeMenu.externalMenuCategories[i].externalMenuItemIds                     | Array                                                                                                                                                                                                            | Array that contains the ids of the items that belongs to the category                                                                                                       |
+| storeMenu.externalMenuCategories[i].externalMenuItemIds[i]                  | string                                                                                                                                                                                                           | The externalMenuItemId should reference a menu item included in storeMenu.externalMenuItems                                                                                 |
+| storeMenu.externalMenuItems                                                 | Array                                                                                                                                                                                                            | Array that contains the collection of menu item to upload                                                                                                                   |
+| storeMenu.externalMenuItems[i].externalMenuItemId                           | string                                                                                                                                                                                                           | The id to reference the menu item in your domain                                                                                                                            |
+| storeMenu.externalMenuItems[i].size                                         | string (<br/> &nbsp;&nbsp;"XX_SMALL" <br/> &nbsp;&nbsp;"X_SMALL" <br/> &nbsp;&nbsp;"SMALL" <br/> &nbsp;&nbsp;"MEDIUM" <br/> &nbsp;&nbsp;"LARGE" <br/> &nbsp;&nbsp;"X_LARGE" <br/> &nbsp;&nbsp;"XX_LARGE" <br/> ) | Size of the menu item                                                                                                                                                       |
+| storeMenu.externalMenuItems[i].menuItemType                                 | string ( <br/> &nbsp;&nbsp;"ITEM" <br/> &nbsp;&nbsp;"MODIFIER" <br/> )                                                                                                                                           | Type of the menu item                                                                                                                                                       |
+| storeMenu.externalMenuItems[i].isModifier                                   | boolean &#124; undefined                                                                                                                                                                                         | Boolean indicating if the menu item is a modifier                                                                                                                           |
+| storeMenu.externalMenuItems[i].isProduct                                    | boolean &#124; undefined                                                                                                                                                                                         | Boolean indicating if the menu item is a product                                                                                                                            |                                                                                                                                                                         
+| storeMenu.externalMenuItems[i].name                                         | string                                                                                                                                                                                                           | Name of the menu item                                                                                                                                                       |                                                                                                                                                                                                                                                            
+| storeMenu.externalMenuItems[i].description                                  | string &#124; undefined                                                                                                                                                                                          | Description of the menu item                                                                                                                                                |
+| storeMenu.externalMenuItems[i].hours                                        | string &#124; undefined                                                                                                                                                                                          | Hours that should the menu item be visible.<br/> E.g. "Mo-Fr 08:00-09:00", "Sa-Su" or "Mar Mo-Fr 11:00-14:00". see https://openingh.openstreetmap.de/evaluation_tool/#check |
+| storeMenu.externalMenuItems[i].price                                        | string                                                                                                                                                                                                           | Price of this menu item                                                                                                                                                     |
+| storeMenu.externalMenuItems[i].promoPrice                                   | string &#124; undefined                                                                                                                                                                                          | PromoPrice of this menu item                                                                                                                                                |
+| storeMenu.externalMenuItems[i].promoText                                    | string &#124; undefined                                                                                                                                                                                          | Description of the promotion for the menu item                                                                                                                              |
+| storeMenu.externalMenuItems[i].imageUrl                                     | string &#124; undefined                                                                                                                                                                                          | Url that contains an image of the menu item                                                                                                                                 |
+| storeMenu.externalMenuItems[i].hidden                                       | string                                                                                                                                                                                                           | Boolean indicating if the menu item is a hidden                                                                                                                             |
+| storeMenu.externalMenuItems[i].hiddenUntil                                  | Date &#124; undefined                                                                                                                                                                                            | The Date until the menu item will be hidden                                                                                                                                 |
+| storeMenu.externalMenuItems[i].externalModifierGroupIds                     | Array                                                                                                                                                                                                            | Array that contains the ids of the modifier groups that belongs to the menu item                                                                                            |
+| storeMenu.externalMenuItems[i].externalModifierGroupIds[i]                  | string                                                                                                                                                                                                           | The externalModifierGroupId should reference a modifier group included in storeMenu.externalModifierGroups                                                                  |
+| storeMenu.externalModifierGroups                                            | Array                                                                                                                                                                                                            | Array that contains the collection of modifier groups to upload                                                                                                             |
+| storeMenu.externalModifierGroups[i].externalModifierGroupId                 | string                                                                                                                                                                                                           | The id to reference the modifier group in your domain                                                                                                                       |
+| storeMenu.externalModifierGroups[i].name                                    | string                                                                                                                                                                                                           | Name of the modifier group                                                                                                                                                  |
+| storeMenu.externalModifierGroups[i].requiredMin                             | number &#124; undefined                                                                                                                                                                                          | Minimum amount of selections of modifiers in this modifier group                                                                                                            |
+| storeMenu.externalModifierGroups[i].requiredMax                             | number &#124; undefined                                                                                                                                                                                          | Maximum amount of selections of modifiers in this modifier group                                                                                                            |
+| storeMenu.externalModifierGroups[i].hidden                                  | boolean                                                                                                                                                                                                          | Boolean indicating if the modifier group is a hidden                                                                                                                        |
+| storeMenu.externalModifierGroups[i].externalModifiers                       | Array                                                                                                                                                                                                            | Array that contains the collection of modifiers in the modifier group                                                                                                       |
+| storeMenu.externalModifierGroups[i].externalModifiers[i].externalMenuItemId | string                                                                                                                                                                                                           | The id to reference the modifier in your domain                                                                                                                             |
+| storeMenu.externalModifierGroups[i].externalModifiers[i].name               | string                                                                                                                                                                                                           | Name of the modifier                                                                                                                                                        |
+| storeMenu.externalModifierGroups[i].externalModifiers[i].hidden             | boolean                                                                                                                                                                                                          | Boolean indicating if the modifier  is a hidden                                                                                                                             |
+| storeMenu.externalModifierGroups[i].externalModifiers[i].price              | string                                                                                                                                                                                                           | Price of the modifier                                                                                                                                                       |
+| storeMenu.externalModifierGroups[i].externalModifiers[i].type               | string ( <br/> &nbsp;&nbsp;"SINGLE" <br/> &nbsp;&nbsp;"MULTIPLE" <br/> )                                                                                                                                         | Type of the modifier                                                                                                                                                        |
+
+
+#### Response Success
+Response Status Code 200
+
+| Body Parameter | Type | Description |
+|----------------|------|-------------|
+| N/A            | N/A  | N/A         |
+
+#### Response Error
+Here is a list of unique errors that be returned for this API endpoint.
+
+| HTTP Status Codes           | Error Name           | Description                                                                                                                                                                                       |
+|-----------------------------|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Product with productId not found <br/> - Neither productId nor externalProductId was sent  |
+| 429 - Too Many Requests     | ApiCallLimitExceeded | Occurs in case uploadStoreMenu API is called more than twice within 2 minutes                                                                                                                     |
+| 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                                                                                                                                  |
+
+#### Example
+Request:
+
+```json
+{
+  "storeId":"e855ce91-c630-42bc-bba4-ad762f5c8658",
+  "storeMenu":{
+    "externalMenus":[
+      {
+        "externalMenuId":"menu01",
+        "restaurantId":"e855ce91-c630-42bc-bba4-ad762f5c8658",
+        "hours":"Mo-Fr 08:00-09:00",
+        "name":"PideDirecto Menu",
+        "hidden":false,
+        "channels":[
+          "PIDEDIRECTO"
+        ],
+        "externalMenuCategoryIds":[
+          "menuCategory01"
+        ]
+      }
+    ],
+    "externalMenuCategories":[
+      {
+        "name":"Burgers",
+        "hidden":false,
+        "externalMenuCategoryId":"menuCategory01",
+        "externalMenuItemIds":[
+          "Burguer01"
+        ]
+      }
+    ],
+    "externalMenuItems":[
+      {
+        "externalMenuItemId":"Burguer01",
+        "name":"Cheeseburger",
+        "description":"Burguer",
+        "price":"100",
+        "imageUrl":"http://routeToImage.example",
+        "hidden":false,
+        "menuItemType":"ITEM",
+        "size":"MEDIUM",
+        "externalModifierGroupIds":[
+          "SidersGroup01"
+        ]
+      }
+    ],
+    "externalModifierGroups":[
+      {
+        "externalModifierGroupId":"SidersGroup01",
+        "name":"Siders",
+        "requiredMin":0,
+        "requiredMax":1,
+        "hidden":false,
+        "externalModifiers":[
+
+        ]
+      }
+    ]
+  }
+}
+
 ```
 
 ### POST changeProductPrice
