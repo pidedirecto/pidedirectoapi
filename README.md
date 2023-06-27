@@ -337,7 +337,7 @@ Request:
 ```json
 {
   "storeId": "4b825ef7-f4ac-42ec-b1bb-8eb662ef7acb",
-  "productId": "45d13207-0db5-3d01-c26d-be06cd50188a"
+  "externalProductId": "45d13207-0db5-3d01-c26d-be06cd50188a"
 }
 ```
 ### POST hideProduct
@@ -372,7 +372,7 @@ Request:
 ```json
 {
   "storeId": "4b825ef7-f4ac-42ec-b1bb-8eb662ef7acb",
-  "productId": "45d13207-0db5-3d01-c26d-be06cd50188a",
+  "externalProductId": "45d13207-0db5-3d01-c26d-be06cd50188a",
   "hiddenUntil": "2023-10-05T14:00:00Z"
 }
 ```
