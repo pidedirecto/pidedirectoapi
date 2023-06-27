@@ -306,7 +306,7 @@ Request:
 }
 ```
 
-### POST showProduct
+### POST unHideProduct
 Use this API method to change the product visibility.
 
 #### Request
