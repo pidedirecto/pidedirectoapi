@@ -306,6 +306,76 @@ Request:
 }
 ```
 
+### POST unHideProduct
+Use this API method to change the product visibility.
+
+#### Request
+
+| Body Parameter    | Type            | Description                                                        |
+|-------------------|-----------------|--------------------------------------------------------------------|
+| storeId           | string (UUID)   | - The store id of the product                                      |
+| externalProductId | string (UUID)   | - The external product id you configured previously in the product |
+
+#### Response Success
+Response Status Code 200
+
+| Body Parameter | Type | Description |
+|----------------|------|-------------|
+| N/A            | N/A  | N/A         |
+
+#### Response Error
+Here is a list of unique errors that be returned for this API endpoint.
+
+| HTTP Status Codes           | Error Name           | Description                                                                                                                                                                                      |
+|-----------------------------|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Product with productId not found <br/> - Neither productId nor externalProductId was sent |
+| 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                                                                                                                                 |
+
+#### Example
+Request:
+
+```json
+{
+  "storeId": "4b825ef7-f4ac-42ec-b1bb-8eb662ef7acb",
+  "externalProductId": "45d13207-0db5-3d01-c26d-be06cd50188a"
+}
+```
+### POST hideProduct
+Use this API method to change the product visibility.
+
+#### Request
+
+| Body Parameter    | Type                             | Description                                                        |
+|-------------------|----------------------------------|--------------------------------------------------------------------|
+| storeId           | string (UUID)                    | - The store id of the product                                      |
+| externalProductId | string (UUID)                    | - The external product id you configured previously in the product |
+| hiddenUntil       | string (Date) &#124; undefined   | - Time until the product should be hidden                          |
+
+#### Response Success
+Response Status Code 200
+
+| Body Parameter | Type | Description |
+|----------------|------|-------------|
+| N/A            | N/A  | N/A         |
+
+#### Response Error
+Here is a list of unique errors that be returned for this API endpoint.
+
+| HTTP Status Codes           | Error Name           | Description                                                                                                                                                                                      |
+|-----------------------------|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Product with productId not found <br/> - Neither productId nor externalProductId was sent |
+| 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                                                                                                                                 |
+
+#### Example
+Request:
+
+```json
+{
+  "storeId": "4b825ef7-f4ac-42ec-b1bb-8eb662ef7acb",
+  "externalProductId": "45d13207-0db5-3d01-c26d-be06cd50188a",
+  "hiddenUntil": "2023-10-05T14:00:00Z"
+}
+```
 
 
 ## Order API
@@ -458,11 +528,11 @@ If you have a fixed agreed delivery cost you can omit calling [getDeliveryEstima
 | customerAddress.location.lat | number                                                             | Latitude GPS coordinate                                                                                                                                                                                                                            |
 | customerAddress.location.lng | number                                                             | Longitude GPS coordinate                                                                                                                                                                                                                           |
 | customerAddress.street       | string                                                             | Street name and number of the delivery address  &#124; You can include the full address retrieved by Google and leave empty neighborhood, zipCode, city, state and country                                                                         |
-| customerAddress.neighborhood | string &#124; undefined                                                               | Neighborhood name of the delivery address                                                                                                                                                                                                          |
-| customerAddress.zipCode      | string &#124; undefined                                                               | ZipCode of the delivery address                                                                                                                                                                                                                    |
-| customerAddress.city         | string &#124; undefined                                                               | City of the delivery address                                                                                                                                                                                                                       |
-| customerAddress.state        | string &#124; undefined                                                               | State of the delivery address                                                                                                                                                                                                                      |
-| customerAddress.country      | string &#124; undefined                                                               | Country of the delivery address                                                                                                                                                                                                                    |
+| customerAddress.neighborhood | string &#124; undefined                                            | Neighborhood name of the delivery address                                                                                                                                                                                                          |
+| customerAddress.zipCode      | string &#124; undefined                                            | ZipCode of the delivery address                                                                                                                                                                                                                    |
+| customerAddress.city         | string &#124; undefined                                            | City of the delivery address                                                                                                                                                                                                                       |
+| customerAddress.state        | string &#124; undefined                                            | State of the delivery address                                                                                                                                                                                                                      |
+| customerAddress.country      | string &#124; undefined                                            | Country of the delivery address                                                                                                                                                                                                                    |
 | customerAddress.instructions | string &#124; undefined                                            | Other delivery instruction of the delivery address                                                                                                                                                                                                 |
 | paymentMethod                | string ( <br/> &nbsp;&nbsp;"CARD" <br/> &nbsp;&nbsp;"CASH" <br/> ) | The payment method of the delivery address. Can be either "CARD" or "CASH". If "CARD" the driver will not charge customer anything.                                                                                                                |
 | orderCost                    | string (number)                                                    | The cost of the order.                                                                                                                                                                                                                             |
