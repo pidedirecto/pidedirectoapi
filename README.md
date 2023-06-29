@@ -7,6 +7,7 @@
 - [Getting Started](#getting-started)
 - [Product API](#product-api)
   - [POST uploadStoreMenu](#post-uploadstoremenu)
+  - [POST uploadStoreMenuV2](#post-uploadstoremenuv2)
   - [POST changeProductPrice](#post-changeproductprice)
 - [Order API](#order-api)
   - [POST acceptOrder](#post-acceptorder)
