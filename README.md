@@ -8,6 +8,8 @@
 - [Product API](#product-api)
   - [POST uploadStoreMenu](#post-uploadstoremenu)
   - [POST changeProductPrice](#post-changeproductprice)
+  - [POST unHideProduct](#post-unhideproduct)
+  - [POST hideProduct](#post-hideproduct)
 - [Order API](#order-api)
   - [POST acceptOrder](#post-acceptorder)
   - [POST rejectOrder](#post-rejectorder)
