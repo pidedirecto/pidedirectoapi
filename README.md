@@ -669,44 +669,45 @@ Then when creating order pass the `deliveryEstimateId`.
 If you have a fixed agreed delivery cost you can omit calling [getDeliveryEstimate](#POST getDeliveryEstimate) and skip passing any `deliveryEstimateId`.
 
 #### Request
-| Body Parameter               | Type                                                               | Description                                                                                                                                                                                                                                        |
-|------------------------------|--------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| storeId                      | string (UUID)                                                      | The Store Id for the store that is sending the delivery                                                                                                                                                                                            |
-| deliveryEstimateId           | string (UUID) &#124; undefined                                     | Delivery Estimate Id received from [getDeliveryEstimate](#POST getDeliveryEstimate) API method, pass this if you need to know the delivery cost in advance. If not passed you will not know the delivery cost in advance before creating the order |
-| customerName                 | string                                                             | Name of the customer                                                                                                                                                                                                                               |
-| customerPhoneNumber          | string                                                             | Phone number to the customer                                                                                                                                                                                                                       |
-| customerAddress              | Object                                                             | The delivery address                                                                                                                                                                                                                               |
-| customerAddress.location     | Object                                                             | GPS coordinates of the delivery address                                                                                                                                                                                                            |
-| customerAddress.location.lat | number                                                             | Latitude GPS coordinate                                                                                                                                                                                                                            |
-| customerAddress.location.lng | number                                                             | Longitude GPS coordinate                                                                                                                                                                                                                           |
-| customerAddress.street       | string                                                             | Street name and number of the delivery address  &#124; You can include the full address retrieved by Google and leave empty neighborhood, zipCode, city, state and country                                                                         |
-| customerAddress.neighborhood | string &#124; undefined                                            | Neighborhood name of the delivery address                                                                                                                                                                                                          |
-| customerAddress.zipCode      | string &#124; undefined                                            | ZipCode of the delivery address                                                                                                                                                                                                                    |
-| customerAddress.city         | string &#124; undefined                                            | City of the delivery address                                                                                                                                                                                                                       |
-| customerAddress.state        | string &#124; undefined                                            | State of the delivery address                                                                                                                                                                                                                      |
-| customerAddress.country      | string &#124; undefined                                            | Country of the delivery address                                                                                                                                                                                                                    |
-| customerAddress.instructions | string &#124; undefined                                            | Other delivery instruction of the delivery address                                                                                                                                                                                                 |
-| paymentMethod                | string ( <br/> &nbsp;&nbsp;"CARD" <br/> &nbsp;&nbsp;"CASH" <br/> ) | The payment method of the delivery address. Can be either "CARD" or "CASH". If "CARD" the driver will not charge customer anything.                                                                                                                |
-| orderCost                    | string (number)                                                    | The cost of the order.                                                                                                                                                                                                                             |
-| pickupTime                   | string (Date) &#124; undefined                                     | Time the driver can pickup the order at earliest. This parameter can be omitted if you want the driver to pickup order ASAP.                                                                                                                       |
-| driverInstructions           | string &#124; undefined                                            | Pickup instructions to show the driver                                                                                                                                                                                                             |
-| askDriverForOrderPhoto       | boolean &#124; undefined                                           | Ask driver to take a photo of the order (NOT YET IMPLEMENTED)                                                                                                                                                                                      |
-| askDriverForSurvey           | boolean &#124; undefined                                           | Ask driver to complete a survey after delivering the order (NOT YET IMPLEMENTED)                                                                                                                                                                   |
-| externalOrderId              | string &#124; undefined                                            | An external order id that can be used outside PideDirecto to identify the order in the integrating system                                                                                                                                          |
-| webhookUrl                   | string (URL) &#124; undefined                                      | An webhookUrl that will be used to send order/delivery updates to. If not provided the configured general webhookUrl will be used. If none is configured no webhook will be called.                                                                |
-| webhookHeaders               | Object &#124; undefined                                            | An object containing headers to add to the webhook request. Where object field is the header name and field value is the header value to send.                                                                                                     |
-| isBigOrder                   | boolean &#124; undefined                                           | True to indicate when the order should be delivered by a vehicle larger than usual (larger than a motorcycle).                                                                                                                                     |
+| Body Parameter               | Type                                                                                          | Description                                                                                                                                                                                                                                        |
+|------------------------------|-----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| storeId                      | string (UUID)                                                                                 | The Store Id for the store that is sending the delivery                                                                                                                                                                                            |
+| deliveryEstimateId           | string (UUID) &#124; undefined                                                                | Delivery Estimate Id received from [getDeliveryEstimate](#POST getDeliveryEstimate) API method, pass this if you need to know the delivery cost in advance. If not passed you will not know the delivery cost in advance before creating the order |
+| customerName                 | string                                                                                        | Name of the customer                                                                                                                                                                                                                               |
+| customerPhoneNumber          | string                                                                                        | Phone number to the customer                                                                                                                                                                                                                       |
+| customerAddress              | Object                                                                                        | The delivery address                                                                                                                                                                                                                               |
+| customerAddress.location     | Object                                                                                        | GPS coordinates of the delivery address                                                                                                                                                                                                            |
+| customerAddress.location.lat | number                                                                                        | Latitude GPS coordinate                                                                                                                                                                                                                            |
+| customerAddress.location.lng | number                                                                                        | Longitude GPS coordinate                                                                                                                                                                                                                           |
+| customerAddress.street       | string                                                                                        | Street name and number of the delivery address  &#124; You can include the full address retrieved by Google and leave empty neighborhood, zipCode, city, state and country                                                                         |
+| customerAddress.neighborhood | string &#124; undefined                                                                       | Neighborhood name of the delivery address                                                                                                                                                                                                          |
+| customerAddress.zipCode      | string &#124; undefined                                                                       | ZipCode of the delivery address                                                                                                                                                                                                                    |
+| customerAddress.city         | string &#124; undefined                                                                       | City of the delivery address                                                                                                                                                                                                                       |
+| customerAddress.state        | string &#124; undefined                                                                       | State of the delivery address                                                                                                                                                                                                                      |
+| customerAddress.country      | string &#124; undefined                                                                       | Country of the delivery address                                                                                                                                                                                                                    |
+| customerAddress.instructions | string &#124; undefined                                                                       | Other delivery instruction of the delivery address                                                                                                                                                                                                 |
+| paymentMethod                | string ( <br/> &nbsp;&nbsp;"CARD" <br/> &nbsp;&nbsp;"CASH" <br/> &nbsp;&nbsp;"PAYMENT_LINK" ) | The payment method of the delivery address. Can be either "CARD", "CASH" or "PAYMENT_LINK". If "CARD" the driver will not charge customer anything. If "PAYMENT_LINK" a payment link will be created with the total of the order.                  |
+| orderCost                    | string (number)                                                                               | The cost of the order.                                                                                                                                                                                                                             |
+| pickupTime                   | string (Date) &#124; undefined                                                                | Time the driver can pickup the order at earliest. This parameter can be omitted if you want the driver to pickup order ASAP.                                                                                                                       |
+| driverInstructions           | string &#124; undefined                                                                       | Pickup instructions to show the driver                                                                                                                                                                                                             |
+| askDriverForOrderPhoto       | boolean &#124; undefined                                                                      | Ask driver to take a photo of the order (NOT YET IMPLEMENTED)                                                                                                                                                                                      |
+| askDriverForSurvey           | boolean &#124; undefined                                                                      | Ask driver to complete a survey after delivering the order (NOT YET IMPLEMENTED)                                                                                                                                                                   |
+| externalOrderId              | string &#124; undefined                                                                       | An external order id that can be used outside PideDirecto to identify the order in the integrating system                                                                                                                                          |
+| webhookUrl                   | string (URL) &#124; undefined                                                                 | An webhookUrl that will be used to send order/delivery updates to. If not provided the configured general webhookUrl will be used. If none is configured no webhook will be called.                                                                |
+| webhookHeaders               | Object &#124; undefined                                                                       | An object containing headers to add to the webhook request. Where object field is the header name and field value is the header value to send.                                                                                                     |
+| isBigOrder                   | boolean &#124; undefined                                                                      | True to indicate when the order should be delivered by a vehicle larger than usual (larger than a motorcycle).                                                                                                                                     |
 
 
 
 #### Response Success
 Response Status Code 200
 
-| Body Parameter | Type            | Description                                               |
-|----------------|-----------------|-----------------------------------------------------------|
-| orderId        | string (UUID)   | Unique identifier of the order in PideDirecto             |
-| trackingUrl    | string          | A URL for tracking the delivery inside PideDirecto system |
-| deliveryCost   | string (number) | The cost of the delivery                                  |
+| Body Parameter | Type                      | Description                                               |
+|----------------|---------------------------|-----------------------------------------------------------|
+| orderId        | string (UUID)             | Unique identifier of the order in PideDirecto             |
+| trackingUrl    | string                    | A URL for tracking the delivery inside PideDirecto system |
+| deliveryCost   | string (number)           | The cost of the delivery                                  |
+| paymentLinkUrl | string &#124; undefined   | A URL for pay the paymentLink                             |
 
 #### Response Error
 Here is a list of unique errors that be returned for this API endpoint.
@@ -1243,6 +1244,95 @@ This event is emitted when a driver pressed delivered to client button in driver
 }
 ```
 
+### Event Type PAYMENT_LINK_PAID
+This event is emitted when a paymentLink is paid.
+
+| Body Parameter | Type                         | Description                                             |
+|----------------|------------------------------|---------------------------------------------------------|
+| paymentLinkId  | string (UUID)                | Unique identifier of the paymentLink in pidedirecto     |
+| orderId        | string (UUID)                | Unique identifier of the order in pidedirecto           |
+| storeId        | string (UUID)                | The Store Id for the store that is sending the delivery |
+| amount         | number                       | The total amount of the payment link                    |
+| status         | string ("PAYED")             | The status of the payment of the paymentLink ("PAYED")  |
+| url            | string                       | A URL for pay the paymentLink                           |
+| eventType      | string ("PAYMENT_LINK_PAID") | Type of the event                                       |
+| paidAt         | string (Date)                | The date time when the paymentLink was payed            | 
+| occurredAt     | string (Date)                | The date time when the event occurred                   |
+
+#### Example
+
+```json
+{
+  "paymentLinkId": "126ad949-cf4e-4fdd-86f0-b74fc2611874",
+  "orderId": "37d13197-0fa5-4d0b-85ad-ae06dd40177a",
+  "storeId": "38981f83-853c-4193-a3c2-97f05582e0ad",
+  "amount": 100,
+  "status": "PAID",
+  "url": "https://tktsixcentenario.test.pidedirecto.mx/paymentlink/7TLvvnVAWoNwFKVJNfzFaL",
+  "eventType": "PAYMENT_LINK_PAID",
+  "paidAt": "2021-09-15T19:42:37Z",
+  "occurredAt": "2021-09-15T19:32:37Z"
+}
+```
+
+### Event Type PAYMENT_LINK_FAILED
+This event is emitted when a paymentLink is paid.
+
+| Body Parameter | Type                           | Description                                             |
+|----------------|--------------------------------|---------------------------------------------------------|
+| paymentLinkId  | string (UUID)                  | Unique identifier of the paymentLink in pidedirecto     |
+| orderId        | string (UUID)                  | Unique identifier of the order in pidedirecto           |
+| storeId        | string (UUID)                  | The Store Id for the store that is sending the delivery |
+| amount         | number                         | The total amount of the payment link                    |
+| status         | string ("FAILED")              | The status of the payment of the paymentLink ("FAILED") |
+| url            | string                         | A URL for pay the paymentLink                           |
+| eventType      | string ("PAYMENT_LINK_FAILED") | Type of the event                                       |
+| occurredAt     | string (Date)                  | The date time when the event occurred                   |
+
+#### Example
+
+```json
+{
+  "paymentLinkId": "126ad949-cf4e-4fdd-86f0-b74fc2611874",
+  "orderId": "37d13197-0fa5-4d0b-85ad-ae06dd40177a",
+  "storeId": "38981f83-853c-4193-a3c2-97f05582e0ad",
+  "amount": 100,
+  "status": "FAILED",
+  "url": "https://tktsixcentenario.test.pidedirecto.mx/paymentlink/7TLvvnVAWoNwFKVJNfzFaL",
+  "eventType": "PAYMENT_LINK_FAILED",
+  "occurredAt": "2021-09-15T19:32:37Z"
+}
+```
+
+### Event Type PAYMENT_LINK_FAILED
+This event is emitted when a paymentLink is paid.
+
+| Body Parameter | Type                              | Description                                                |
+|----------------|-----------------------------------|------------------------------------------------------------|
+| paymentLinkId  | string (UUID)                     | Unique identifier of the paymentLink in pidedirecto        |
+| orderId        | string (UUID)                     | Unique identifier of the order in pidedirecto              |
+| storeId        | string (UUID)                     | The Store Id for the store that is sending the delivery    |
+| amount         | number                            | The total amount of the payment link                       |
+| status         | string ("CANCELLED")              | The status of the payment of the paymentLink ("CANCELLED") |
+| url            | string                            | A URL for pay the paymentLink                              |
+| eventType      | string ("PAYMENT_LINK_CANCELLED") | Type of the event                                          |
+| occurredAt     | string (Date)                     | The date time when the event occurred                      |
+
+#### Example
+
+```json
+{
+  "paymentLinkId": "126ad949-cf4e-4fdd-86f0-b74fc2611874",
+  "orderId": "37d13197-0fa5-4d0b-85ad-ae06dd40177a",
+  "storeId": "38981f83-853c-4193-a3c2-97f05582e0ad",
+  "amount": 100,
+  "status": "CANCELLED",
+  "url": "https://tktsixcentenario.test.pidedirecto.mx/paymentlink/7TLvvnVAWoNwFKVJNfzFaL",
+  "eventType": "PAYMENT_LINK_CANCELLED",
+  "occurredAt": "2021-09-15T19:32:37Z"
+}
+```
+
 ## Diagrams
 
 ### Diagram Order Creation
@@ -1358,3 +1448,12 @@ This event is emitted when a driver pressed delivered to client button in driver
 - API - Added isBigOrder to createDeliveryOrder request and add isBigOrder to Event Type ORDER_CREATED response.
 - DOCS - Updated createDeliveryOrder section with the isBigOrder request parameter.
 - DOCS - Updated Event Type ORDER_CREATED section with the isBigOrder response parameter.
+
+### 2024-05-27
+- API - Added PAYMENT_LINK as type of paymentMethod in createDeliveryOrder.
+- API - Added new webhook event types
+  - PAYMENT_LINK_PAID
+  - PAYMENT_LINK_FAILED
+  - PAYMENT_LINK_CANCELLED
+- DOCS - Updated createDeliveryOrder section with the PAYMENT_LINK payment method request parameter.
+- DOCS - Describe Event Type PAYMENT_LINK_PAID, PAYMENT_LINK_FAILED and PAYMENT_LINK_CANCELLED
