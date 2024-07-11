@@ -18,6 +18,8 @@
   - [POST createDeliveryOrder](#post-createdeliveryorder)
   - [POST cancelOrder](#post-cancelorder)
   - [POST getDriverPosition](#post-getdriverposition)
+- [PaymentLink API](#paymentLink-api)
+  - [POST createPaymentLink](#post-createpaymentlink)
 
 - [Webhook Events](#webhook-events)
   - [Event Type ORDER_CREATED](#event-type-order_created)
@@ -30,6 +32,9 @@
   - [Event Type DRIVER_ARRIVED_AT_CLIENT](#event-type-driver_arrived_at_client)
   - [Event Type DRIVER_CANCELLED](#event-type-driver_cancelled)
   - [Event Type ORDER_COMPLETED](#event-type-order_completed)
+  - [Event Type PAYMENT_LINK_PAID](#event-type-payment_link_paid)
+  - [Event Type PAYMENT_LINK_FAILED](#event-type-payment_link_failed)
+  - [Event Type PAYMENT_LINK_CANCELLED](#event-type-payment_link_cancelled)
 - [Diagrams](#examples)
   - [Diagram Order Creation](#diagram-order-creation)
 - [Changelog](#changelog)
@@ -877,7 +882,53 @@ Response
 }
 ```
 
+## PaymentLink API
 
+### POST createPaymentLink
+Use this API method to create a payment link. The payment link created will not be linked to any order. Currently, the
+only way to create an order with paymentLink is only creating a delivery order, see [createDeliveryorder](#POST-createdeliveryorder). 
+
+#### Request
+
+| Body Parameter | Type          | Description                                                                 |
+|----------------|---------------|-----------------------------------------------------------------------------|
+| storeId        | string (UUID) | The Store Id for the store that is creating the payment link.               |
+| amount         | number        | The total amount of the payment link. The amount must be greater than zero. |
+
+#### Response Success
+Response Status Code 200
+
+| Body Parameter | Type          | Description                                          |
+|----------------|---------------|------------------------------------------------------|
+| paymentLinkId  | string (UUID) | Unique identifier of the payment link in PideDirecto |
+| paymentLinkUrl | string        | A URL for pay the paymentLink                        |
+
+
+#### Response Error
+Here is a list of unique errors that be returned for this API endpoint.
+
+| HTTP Status Codes           | Error Name                 | Description                                                                                    |
+|-----------------------------|----------------------------|------------------------------------------------------------------------------------------------|
+| 400 - Bad Request           | InvalidArgumentError       | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
+| 500 - Internal Server Error | UnknownError               | An unknown server error has occurred, try again.                                               |
+
+
+#### Example
+Request:
+```json
+{
+  "storeId": "38981f83-853c-4193-a3c2-97f05582e0ad",
+  "amount": 100
+}
+```
+Response
+
+```json
+{
+  "paymentLinkId": "78dbea40-783e-4173-9215-da91cf8207a6",
+  "paymentLinkUrl": "https://myrestaurant.test.pidedirecto.mx/paymentlink/7TLvvnVAWoNwFKVJNfzFaL"
+}
+```
 
 
 
@@ -1317,7 +1368,7 @@ This event is emitted when a paymentLink is paid.
   "storeId": "38981f83-853c-4193-a3c2-97f05582e0ad",
   "amount": 100,
   "status": "PAID",
-  "url": "https://tktsixcentenario.test.pidedirecto.mx/paymentlink/7TLvvnVAWoNwFKVJNfzFaL",
+  "url": "https://myrestaurant.test.pidedirecto.mx/paymentlink/7TLvvnVAWoNwFKVJNfzFaL",
   "eventType": "PAYMENT_LINK_PAID",
   "paidAt": "2021-09-15T19:42:37Z",
   "occurredAt": "2021-09-15T19:32:37Z"
@@ -1347,13 +1398,13 @@ This event is emitted when a paymentLink is paid.
   "storeId": "38981f83-853c-4193-a3c2-97f05582e0ad",
   "amount": 100,
   "status": "FAILED",
-  "url": "https://tktsixcentenario.test.pidedirecto.mx/paymentlink/7TLvvnVAWoNwFKVJNfzFaL",
+  "url": "https://myrestaurant.test.pidedirecto.mx/paymentlink/7TLvvnVAWoNwFKVJNfzFaL",
   "eventType": "PAYMENT_LINK_FAILED",
   "occurredAt": "2021-09-15T19:32:37Z"
 }
 ```
 
-### Event Type PAYMENT_LINK_FAILED
+### Event Type PAYMENT_LINK_CANCELLED
 This event is emitted when a paymentLink is paid.
 
 | Body Parameter | Type                              | Description                                                |
@@ -1376,7 +1427,7 @@ This event is emitted when a paymentLink is paid.
   "storeId": "38981f83-853c-4193-a3c2-97f05582e0ad",
   "amount": 100,
   "status": "CANCELLED",
-  "url": "https://tktsixcentenario.test.pidedirecto.mx/paymentlink/7TLvvnVAWoNwFKVJNfzFaL",
+  "url": "https://myrestaurant.test.pidedirecto.mx/paymentlink/7TLvvnVAWoNwFKVJNfzFaL",
   "eventType": "PAYMENT_LINK_CANCELLED",
   "occurredAt": "2021-09-15T19:32:37Z"
 }
@@ -1513,3 +1564,8 @@ This event is emitted when a paymentLink is paid.
 
 ### 2024-06-25
 - DOCS - Updated getDeliveryEstimate section to add Request and Response example.
+
+### 2024-07-11
+- API - Added new createPaymentLink API
+- DOCS - Describe createPaymentLink section more in details
+- DOCS - Updated index with payment link webhook events
