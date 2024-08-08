@@ -1570,3 +1570,6 @@ This event is emitted when a paymentLink is paid.
 - API - Added new createPaymentLink API
 - DOCS - Describe createPaymentLink section more in details
 - DOCS - Updated index with payment link webhook events
+- 
+### 2024-08-08
+- DOCS - Added PIDEDIRECTOPOS as app for ORDER_CREATED WebhookEvent
