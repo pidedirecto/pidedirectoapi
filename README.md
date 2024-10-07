@@ -1,4 +1,5 @@
 # PideDirecto API
+
 - [Environments](#environments)
 - [API Key](#api-key)
 - [Store Id](#store-id)
@@ -19,6 +20,7 @@
   - [POST cancelOrder](#post-cancelorder)
   - [POST getDriverPosition](#post-getdriverposition)
 - [PaymentLink API](#paymentLink-api)
+
   - [POST createPaymentLink](#post-createpaymentlink)
 
 - [Webhook Events](#webhook-events)
@@ -39,9 +41,8 @@
   - [Diagram Order Creation](#diagram-order-creation)
 - [Changelog](#changelog)
 
-
-
 ## Environments
+
 There is a TEST and a PRODUCTION environment you can use to validate your integration.
 
 You will receive a TEST version of our PideDirecto Drivers App and urls to access the test version PideDirecto Admin in our test environment.
@@ -52,9 +53,8 @@ If you still would like test in production you could register yourself as a driv
 
 Please contact your Account Manager to get your test account configured and the test version of the PideDirecto Drivers App.
 
-
-
 ## API Key
+
 You need a Private API Key that you use for accessing our API for all stores.
 API Key has to be sent in Header: 'x-api-key'
 
@@ -65,6 +65,7 @@ If your credentials gets compromised you we can create you a new one and invalid
 To get an API key, talk to your Account Manager.
 
 #### Example
+
 ```
 headers: {
   'x-api-key': 'private_test_YAdrs93oY6HBX7Tws34QsLdo'
@@ -72,19 +73,19 @@ headers: {
 ```
 
 ## Store Id
+
 Each unique location that needs the delivery service needs to configured in PideDirecto before it can be integrated.
 All unique locations has a unique Store Id, a UUID 4 string.
 This Store Id has to be provided when creating orders through the API.
 
 Please contact your Account Manager to add new locations or if you need to know what storeId you have configured.
 
-
-
 ## HTTP Status Codes and Errors
+
 All API endpoints return the following status codes along with the header `"Content-Type": "application/json"`.
 
 | HTTP Status Codes           | Description                                                                                                                                                     |
-|-----------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 200 - OK                    | Successful request                                                                                                                                              |
 | 400 - Bad Request           | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Trying to call API when resource state does not allow it |
 | 401 - Unauthorized          | - Wrong or no API key is provided in header x-api-key <br> - API Key does not have permission to call api for specific resource                                 |
@@ -96,7 +97,7 @@ All API endpoints return the following status codes along with the header `"Cont
 All errors returned by API returns at least the following
 
 | Body Parameter | Type   | Description                                       |
-|----------------|--------|---------------------------------------------------|
+| -------------- | ------ | ------------------------------------------------- |
 | name           | string | A unique name of the error                        |
 | message        | string | A readable description about the error in english |
 
@@ -106,15 +107,13 @@ Here is a list of unique general errors that be returned in all API endpoints.
 Check the documentation for a specific endpoint to see other Error Names specific to that endpoint.
 
 | HTTP Status Codes           | Error Name        | Description                                                                                                                     |
-|-----------------------------|-------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| --------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | 401 - Unauthorized          | UnauthorizedError | - Wrong or no API key is provided in header x-api-key <br> - API Key does not have permission to call api for specific resource |
 | 404 - Not Found             | NotFound          | Invalid API endpoint                                                                                                            |
 | 500 - Internal Server Error | UnknownError      | An unknown server error has occurred, try again.                                                                                |
 
-
-
-
 ## Webhook
+
 To receive order/delivery updates you need to configure a webhook or pass one as a parameter when creating an order through the API.
 Please note that if you choose to pass webhooks in the API calls, and do not configure a general webhook, you will not get order/delivery updates about of orders created outside this API.
 
@@ -125,92 +124,92 @@ We will try to re-post order/delivery updates to the webhook url for maximum 3 t
 
 To configure a general webhook please contact your account manager and send him your webhook for both the TEST and PRODUCTION environments.
 
-
-
-
 ## Getting Started
+
 To test the order/delivery status updates you will need install a test version of
 the PideDirecto Drivers App and register as a driver.
 
 Just follow the signup process in the drivers app and when you are done make sure to tell your Account Manager so, he can verify the driver registered.
 Since you need to be a verified driver to be able to receiver deliveries to deliver.
 
-
-
 ## Product API
 
-
 ### POST uploadStoreMenu
+
 Use this API method to upload a group of products to a store.
 
 #### Request
-| Body Parameter                                                                                                                    | Type                                                                            | Description                                                                                                                                                             |
-|-----------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| storeId                                                                                                                           | string (UUID)                                                                   | The Store Id of the store that the menu is going to be added                                                                                                            |
-| storeMenu                                                                                                                         | Object                                                                          | Store Menu to be uploaded to store provided                                                                                                                             |
-| storeMenu.name                                                                                                                    | string                                                                          | Name of the store menu                                                                                                                                                  |
-| storeMenu.hours                                                                                                                   | string                                                                          | Hours that should the menu be visible.<br/> E.g. "Mo-Fr 08:00-09:00", "Sa-Su" or "Mar Mo-Fr 11:00-14:00". see https://openingh.openstreetmap.de/evaluation_tool/#check  |
-| storeMenu.channels                                                                                                                | Array                                                                           | Channels that this menu should be visible for                                                                                                                           |
-| storeMenu.channels[i]                                                                                                             | string ( <br/> &nbsp;&nbsp;"PIDEDIRECTO" <br/> &nbsp;&nbsp;"UBER_EATS" <br/> )  | Store channel that this menu should be visible for                                                                                                                      |
-| storeMenu.categories                                                                                                              | Array                                                                           | Array of categories that the menu has                                                                                                                                   |
-| storeMenu.categories[i]                                                                                                           | Object                                                                          | Store Menu Category Item                                                                                                                                                |
-| storeMenu.categories[i].name                                                                                                      | string                                                                          | Name of the category                                                                                                                                                    |
-| storeMenu.categories[i].products                                                                                                  | Array                                                                           | Array of Products that this category contains                                                                                                                           |
-| storeMenu.categories[i].products[j]                                                                                               | Object                                                                          | A Product Item                                                                                                                                                          |
-| storeMenu.categories[i].products[j].externalProductId                                                                             | string &#124; undefined                                                         | External Identifier of this product                                                                                                                                     |
-| storeMenu.categories[i].products[j].externalProductData                                                                           | string &#124; undefined                                                         | External additional information of this product                                                                                                                         |
-| storeMenu.categories[i].products[j].name                                                                                          | string                                                                          | Name of this product                                                                                                                                                    |
-| storeMenu.categories[i].products[j].description                                                                                   | string                                                                          | Description of the product                                                                                                                                              |
-| storeMenu.categories[i].products[j].price                                                                                         | string                                                                          | Price of this product                                                                                                                                                   |
-| storeMenu.categories[i].products[j].imageUrl                                                                                      | string &#124; undefined                                                         | Url that contains an image of the product                                                                                                                               |
-| storeMenu.categories[i].products[j].modifierGroups                                                                                | Array  &#124; undefined                                                         | Array of modifier groups for this product                                                                                                                               |
-| storeMenu.categories[i].products[j].modifierGroups[k]                                                                             | Object                                                                          | A modifier group                                                                                                                                                        |
-| storeMenu.categories[i].products[j].modifierGroups[k].externalModifierId                                                          | string &#124; undefined                                                         | External Identifier of this modifier group                                                                                                                              |
-| storeMenu.categories[i].products[j].modifierGroups[k].name                                                                        | string                                                                          | Name of this modifier group                                                                                                                                             |
-| storeMenu.categories[i].products[j].modifierGroups[k].requiredMin                                                                 | number &#124; undefined                                                         | Minimum amount of selections of modifiers in this modifier group                                                                                                        |
-| storeMenu.categories[i].products[j].modifierGroups[k].requiredMax                                                                 | number &#124; undefined                                                         | Maximum amount of selections of modifiers in this modifier group                                                                                                        |
-| storeMenu.categories[i].products[j].modifierGroups[k].modifiers                                                                   | Array                                                                           | Array of modifiers in this modifier group                                                                                                                               |
-| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l]                                                                | Object                                                                          | A modifier                                                                                                                                                              |
-| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].externalModifierId                                             | string                                                                          | External Identifier of this modifier, it is also used to map to the corresponding modifier provided                                                                     |
-| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].overwritePrice                                                 | string &#124; undefined                                                         | Use this field if you want to overwrite the price of the modifier provided                                                                                              |
-| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].type                                                           | string ( <br/> &nbsp;&nbsp;"SINGLE" <br/> &nbsp;&nbsp;"MULTIPLE" <br/> )        | If customer is allowed to select a quantity more then 1 of the modifier item "MULTIPLE" otherwise "SINGLE"                                                              |
-| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups                                              | Array &#124; undefined                                                          | Array of sub-modifier groups for this product                                                                                                                           |
-| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k]                                           | Object                                                                          | A sub-modifier group                                                                                                                                                    |
-| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].externalSubModifierId                     | string &#124; undefined                                                         | External Identifier of this sub-modifier group                                                                                                                          |
-| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].name                                      | string                                                                          | Name of this sub-modifier group                                                                                                                                         |
-| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].requiredMin                               | number &#124; undefined                                                         | Minimum amount of selections of sub-modifiers in this sub-modifier group                                                                                                |
-| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].requiredMax                               | number &#124; undefined                                                         | Maximum amount of selections of sub-modifiers in this sub-modifier group                                                                                                |
-| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].subModifiers                              | Array                                                                           | Array of sub-modifiers for this sub-modifier group                                                                                                                      |
-| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].subModifiers[l]                           | Object                                                                          | A sub-modifier                                                                                                                                                          |
-| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].subModifiers[l].externalSubModifierItemId | string &#124; undefined                                                         | External Identifier of this sub-modifier                                                                                                                                |
-| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].subModifiers[l].name                      | string                                                                          | Name of this sub-modifier                                                                                                                                               |
-| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].subModifiers[l].price                     | number                                                                          | Price of this sub-modifier                                                                                                                                              |
-| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].subModifiers[l].type                      | string ( <br/> &nbsp;&nbsp;"SINGLE" <br/> &nbsp;&nbsp;"MULTIPLE" <br/> )        | If customer is allowed to select a quantity more then 1 of the sub-modifier "MULTIPLE" otherwise "SINGLE"                                                               |
-| storeMenu.modifiers                                                                                                               | Array                                                                           | Array of modifiers used in the storeMenu                                                                                                                                |
-| storeMenu.modifiers[i]                                                                                                            | Object                                                                          | Modifier Object that can be reused in storeMenu using externalModifierId                                                                                                |
-| storeMenu.modifiers[i].externalModifierId                                                                                         | string                                                                          | External identifier of this modifier, this id is also used for identifying the modifier in storeMenu                                                                    |
-| storeMenu.modifiers[i].name                                                                                                       | string                                                                          | Name of this modifier                                                                                                                                                   |
-| storeMenu.modifiers[i].description                                                                                                | string &#124; undefined                                                         | Description of the modifier                                                                                                                                             |
-| storeMenu.modifiers[i].price                                                                                                      | string                                                                          | Price of the modifier                                                                                                                                                   |
-| storeMenu.modifiers[i].imageUrl                                                                                                   | string &#124; undefined                                                         | Url that contains an image of the modifier                                                                                                                              |
+
+| Body Parameter                                                                                                                    | Type                                                                           | Description                                                                                                                                                            |
+| --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| storeId                                                                                                                           | string (UUID)                                                                  | The Store Id of the store that the menu is going to be added                                                                                                           |
+| storeMenu                                                                                                                         | Object                                                                         | Store Menu to be uploaded to store provided                                                                                                                            |
+| storeMenu.name                                                                                                                    | string                                                                         | Name of the store menu                                                                                                                                                 |
+| storeMenu.hours                                                                                                                   | string                                                                         | Hours that should the menu be visible.<br/> E.g. "Mo-Fr 08:00-09:00", "Sa-Su" or "Mar Mo-Fr 11:00-14:00". see https://openingh.openstreetmap.de/evaluation_tool/#check |
+| storeMenu.channels                                                                                                                | Array                                                                          | Channels that this menu should be visible for                                                                                                                          |
+| storeMenu.channels[i]                                                                                                             | string ( <br/> &nbsp;&nbsp;"PIDEDIRECTO" <br/> &nbsp;&nbsp;"UBER_EATS" <br/> ) | Store channel that this menu should be visible for                                                                                                                     |
+| storeMenu.categories                                                                                                              | Array                                                                          | Array of categories that the menu has                                                                                                                                  |
+| storeMenu.categories[i]                                                                                                           | Object                                                                         | Store Menu Category Item                                                                                                                                               |
+| storeMenu.categories[i].name                                                                                                      | string                                                                         | Name of the category                                                                                                                                                   |
+| storeMenu.categories[i].products                                                                                                  | Array                                                                          | Array of Products that this category contains                                                                                                                          |
+| storeMenu.categories[i].products[j]                                                                                               | Object                                                                         | A Product Item                                                                                                                                                         |
+| storeMenu.categories[i].products[j].externalProductId                                                                             | string &#124; undefined                                                        | External Identifier of this product                                                                                                                                    |
+| storeMenu.categories[i].products[j].externalProductData                                                                           | string &#124; undefined                                                        | External additional information of this product                                                                                                                        |
+| storeMenu.categories[i].products[j].name                                                                                          | string                                                                         | Name of this product                                                                                                                                                   |
+| storeMenu.categories[i].products[j].description                                                                                   | string                                                                         | Description of the product                                                                                                                                             |
+| storeMenu.categories[i].products[j].price                                                                                         | string                                                                         | Price of this product                                                                                                                                                  |
+| storeMenu.categories[i].products[j].imageUrl                                                                                      | string &#124; undefined                                                        | Url that contains an image of the product                                                                                                                              |
+| storeMenu.categories[i].products[j].modifierGroups                                                                                | Array &#124; undefined                                                         | Array of modifier groups for this product                                                                                                                              |
+| storeMenu.categories[i].products[j].modifierGroups[k]                                                                             | Object                                                                         | A modifier group                                                                                                                                                       |
+| storeMenu.categories[i].products[j].modifierGroups[k].externalModifierId                                                          | string &#124; undefined                                                        | External Identifier of this modifier group                                                                                                                             |
+| storeMenu.categories[i].products[j].modifierGroups[k].name                                                                        | string                                                                         | Name of this modifier group                                                                                                                                            |
+| storeMenu.categories[i].products[j].modifierGroups[k].requiredMin                                                                 | number &#124; undefined                                                        | Minimum amount of selections of modifiers in this modifier group                                                                                                       |
+| storeMenu.categories[i].products[j].modifierGroups[k].requiredMax                                                                 | number &#124; undefined                                                        | Maximum amount of selections of modifiers in this modifier group                                                                                                       |
+| storeMenu.categories[i].products[j].modifierGroups[k].modifiers                                                                   | Array                                                                          | Array of modifiers in this modifier group                                                                                                                              |
+| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l]                                                                | Object                                                                         | A modifier                                                                                                                                                             |
+| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].externalModifierId                                             | string                                                                         | External Identifier of this modifier, it is also used to map to the corresponding modifier provided                                                                    |
+| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].overwritePrice                                                 | string &#124; undefined                                                        | Use this field if you want to overwrite the price of the modifier provided                                                                                             |
+| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].type                                                           | string ( <br/> &nbsp;&nbsp;"SINGLE" <br/> &nbsp;&nbsp;"MULTIPLE" <br/> )       | If customer is allowed to select a quantity more then 1 of the modifier item "MULTIPLE" otherwise "SINGLE"                                                             |
+| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups                                              | Array &#124; undefined                                                         | Array of sub-modifier groups for this product                                                                                                                          |
+| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k]                                           | Object                                                                         | A sub-modifier group                                                                                                                                                   |
+| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].externalSubModifierId                     | string &#124; undefined                                                        | External Identifier of this sub-modifier group                                                                                                                         |
+| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].name                                      | string                                                                         | Name of this sub-modifier group                                                                                                                                        |
+| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].requiredMin                               | number &#124; undefined                                                        | Minimum amount of selections of sub-modifiers in this sub-modifier group                                                                                               |
+| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].requiredMax                               | number &#124; undefined                                                        | Maximum amount of selections of sub-modifiers in this sub-modifier group                                                                                               |
+| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].subModifiers                              | Array                                                                          | Array of sub-modifiers for this sub-modifier group                                                                                                                     |
+| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].subModifiers[l]                           | Object                                                                         | A sub-modifier                                                                                                                                                         |
+| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].subModifiers[l].externalSubModifierItemId | string &#124; undefined                                                        | External Identifier of this sub-modifier                                                                                                                               |
+| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].subModifiers[l].name                      | string                                                                         | Name of this sub-modifier                                                                                                                                              |
+| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].subModifiers[l].price                     | number                                                                         | Price of this sub-modifier                                                                                                                                             |
+| storeMenu.categories[i].products[j].modifierGroups[k].modifiers[l].subModifierGroups[k].subModifiers[l].type                      | string ( <br/> &nbsp;&nbsp;"SINGLE" <br/> &nbsp;&nbsp;"MULTIPLE" <br/> )       | If customer is allowed to select a quantity more then 1 of the sub-modifier "MULTIPLE" otherwise "SINGLE"                                                              |
+| storeMenu.modifiers                                                                                                               | Array                                                                          | Array of modifiers used in the storeMenu                                                                                                                               |
+| storeMenu.modifiers[i]                                                                                                            | Object                                                                         | Modifier Object that can be reused in storeMenu using externalModifierId                                                                                               |
+| storeMenu.modifiers[i].externalModifierId                                                                                         | string                                                                         | External identifier of this modifier, this id is also used for identifying the modifier in storeMenu                                                                   |
+| storeMenu.modifiers[i].name                                                                                                       | string                                                                         | Name of this modifier                                                                                                                                                  |
+| storeMenu.modifiers[i].description                                                                                                | string &#124; undefined                                                        | Description of the modifier                                                                                                                                            |
+| storeMenu.modifiers[i].price                                                                                                      | string                                                                         | Price of the modifier                                                                                                                                                  |
+| storeMenu.modifiers[i].imageUrl                                                                                                   | string &#124; undefined                                                        | Url that contains an image of the modifier                                                                                                                             |
 
 #### Response Success
+
 Response Status Code 200
 
 | Body Parameter | Type | Description |
-|----------------|------|-------------|
+| -------------- | ---- | ----------- |
 | N/A            | N/A  | N/A         |
 
 #### Response Error
+
 Here is a list of unique errors that be returned for this API endpoint.
 
 | HTTP Status Codes           | Error Name           | Description                                                                                                                                                                                      |
-|-----------------------------|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| --------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Product with productId not found <br/> - Neither productId nor externalProductId was sent |
 | 429 - Too Many Requests     | ApiCallLimitExceeded | Occurs in case uploadStoreMenu API is called more than twice within 2 minutes                                                                                                                    |
 | 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                                                                                                                                 |
 
 #### Example
+
 Request:
 
 ```json
@@ -219,9 +218,7 @@ Request:
   "storeMenu": {
     "name": "PideDirecto Menu",
     "hours": "Mo-Fr 08:00-09:00",
-    "channels": [
-      "PideDirecto"
-    ],
+    "channels": ["PideDirecto"],
     "categories": [
       {
         "name": "Burgers",
@@ -278,31 +275,32 @@ Request:
     ]
   }
 }
-
-
 ```
+
 ### POST uploadStoreMenuV2
+
 Use this API method to upload a group of products to a store.
 
 #### Request
+
 | Body Parameter                                      | Type                                                                                                                                                                                                             | Description                                                                                                                                                               |
-|-----------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | storeId                                             | string (UUID)                                                                                                                                                                                                    | The Store Id of the store that the menu is going to be added                                                                                                              |
 | storeMenu                                           | Object                                                                                                                                                                                                           | Store Menu to be uploaded to store provided                                                                                                                               |
 | storeMenu.menu                                      | Object                                                                                                                                                                                                           | The menu to upload                                                                                                                                                        |
 | storeMenu.menu.menuId                               | string                                                                                                                                                                                                           | The id to reference the menu in your domain                                                                                                                               |
 | storeMenu.menu.name                                 | string                                                                                                                                                                                                           | Name of the menu                                                                                                                                                          |
 | storeMenu.menu.hours                                | string &#124; undefined                                                                                                                                                                                          | Hours that should the menu be visible.<br/> E.g. "Mo-Fr 08:00-09:00", "Sa-Su" or "Mar Mo-Fr 11:00-14:00". see https://openingh.openstreetmap.de/evaluation_tool/#check    |
-| storeMenu.menu.channels                             | Array  &#124; undefined                                                                                                                                                                                          | Channels that this menu should be visible for                                                                                                                             |
+| storeMenu.menu.channels                             | Array &#124; undefined                                                                                                                                                                                           | Channels that this menu should be visible for                                                                                                                             |
 | storeMenu.menu.channels[i]                          | string ( <br/> &nbsp;&nbsp;"PIDEDIRECTO" <br/> &nbsp;&nbsp;"UBER_EATS" <br/> )                                                                                                                                   | Store channel that this menu should be visible for                                                                                                                        |
-| storeMenu.menu.hidden                               | boolean                                                                                                                                                                                                          | Boolean indicating if the menu is hidden                                                                                                                                  | 
-| storeMenu.menu.categoryIds                          | Array                                                                                                                                                                                                            | Array that contains the ids of the categories that belongs to the menu                                                                                                    | 
+| storeMenu.menu.hidden                               | boolean                                                                                                                                                                                                          | Boolean indicating if the menu is hidden                                                                                                                                  |
+| storeMenu.menu.categoryIds                          | Array                                                                                                                                                                                                            | Array that contains the ids of the categories that belongs to the menu                                                                                                    |
 | storeMenu.menu.categoryIds[i]                       | string                                                                                                                                                                                                           | The categoryId should reference a category included in storeMenu.categories                                                                                               |
 | storeMenu.categories                                | Array                                                                                                                                                                                                            | Array that contains the collection of categories to upload                                                                                                                |
 | storeMenu.categories[i].categoryId                  | string                                                                                                                                                                                                           | The id to reference the category in your domain                                                                                                                           |
 | storeMenu.categories[i].name                        | string                                                                                                                                                                                                           | Name of the category                                                                                                                                                      |
 | storeMenu.categories[i].hidden                      | boolean                                                                                                                                                                                                          | Boolean indicating if the category is hidden                                                                                                                              |
-| storeMenu.categories[i].imageUrl                    | string  &#124; undefined                                                                                                                                                                                         | Url that contains an image of the category                                                                                                                                |
+| storeMenu.categories[i].imageUrl                    | string &#124; undefined                                                                                                                                                                                          | Url that contains an image of the category                                                                                                                                |
 | storeMenu.categories[i].productIds                  | Array                                                                                                                                                                                                            | Array that contains the ids of the product that belongs to the category                                                                                                   |
 | storeMenu.categories[i].productIds[i]               | string                                                                                                                                                                                                           | The productId should reference a products included in storeMenu.products                                                                                                  |
 | storeMenu.products                                  | Array                                                                                                                                                                                                            | Array that contains the collection of product to upload                                                                                                                   |
@@ -311,8 +309,8 @@ Use this API method to upload a group of products to a store.
 | storeMenu.products[i].size                          | string (<br/> &nbsp;&nbsp;"XX_SMALL" <br/> &nbsp;&nbsp;"X_SMALL" <br/> &nbsp;&nbsp;"SMALL" <br/> &nbsp;&nbsp;"MEDIUM" <br/> &nbsp;&nbsp;"LARGE" <br/> &nbsp;&nbsp;"X_LARGE" <br/> &nbsp;&nbsp;"XX_LARGE" <br/> ) | Size of the product                                                                                                                                                       |
 | storeMenu.products[i].menuItemType                  | string ( <br/> &nbsp;&nbsp;"ITEM" <br/> &nbsp;&nbsp;"MODIFIER" <br/> )                                                                                                                                           | Type of the product                                                                                                                                                       |
 | storeMenu.products[i].isModifier                    | boolean &#124; undefined                                                                                                                                                                                         | Boolean indicating if the product is a modifier                                                                                                                           |
-| storeMenu.products[i].isProduct                     | boolean &#124; undefined                                                                                                                                                                                         | Boolean indicating if the product is a product                                                                                                                            |                                                                                                                                                                         
-| storeMenu.products[i].name                          | string                                                                                                                                                                                                           | Name of the product                                                                                                                                                       |                                                                                                                                                                                                                                                            
+| storeMenu.products[i].isProduct                     | boolean &#124; undefined                                                                                                                                                                                         | Boolean indicating if the product is a product                                                                                                                            |
+| storeMenu.products[i].name                          | string                                                                                                                                                                                                           | Name of the product                                                                                                                                                       |
 | storeMenu.products[i].description                   | string &#124; undefined                                                                                                                                                                                          | Description of the product                                                                                                                                                |
 | storeMenu.products[i].hours                         | string &#124; undefined                                                                                                                                                                                          | Hours that should the product be visible.<br/> E.g. "Mo-Fr 08:00-09:00", "Sa-Su" or "Mar Mo-Fr 11:00-14:00". see https://openingh.openstreetmap.de/evaluation_tool/#check |
 | storeMenu.products[i].price                         | string                                                                                                                                                                                                           | Price of this product                                                                                                                                                     |
@@ -331,95 +329,86 @@ Use this API method to upload a group of products to a store.
 | storeMenu.modifierGroups[i].hidden                  | boolean                                                                                                                                                                                                          | Boolean indicating if the modifier group is a hidden                                                                                                                      |
 | storeMenu.modifierGroups[i].modifiers               | Array                                                                                                                                                                                                            | Array that contains the collection of modifiers in the modifier group                                                                                                     |
 | storeMenu.modifierGroups[i].modifiers[i].modifierId | string                                                                                                                                                                                                           | The id to reference the modifier in your domain                                                                                                                           |
-| storeMenu.modifierGroups[i].modifiers[i].name       | string  &#124; undefined                                                                                                                                                                                         | Name of the modifier, this will overwrite the product value                                                                                                               |
-| storeMenu.modifierGroups[i].modifiers[i].hidden     | boolean &#124; undefined                                                                                                                                                                                         | Boolean indicating if the modifier  is a hidden, this will overwrite the product value                                                                                    |
-| storeMenu.modifierGroups[i].modifiers[i].price      | string  &#124; undefined                                                                                                                                                                                         | Price of the modifier, this will overwrite the product value                                                                                                              |
+| storeMenu.modifierGroups[i].modifiers[i].name       | string &#124; undefined                                                                                                                                                                                          | Name of the modifier, this will overwrite the product value                                                                                                               |
+| storeMenu.modifierGroups[i].modifiers[i].hidden     | boolean &#124; undefined                                                                                                                                                                                         | Boolean indicating if the modifier is a hidden, this will overwrite the product value                                                                                     |
+| storeMenu.modifierGroups[i].modifiers[i].price      | string &#124; undefined                                                                                                                                                                                          | Price of the modifier, this will overwrite the product value                                                                                                              |
 | storeMenu.modifierGroups[i].modifiers[i].type       | string ( <br/> &nbsp;&nbsp;"SINGLE" <br/> &nbsp;&nbsp;"MULTIPLE" <br/> )                                                                                                                                         | Type of the modifier                                                                                                                                                      |
 
-
 #### Response Success
+
 Response Status Code 200
 
 | Body Parameter | Type | Description |
-|----------------|------|-------------|
+| -------------- | ---- | ----------- |
 | N/A            | N/A  | N/A         |
 
 #### Response Error
+
 Here is a list of unique errors that be returned for this API endpoint.
 
-| HTTP Status Codes           | Error Name           | Description                                                                                                                                                                                       |
-|-----------------------------|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Product with productId not found <br/> - Neither productId nor externalProductId was sent  |
-| 429 - Too Many Requests     | ApiCallLimitExceeded | Occurs in case uploadStoreMenu API is called more than twice within 2 minutes                                                                                                                     |
-| 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                                                                                                                                  |
+| HTTP Status Codes           | Error Name           | Description                                                                                                                                                                                      |
+| --------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Product with productId not found <br/> - Neither productId nor externalProductId was sent |
+| 429 - Too Many Requests     | ApiCallLimitExceeded | Occurs in case uploadStoreMenu API is called more than twice within 2 minutes                                                                                                                    |
+| 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                                                                                                                                 |
 
 #### Example
+
 Request:
 
 ```json
 {
-  "storeId":"1d291d1c-1ecd-4c2e-a7f4-fabc1fac93f7",
-  "storeMenu":{
-    "menu":{
-      "menuId":"menuId01",
-      "name":"menu1",
-      "hidden":false,
-      "channels":[
-        "DIDI_FOOD",
-        "PIDEDIRECTO"
-      ],
-      "categoryIds":[
-        "categoryId01"
-      ]
+  "storeId": "1d291d1c-1ecd-4c2e-a7f4-fabc1fac93f7",
+  "storeMenu": {
+    "menu": {
+      "menuId": "menuId01",
+      "name": "menu1",
+      "hidden": false,
+      "channels": ["DIDI_FOOD", "PIDEDIRECTO"],
+      "categoryIds": ["categoryId01"]
     },
-    "categories":[
+    "categories": [
       {
-        "categoryId":"categoryId01",
-        "name":"category01",
-        "hidden":false,
-        "productIds":[
-          "productId01"
-        ]
+        "categoryId": "categoryId01",
+        "name": "category01",
+        "hidden": false,
+        "productIds": ["productId01"]
       }
     ],
-    "products":[
+    "products": [
       {
-        "productId":"productId01",
-        "size":"LARGE",
-        "menuItemType":"MODIFIER",
-        "name":"product01",
-        "price":"10",
-        "hidden":false,
-        "modifierGroupIds":[
-
-        ]
+        "productId": "productId01",
+        "size": "LARGE",
+        "menuItemType": "MODIFIER",
+        "name": "product01",
+        "price": "10",
+        "hidden": false,
+        "modifierGroupIds": []
       },
       {
-        "productId":"productId02",
-        "size":"LARGE",
-        "menuItemType":"ITEM",
-        "name":"product02",
-        "price":"100",
-        "hidden":false,
-        "modifierGroupIds":[
-          "modifierGroupId01"
-        ]
+        "productId": "productId02",
+        "size": "LARGE",
+        "menuItemType": "ITEM",
+        "name": "product02",
+        "price": "100",
+        "hidden": false,
+        "modifierGroupIds": ["modifierGroupId01"]
       }
     ],
-    "modifierGroups":[
+    "modifierGroups": [
       {
-        "modifierGroupId":"modifierGroupId01",
-        "name":"modifierGroup01",
-        "requiredMin":0,
-        "requiredMax":1,
-        "hidden":false,
-        "modifiers":[
+        "modifierGroupId": "modifierGroupId01",
+        "name": "modifierGroup01",
+        "requiredMin": 0,
+        "requiredMax": 1,
+        "hidden": false,
+        "modifiers": [
           {
-            "modifierId":"productId01",
-            "hidden":false,
-            "name":"product01",
-            "price":"10",
-            "type":"SINGLE"
+            "modifierId": "productId01",
+            "hidden": false,
+            "name": "product01",
+            "price": "10",
+            "type": "SINGLE"
           }
         ]
       }
@@ -429,33 +418,38 @@ Request:
 ```
 
 ### POST changeProductPrice
+
 Use this API method to change the product price.
 
 #### Request
 
 | Body Parameter    | Type            | Description                                                                                                          |
-|-------------------|-----------------|----------------------------------------------------------------------------------------------------------------------|
+| ----------------- | --------------- | -------------------------------------------------------------------------------------------------------------------- |
 | productId         | string (UUID)   | - The Product Id you want to change <br/> - Not required if you send only a externalProductId                        |
 | externalProductId | string          | - The external product id you configured previously in the product <br/> - It is ignored if you send a productId too |
 | price             | string (number) | The new product price                                                                                                |
 
 #### Response Success
+
 Response Status Code 200
 
 | Body Parameter | Type | Description |
-|----------------|------|-------------|
+| -------------- | ---- | ----------- |
 | N/A            | N/A  | N/A         |
 
 #### Response Error
+
 Here is a list of unique errors that be returned for this API endpoint.
 
 | HTTP Status Codes           | Error Name           | Description                                                                                                                                                                                      |
-|-----------------------------|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| --------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Product with productId not found <br/> - Neither productId nor externalProductId was sent |
 | 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                                                                                                                                 |
 
 #### Example
+
 Request:
+
 ```json
 {
   "productId": "45d13207-0db5-3d01-c26d-be06cd50188a",
@@ -464,31 +458,35 @@ Request:
 ```
 
 ### POST unHideProduct
+
 Use this API method to change the product visibility.
 
 #### Request
 
-| Body Parameter    | Type            | Description                                                        |
-|-------------------|-----------------|--------------------------------------------------------------------|
-| storeId           | string (UUID)   | - The store id of the product                                      |
-| externalProductId | string (UUID)   | - The external product id you configured previously in the product |
+| Body Parameter    | Type          | Description                                                        |
+| ----------------- | ------------- | ------------------------------------------------------------------ |
+| storeId           | string (UUID) | - The store id of the product                                      |
+| externalProductId | string (UUID) | - The external product id you configured previously in the product |
 
 #### Response Success
+
 Response Status Code 200
 
 | Body Parameter | Type | Description |
-|----------------|------|-------------|
+| -------------- | ---- | ----------- |
 | N/A            | N/A  | N/A         |
 
 #### Response Error
+
 Here is a list of unique errors that be returned for this API endpoint.
 
 | HTTP Status Codes           | Error Name           | Description                                                                                                                                                                                      |
-|-----------------------------|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| --------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Product with productId not found <br/> - Neither productId nor externalProductId was sent |
 | 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                                                                                                                                 |
 
 #### Example
+
 Request:
 
 ```json
@@ -497,33 +495,38 @@ Request:
   "externalProductId": "45d13207-0db5-3d01-c26d-be06cd50188a"
 }
 ```
+
 ### POST hideProduct
+
 Use this API method to change the product visibility.
 
 #### Request
 
-| Body Parameter    | Type                             | Description                                                        |
-|-------------------|----------------------------------|--------------------------------------------------------------------|
-| storeId           | string (UUID)                    | - The store id of the product                                      |
-| externalProductId | string (UUID)                    | - The external product id you configured previously in the product |
-| hiddenUntil       | string (Date) &#124; undefined   | - Time until the product should be hidden                          |
+| Body Parameter    | Type                           | Description                                                        |
+| ----------------- | ------------------------------ | ------------------------------------------------------------------ |
+| storeId           | string (UUID)                  | - The store id of the product                                      |
+| externalProductId | string (UUID)                  | - The external product id you configured previously in the product |
+| hiddenUntil       | string (Date) &#124; undefined | - Time until the product should be hidden                          |
 
 #### Response Success
+
 Response Status Code 200
 
 | Body Parameter | Type | Description |
-|----------------|------|-------------|
+| -------------- | ---- | ----------- |
 | N/A            | N/A  | N/A         |
 
 #### Response Error
+
 Here is a list of unique errors that be returned for this API endpoint.
 
 | HTTP Status Codes           | Error Name           | Description                                                                                                                                                                                      |
-|-----------------------------|----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| --------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request <br/> - Product with productId not found <br/> - Neither productId nor externalProductId was sent |
 | 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                                                                                                                                 |
 
 #### Example
+
 Request:
 
 ```json
@@ -534,12 +537,10 @@ Request:
 }
 ```
 
-
 ## Order API
 
-
-
 ### POST acceptOrder
+
 Use this API method to accept an order that was ordered from PideDirecto webpage or app.
 Orders can only be accepted as long as the customer did not cancel the order (as long as order status is NEW).
 If store cannot accept an order it has to be rejected, see [POST rejectOrder](#POST-rejectOrder) api call.
@@ -547,125 +548,123 @@ If store cannot accept an order it has to be rejected, see [POST rejectOrder](#P
 #### Request
 
 | Body Parameter | Type   | Description                                   |
-|----------------|--------|-----------------------------------------------|
+| -------------- | ------ | --------------------------------------------- |
 | orderId        | string | Unique identifier of the order in PideDirecto |
 
 #### Response Success
+
 Response Status Code 200
 
 | Body Parameter | Type | Description |
-|----------------|------|-------------|
+| -------------- | ---- | ----------- |
 | N/A            | N/A  | N/A         |
 
-
 #### Response Error
+
 Here is a list of unique errors that be returned for this API endpoint.
 
 | HTTP Status Codes           | Error Name                 | Description                                                                                    |
-|-----------------------------|----------------------------|------------------------------------------------------------------------------------------------|
+| --------------------------- | -------------------------- | ---------------------------------------------------------------------------------------------- |
 | 400 - Bad Request           | InvalidArgumentError       | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
 | 400 - Bad Request           | OrderCannotBeAcceptedError | Order cannot be accepted since current order state does not allow it                           |
 | 500 - Internal Server Error | UnknownError               | An unknown server error has occurred, try again.                                               |
 
-
 #### Example
+
 Request:
+
 ```json
 {
   "orderId": "37d13197-0fa5-4d0b-85ad-ae06dd40177a"
 }
 ```
 
-
-
 ### POST rejectOrder
+
 Use this API method to reject an order that was ordered from PideDirecto webpage or app.
 Orders can only be rejected as long as the customer did not reject the order (as long as order status is NEW).
 If store cannot reject an order it has to be accepted, see [POST rejectOrder](#POST-rejectOrder) api call.
 
 #### Request
 
-| Body Parameter | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Description                                   |
-|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
-| orderId        | string                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | Unique identifier of the order in PideDirecto |
-| reason         | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/>  &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/>  &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/>   &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/>   &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order is rejected              |
+| Body Parameter | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Description                                   |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| orderId        | string                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Unique identifier of the order in PideDirecto |
+| reason         | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/> &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/> &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/> &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/> &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order is rejected              |
 
 #### Response Success
+
 Response Status Code 200
 
 | Body Parameter | Type | Description |
-|----------------|------|-------------|
+| -------------- | ---- | ----------- |
 | N/A            | N/A  | N/A         |
 
-
 #### Response Error
+
 Here is a list of unique errors that be returned for this API endpoint.
 
-| HTTP Status Codes           | Error Name              | Description                                                                                    |
-|-----------------------------|-------------------------|------------------------------------------------------------------------------------------------|
-| 400 - Bad Request           | InvalidArgumentError    | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
-| 400 - Bad Request           | OrderCannotBeCancelled  | Order cannot be rejected since current order state does not allow it                           |
-| 500 - Internal Server Error | UnknownError            | An unknown server error has occurred, try again.                                               |
-
+| HTTP Status Codes           | Error Name             | Description                                                                                    |
+| --------------------------- | ---------------------- | ---------------------------------------------------------------------------------------------- |
+| 400 - Bad Request           | InvalidArgumentError   | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
+| 400 - Bad Request           | OrderCannotBeCancelled | Order cannot be rejected since current order state does not allow it                           |
+| 500 - Internal Server Error | UnknownError           | An unknown server error has occurred, try again.                                               |
 
 #### Example
+
 Request:
+
 ```json
 {
   "orderId": "37d13197-0fa5-4d0b-85ad-ae06dd40177a"
 }
 ```
 
-
-
-
-
-
-
-
-
-
 ### POST getDeliveryEstimate
+
 If you want to create a delivery order you can use this API method to get a delivery estimate with driving duration or delivery cost before creating the order with [createDeliveryOrder](#POST-createDeliveryOrder) API method.
 Then pass the `deliveryEstimateId` when calling the [createDeliveryOrder](#POST-createDeliveryOrder) API method to create an order with the guaranteed the delivery cost.
 If you don't care about the driving duration or a guaranteed delivery cost you can skip calling this API and call [createDeliveryOrder](#POST-createDeliveryOrder) without passing a `deliveryEstimateId`.
 
 #### Request
+
 | Body Parameter       | Type          | Description                                             |
-|----------------------|---------------|---------------------------------------------------------|
+| -------------------- | ------------- | ------------------------------------------------------- |
 | storeId              | string (UUID) | The Store Id for the store that is sending the delivery |
 | deliveryLocation     | Object        | GPS coordinates of the delivery location                |
 | deliveryLocation.lat | number        | Latitude GPS coordinate                                 |
 | deliveryLocation.lng | number        | Longitude GPS coordinate                                |
 
-
 #### Response Success
+
 Response Status Code 200
 
-| Body Parameter                 | Type                                                                                                                 | Description                                                                                                                                         |
-|--------------------------------|----------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| deliveryEstimateId             | string (UUID)                                                                                                        | Unique identifier of the delivery estimate created, pass this to [createDeliveryOrder](#POST-createDeliveryOrder) to get a guaranteed delivery cost |
-| storeLocation                  | Object                                                                                                               | GPS coordinates of the store                                                                                                                        |
-| storeLocation.lat              | number                                                                                                               | Latitude GPS coordinate                                                                                                                             |
-| storeLocation.lng              | number                                                                                                               | Longitude GPS coordinate                                                                                                                            |
-| deliveryLocation               | Object                                                                                                               | GPS coordinates of the delivery location                                                                                                            |
-| deliveryLocation.lat           | number                                                                                                               | Latitude GPS coordinate                                                                                                                             |
-| deliveryLocation.lng           | number                                                                                                               | Longitude GPS coordinate                                                                                                                            |
-| drivingDistance                | number                                                                                                               | Driving Distance in meter calculated using Google Maps                                                                                              |
-| drivingDuration                | number                                                                                                               | Driving Duration in seconds calculated using Google Maps                                                                                            |
-| deliveryCost                   | string (number)                                                                                                      | Delivery Cost calculated                                                                                                                            |
-| deliveryAvailable              | boolean                                                                                                              | Boolean that indicates if PideDirecto is able to make the delivery   (isWithinDeliveryRadius new field)                                             |
-| deliveryNotAvailableReason     | string ( <br/> &nbsp;&nbsp;"NOT_WITHIN_DELIVERY_RADIUS"<br/> &nbsp;&nbsp; "DRIVERS_SHORTAGE"<br/> &nbsp;&nbsp;  )    | String that indicates why the delivery is not available                                                                                             |
+| Body Parameter             | Type                                                                                                             | Description                                                                                                                                         |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| deliveryEstimateId         | string (UUID)                                                                                                    | Unique identifier of the delivery estimate created, pass this to [createDeliveryOrder](#POST-createDeliveryOrder) to get a guaranteed delivery cost |
+| storeLocation              | Object                                                                                                           | GPS coordinates of the store                                                                                                                        |
+| storeLocation.lat          | number                                                                                                           | Latitude GPS coordinate                                                                                                                             |
+| storeLocation.lng          | number                                                                                                           | Longitude GPS coordinate                                                                                                                            |
+| deliveryLocation           | Object                                                                                                           | GPS coordinates of the delivery location                                                                                                            |
+| deliveryLocation.lat       | number                                                                                                           | Latitude GPS coordinate                                                                                                                             |
+| deliveryLocation.lng       | number                                                                                                           | Longitude GPS coordinate                                                                                                                            |
+| drivingDistance            | number                                                                                                           | Driving Distance in meter calculated using Google Maps                                                                                              |
+| drivingDuration            | number                                                                                                           | Driving Duration in seconds calculated using Google Maps                                                                                            |
+| deliveryCost               | string (number)                                                                                                  | Delivery Cost calculated                                                                                                                            |
+| deliveryAvailable          | boolean                                                                                                          | Boolean that indicates if PideDirecto is able to make the delivery (isWithinDeliveryRadius new field)                                               |
+| deliveryNotAvailableReason | string ( <br/> &nbsp;&nbsp;"NOT_WITHIN_DELIVERY_RADIUS"<br/> &nbsp;&nbsp; "DRIVERS_SHORTAGE"<br/> &nbsp;&nbsp; ) | String that indicates why the delivery is not available                                                                                             |
 
 #### Response Error
+
 Here is a list of unique errors that be returned for this API endpoint.
 
 | HTTP Status Codes           | Error Name           | Description                                                                                    |
-|-----------------------------|----------------------|------------------------------------------------------------------------------------------------|
+| --------------------------- | -------------------- | ---------------------------------------------------------------------------------------------- |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
 | 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                               |
 
 #### Example
+
 Request:
 
 ```json
@@ -679,6 +678,7 @@ Request:
 ```
 
 Response
+
 ```json
 {
   "deliveryEstimateId": "ec536649-da5d-4346-a47e-2f868f4a62ab",
@@ -699,14 +699,16 @@ Response
 ```
 
 ### POST createDeliveryOrder
+
 Use this API method to request a delivery.  
 Make sure to call [getDeliveryEstimate](#POST-getDeliveryEstimate) in advance if you wish to confirm the delivery cost with your customer before creating the order.
 Then when creating order pass the `deliveryEstimateId`.
 If you have a fixed agreed delivery cost you can omit calling [getDeliveryEstimate](#POST-getDeliveryEstimate) and skip passing any `deliveryEstimateId`.
 
 #### Request
+
 | Body Parameter               | Type                                                                                          | Description                                                                                                                                                                                                                                        |
-|------------------------------|-----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ---------------------------- | --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | storeId                      | string (UUID)                                                                                 | The Store Id for the store that is sending the delivery                                                                                                                                                                                            |
 | deliveryEstimateId           | string (UUID) &#124; undefined                                                                | Delivery Estimate Id received from [getDeliveryEstimate](#POST-getDeliveryEstimate) API method, pass this if you need to know the delivery cost in advance. If not passed you will not know the delivery cost in advance before creating the order |
 | customerName                 | string                                                                                        | Name of the customer                                                                                                                                                                                                                               |
@@ -715,7 +717,7 @@ If you have a fixed agreed delivery cost you can omit calling [getDeliveryEstima
 | customerAddress.location     | Object                                                                                        | GPS coordinates of the delivery address                                                                                                                                                                                                            |
 | customerAddress.location.lat | number                                                                                        | Latitude GPS coordinate                                                                                                                                                                                                                            |
 | customerAddress.location.lng | number                                                                                        | Longitude GPS coordinate                                                                                                                                                                                                                           |
-| customerAddress.street       | string                                                                                        | Street name and number of the delivery address  &#124; You can include the full address retrieved by Google and leave empty neighborhood, zipCode, city, state and country                                                                         |
+| customerAddress.street       | string                                                                                        | Street name and number of the delivery address &#124; You can include the full address retrieved by Google and leave empty neighborhood, zipCode, city, state and country                                                                          |
 | customerAddress.neighborhood | string &#124; undefined                                                                       | Neighborhood name of the delivery address                                                                                                                                                                                                          |
 | customerAddress.zipCode      | string &#124; undefined                                                                       | ZipCode of the delivery address                                                                                                                                                                                                                    |
 | customerAddress.city         | string &#124; undefined                                                                       | City of the delivery address                                                                                                                                                                                                                       |
@@ -724,7 +726,7 @@ If you have a fixed agreed delivery cost you can omit calling [getDeliveryEstima
 | customerAddress.instructions | string &#124; undefined                                                                       | Other delivery instruction of the delivery address                                                                                                                                                                                                 |
 | paymentMethod                | string ( <br/> &nbsp;&nbsp;"CARD" <br/> &nbsp;&nbsp;"CASH" <br/> &nbsp;&nbsp;"PAYMENT_LINK" ) | The payment method of the delivery address. Can be either "CARD", "CASH" or "PAYMENT_LINK". If "CARD" the driver will not charge customer anything. If "PAYMENT_LINK" a payment link will be created with the total of the order.                  |
 | orderCost                    | string (number)                                                                               | The cost of the order.                                                                                                                                                                                                                             |
-| driverTip                    | string (number); undefined                                                                    | Extra driver tip   (TEST ENV)                                                                                                                                                                                                                      |
+| driverTip                    | string (number); undefined                                                                    | Extra driver tip (TEST ENV)                                                                                                                                                                                                                        |
 | pickupTime                   | string (Date) &#124; undefined                                                                | Time the driver can pickup the order at earliest. This parameter can be omitted if you want the driver to pickup order ASAP.                                                                                                                       |
 | driverInstructions           | string &#124; undefined                                                                       | Pickup instructions to show the driver                                                                                                                                                                                                             |
 | askDriverForOrderPhoto       | boolean &#124; undefined                                                                      | Ask driver to take a photo of the order (NOT YET IMPLEMENTED)                                                                                                                                                                                      |
@@ -734,30 +736,29 @@ If you have a fixed agreed delivery cost you can omit calling [getDeliveryEstima
 | webhookHeaders               | Object &#124; undefined                                                                       | An object containing headers to add to the webhook request. Where object field is the header name and field value is the header value to send.                                                                                                     |
 | isBigOrder                   | boolean &#124; undefined                                                                      | True to indicate when the order should be delivered by a vehicle larger than usual (larger than a motorcycle).                                                                                                                                     |
 
-
-
 #### Response Success
+
 Response Status Code 200
 
-| Body Parameter | Type                      | Description                                               |
-|----------------|---------------------------|-----------------------------------------------------------|
-| orderId        | string (UUID)             | Unique identifier of the order in PideDirecto             |
-| trackingUrl    | string                    | A URL for tracking the delivery inside PideDirecto system |
-| deliveryCost   | string (number)           | The cost of the delivery                                  |
-| paymentLinkUrl | string &#124; undefined   | A URL for pay the paymentLink                             |
+| Body Parameter | Type                    | Description                                               |
+| -------------- | ----------------------- | --------------------------------------------------------- |
+| orderId        | string (UUID)           | Unique identifier of the order in PideDirecto             |
+| trackingUrl    | string                  | A URL for tracking the delivery inside PideDirecto system |
+| deliveryCost   | string (number)         | The cost of the delivery                                  |
+| paymentLinkUrl | string &#124; undefined | A URL for pay the paymentLink                             |
 
 #### Response Error
+
 Here is a list of unique errors that be returned for this API endpoint.
 
 | HTTP Status Codes           | Error Name              | Description                                                                                                          |
-|-----------------------------|-------------------------|----------------------------------------------------------------------------------------------------------------------|
+| --------------------------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | 400 - Bad Request           | InvalidArgumentError    | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request                       |
 | 400 - Bad Request           | NotWithinDeliveryRadius | - The delivery is not within the delivery radius of the store. <br/> - Check delivery estimate before creating order |
 | 500 - Internal Server Error | UnknownError            | An unknown server error has occurred, try again.                                                                     |
 
-
-
 #### Example
+
 Request:
 
 ```json
@@ -783,7 +784,9 @@ Request:
   "webhookUrl": null
 }
 ```
+
 Response
+
 ```json
 {
   "orderId": "37d13197-0fa5-4d0b-85ad-ae06dd40177a",
@@ -792,39 +795,40 @@ Response
 }
 ```
 
-
-
 ### POST cancelOrder
+
 Use this API method to cancel an order. Orders can only be cancelled if no driver has accepted the order.
 As soon as a driver has accepted the order or order is already cancelled/rejected/completed/delivered an error with name `OrderCannotBeCancelled` will be returned.
 
 #### Request
 
-| Body Parameter | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Description                                   |
-|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
-| orderId        | string                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | Unique identifier of the order in PideDirecto |
-| reason         | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/>  &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/>  &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/>   &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/>   &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order is cancelled             |
+| Body Parameter | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Description                                   |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| orderId        | string                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Unique identifier of the order in PideDirecto |
+| reason         | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/> &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/> &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/> &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/> &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order is cancelled             |
 
 #### Response Success
+
 Response Status Code 200
 
 | Body Parameter | Type | Description |
-|----------------|------|-------------|
+| -------------- | ---- | ----------- |
 | N/A            | N/A  | N/A         |
 
-
 #### Response Error
+
 Here is a list of unique errors that be returned for this API endpoint.
 
 | HTTP Status Codes           | Error Name             | Description                                                                                    |
-|-----------------------------|------------------------|------------------------------------------------------------------------------------------------|
+| --------------------------- | ---------------------- | ---------------------------------------------------------------------------------------------- |
 | 400 - Bad Request           | InvalidArgumentError   | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
 | 400 - Bad Request           | OrderCannotBeCancelled | Order cannot be cancelled since current order state does not allow it                          |
 | 500 - Internal Server Error | UnknownError           | An unknown server error has occurred, try again.                                               |
 
-
 #### Example
+
 Request:
+
 ```json
 {
   "orderId": "37d13197-0fa5-4d0b-85ad-ae06dd40177a",
@@ -833,37 +837,38 @@ Request:
 ```
 
 ### POST getDriverPosition
+
 Use this API method to retrieve the driver position of the requested orderId.
 Make sure that the orderId exists, and it is not finished.
 
 #### Request
+
 | Body Parameter | Type          | Description                                   |
-|----------------|---------------|-----------------------------------------------|
+| -------------- | ------------- | --------------------------------------------- |
 | orderId        | string (UUID) | Unique identifier of the order in PideDirecto |
 
-
-
 #### Response Success
+
 Response Status Code 200
 
 | Body Parameter     | Type          | Description                                    |
-|--------------------|---------------|------------------------------------------------|
+| ------------------ | ------------- | ---------------------------------------------- |
 | driverId           | string (UUID) | Unique identifier of the driver in PideDirecto |
 | driverPosition     | Object        | Object containing driver position              |
 | driverPosition.lat | number        | Latitude GPS coordinate                        |
 | driverPosition.lng | number        | Longitude GPS coordinate                       |
 
 #### Response Error
+
 Here is a list of unique errors that be returned for this API endpoint.
 
 | HTTP Status Codes           | Error Name           | Description                                                                                    |
-|-----------------------------|----------------------|------------------------------------------------------------------------------------------------|
+| --------------------------- | -------------------- | ---------------------------------------------------------------------------------------------- |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
 | 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                               |
 
-
-
 #### Example
+
 Request:
 
 ```json
@@ -871,6 +876,7 @@ Request:
   "orderId": "38981f83-853c-4193-a3c2-97f05582e0ad"
 }
 ```
+
 Response
 
 ```json
@@ -886,42 +892,46 @@ Response
 ## PaymentLink API
 
 ### POST createPaymentLink
+
 Use this API method to create a payment link. The payment link created will not be linked to any order. Currently, the
-only way to create an order with paymentLink is only creating a delivery order, see [createDeliveryorder](#POST-createdeliveryorder). 
+only way to create an order with paymentLink is only creating a delivery order, see [createDeliveryorder](#POST-createdeliveryorder).
 
 #### Request
 
 | Body Parameter | Type          | Description                                                                 |
-|----------------|---------------|-----------------------------------------------------------------------------|
+| -------------- | ------------- | --------------------------------------------------------------------------- |
 | storeId        | string (UUID) | The Store Id for the store that is creating the payment link.               |
 | amount         | number        | The total amount of the payment link. The amount must be greater than zero. |
 
 #### Response Success
+
 Response Status Code 200
 
 | Body Parameter | Type          | Description                                          |
-|----------------|---------------|------------------------------------------------------|
+| -------------- | ------------- | ---------------------------------------------------- |
 | paymentLinkId  | string (UUID) | Unique identifier of the payment link in PideDirecto |
 | paymentLinkUrl | string        | A URL for pay the paymentLink                        |
 
-
 #### Response Error
+
 Here is a list of unique errors that be returned for this API endpoint.
 
-| HTTP Status Codes           | Error Name                 | Description                                                                                    |
-|-----------------------------|----------------------------|------------------------------------------------------------------------------------------------|
-| 400 - Bad Request           | InvalidArgumentError       | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
-| 500 - Internal Server Error | UnknownError               | An unknown server error has occurred, try again.                                               |
-
+| HTTP Status Codes           | Error Name           | Description                                                                                    |
+| --------------------------- | -------------------- | ---------------------------------------------------------------------------------------------- |
+| 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
+| 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                               |
 
 #### Example
+
 Request:
+
 ```json
 {
   "storeId": "38981f83-853c-4193-a3c2-97f05582e0ad",
   "amount": 100
 }
 ```
+
 Response
 
 ```json
@@ -931,92 +941,90 @@ Response
 }
 ```
 
-
-
 ## Webhook Events
 
 ### Event Type ORDER_CREATED
+
 This event is will be emitted when a new order is created.
 
-| Body Parameter                                                                                          | Type                                                                                                                           | Description                                                                                                                                                                                                                                                                                                                 |
-|---------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| orderId                                                                                                 | string (UUID)                                                                                                                  | Unique identifier of the order in pidedirecto                                                                                                                                                                                                                                                                               |
+| Body Parameter                                                                                          | Type                                                                                                         | Description                                                                                                                                                                                                                                                                                                                 |
+| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| orderId                                                                                                 | string (UUID)                                                                                                | Unique identifier of the order in pidedirecto                                                                                                                                                                                                                                                                               |
 | app                                                                                                     | string (<br/>"PIDEDIRECTO", <br/> "PIDEDIRECTOPOS", <br/>"UBER_EATS", <br/>"RAPPI",<br/> "DIDI_FOOD" <br/> ) | Name of the App where the order was created                                                                                                                                                                                                                                                                                 |
-| storeId                                                                                                 | string (UUID)                                                                                                                  | The Store Id for the store that is sending the delivery                                                                                                                                                                                                                                                                     |
-| externalOrderId                                                                                         | string &#124; undefined                                                                                                        | The external order id sent when creating a order. If no external order id was sent it will be undefined                                                                                                                                                                                                                     |
-| didiFoodOrderId                                                                                         | string &#124; undefined                                                                                                        | Unique Identifier from Didi Food order. If not a Didi Food order it will be undefined                                                                                                                                                                                                                                       |
-| didiFoodOrderIndex                                                                                      | string &#124; undefined                                                                                                        | Order Index provided by Didi Food. If not a Didi Food order it will be undefined                                                                                                                                                                                                                                            |
-| rappiOrderId                                                                                            | string &#124; undefined                                                                                                        | Unique Identifier from Rappi order. If not a Rappi order it will be undefined                                                                                                                                                                                                                                               |
-| uberEatsOrderId                                                                                         | string &#124; undefined                                                                                                        | Unique Identifier from Uber Eats order. If not an Uber Eats order it will be undefined                                                                                                                                                                                                                                      |
-| eventType                                                                                               | string ("ORDER_CREATED")                                                                                                       | Type of the event                                                                                                                                                                                                                                                                                                           |
-| occurredAt                                                                                              | string (Date)                                                                                                                  | The date time when the event occurred                                                                                                                                                                                                                                                                                       |
-| orderStatus                                                                                             | string ( <br/> &nbsp;&nbsp;"NEW" <br/> &nbsp;&nbsp;"ACCEPTED" <br/> )                                                          | Order status. If order is made from PideDirecto webpage or app it will be in status "NEW" and needs to be either accepted or rejected by API acceptOrder or rejectOrder or in PideDirecto Admin. Otherwise if created by the API createDeliveryOrder or from PideDirecto Admin by the store it will have status "ACCEPTED". |
-| orderType                                                                                               | string ( <br/> &nbsp;&nbsp;"TAKE_AWAY_ORDER" <br/>  &nbsp;&nbsp;"DELIVERY_ORDER" <br/> )                                       | The type of the order                                                                                                                                                                                                                                                                                                       |
-| pickupTime                                                                                              | string (Date) &#124; undefined                                                                                                 | Time the driver can pickup the order at earliest                                                                                                                                                                                                                                                                            |
-| pickupTimeType                                                                                          | string ( <br/> &nbsp;&nbsp;"ASAP" <br/> &nbsp;&nbsp;"PLANNED" <br/> ) &#124; undefined                                         | The type of the pickup time                                                                                                                                                                                                                                                                                                 |
-| storeName                                                                                               | string                                                                                                                         | Name of the store                                                                                                                                                                                                                                                                                                           |
-| storeStreet                                                                                             | string                                                                                                                         | Street of the store                                                                                                                                                                                                                                                                                                         |
-| storeLocation                                                                                           | Object                                                                                                                         | GPS coordinates of the store                                                                                                                                                                                                                                                                                                |
-| storeLocation.lat                                                                                       | number                                                                                                                         | Latitude GPS coordinate                                                                                                                                                                                                                                                                                                     |
-| storeLocation.lng                                                                                       | number                                                                                                                         | Longitude GPS coordinate                                                                                                                                                                                                                                                                                                    |
-| customerId                                                                                              | string (UUID)                                                                                                                  | Unique identifier of the customer in pidedirecto                                                                                                                                                                                                                                                                            |
-| customerName                                                                                            | string                                                                                                                         | Name of the customer                                                                                                                                                                                                                                                                                                        |
-| customerEmail                                                                                           | string &#124; undefined                                                                                                        | Email of the customer                                                                                                                                                                                                                                                                                                       |
-| customerPhoneNumber                                                                                     | string                                                                                                                         | Phone number to the customer                                                                                                                                                                                                                                                                                                |
-| customerAddress                                                                                         | Object &#124; undefined                                                                                                        | The delivery address if `orderType` is "DELIVERY_ORDER" otherwise undefined                                                                                                                                                                                                                                                 |
-| customerAddress.location                                                                                | Object                                                                                                                         | GPS coordinates of the delivery address                                                                                                                                                                                                                                                                                     |
-| customerAddress.location.lat                                                                            | number                                                                                                                         | Latitude GPS coordinate                                                                                                                                                                                                                                                                                                     |
-| customerAddress.location.lng                                                                            | number                                                                                                                         | Longitude GPS coordinate                                                                                                                                                                                                                                                                                                    |
-| customerAddress.street                                                                                  | string                                                                                                                         | Street name and number of the delivery address                                                                                                                                                                                                                                                                              |
-| customerAddress.instructions                                                                            | string &#124; undefined                                                                                                        | Other delivery instruction of the delivery address                                                                                                                                                                                                                                                                          |
-| subtotal                                                                                                | string (number)                                                                                                                | Total cost of the order items without discount                                                                                                                                                                                                                                                                              |
-| productDiscount                                                                                         | string (number) &#124; undefined                                                                                               | Total product discount of the order items                                                                                                                                                                                                                                                                                   |
-| promoCode                                                                                               | string (number) &#124; undefined                                                                                               | Promo code used with order                                                                                                                                                                                                                                                                                                  |
-| promoCodeDiscount                                                                                       | string (number) &#124; undefined                                                                                               | Total discount received from using a promo code                                                                                                                                                                                                                                                                             |
-| discount                                                                                                | string (number) &#124; undefined                                                                                               | The sum of all discounts that apply to this order (total discount)                                                                                                                                                                                                                                                          |
-| isBigOrder                                                                                              | boolean &#124; undefined                                                                                                       | True to indicate when the order should be delivered by a vehicle larger than usual (larger than a motorcycle).                                                                                                                                                                                                              |
-| deliveryCost                                                                                            | string (number) &#124; undefined                                                                                               | Delivery cost that the customer pays for the order                                                                                                                                                                                                                                                                          |
-| total                                                                                                   | string (number)                                                                                                                | Total cost that the customer pays for the order (delivery cost included)                                                                                                                                                                                                                                                    |
-| paymentMethod                                                                                           | string ( <br/> &nbsp;&nbsp;"CARD" <br/> &nbsp;&nbsp;"CASH" <br/> &nbsp;&nbsp;"PAYMENT_TERMINAL" <br/> )                        | The payment method of the delivery address. Can be either "CARD", "CASH" or "PAYMENT_TERMINAL". If "CARD" the driver will not charge customer anything.                                                                                                                                                                     |
-| cardNumber                                                                                              | string &#124; undefined                                                                                                        | The card number with the following format " ****last 4 digits ". Only if the paymentMethod is "CARD" or "PAYMENT_TERMINAL"                                                                                                                                                                                                  |
-| cardType                                                                                                | string ( <br/> &nbsp;&nbsp;"CREDIT" <br/> &nbsp;&nbsp;"DEBIT" <br/>) &#124; undefined                                          | The card type. Only if the paymentMethod is "CARD" or "PAYMENT_TERMINAL"                                                                                                                                                                                                                                                    |
-| payments                                                                                                | Array &#124; undefined                                                                                                         | All payments used to pay the order.                                                                                                                                                                                                                                                                                         |
-| payments[i]                                                                                             | Object                                                                                                                         | Contains the payment information                                                                                                                                                                                                                                                                                            |
-| payments[i].paymentTerminalPaymentId                                                                    | string (UUID) &#124; undefined                                                                                                 | Id of the payment if the payments[i].paymentMethod is "PAYMENT_TERMINAL"                                                                                                                                                                                                                                                    |
-| payments[i].amount                                                                                      | string                                                                                                                         | Amount of the payment                                                                                                                                                                                                                                                                                                       |
-| payments[i].paymentMethod                                                                               | string ( <br/> &nbsp;&nbsp;"CARD" <br/> &nbsp;&nbsp;"CASH" <br/> &nbsp;&nbsp;"PAYMENT_TERMINAL" <br/> )                        | The payment method of the payments[i]                                                                                                                                                                                                                                                                                       |
-| payments[i].cardNumber                                                                                  | string &#124; undefined                                                                                                        | The card number with the following format " ****last 4 digits ". Only if the payments[i].paymentMethod is "CARD" or "PAYMENT_TERMINAL"                                                                                                                                                                                      |
-| payments[i].cardType                                                                                    | string ( <br/> &nbsp;&nbsp;"CREDIT" <br/> &nbsp;&nbsp;"DEBIT" <br/>) &#124; undefined                                          | The card type. Only if the payments[i].paymentMethod is "CARD" or "PAYMENT_TERMINAL"                                                                                                                                                                                                                                        |
-| orderItems                                                                                              | Array                                                                                                                          | All order items ordered in this order                                                                                                                                                                                                                                                                                       |
-| orderItems[i]                                                                                           | Object                                                                                                                         | An order item                                                                                                                                                                                                                                                                                                               |
-| orderItems[i].productId                                                                                 | string (UUID)                                                                                                                  | Product id of this order item                                                                                                                                                                                                                                                                                               |
-| orderItems[i].externalProductId                                                                         | string  &#124; undefined                                                                                                       | External Product id of this order item                                                                                                                                                                                                                                                                                      |
-| orderItems[i].name                                                                                      | string                                                                                                                         | Name of this order item                                                                                                                                                                                                                                                                                                     |
-| orderItems[i].unitPrice                                                                                 | string (number)                                                                                                                | Unit price of this order item                                                                                                                                                                                                                                                                                               |
-| orderItems[i].discountedUnitPrice                                                                       | string (number) &#124; undefined                                                                                               | The discounted price of this order item. E.g. if product has a discount price it will be the price for customer instead of `unitPrice`                                                                                                                                                                                      |
-| orderItems[i].quantity                                                                                  | number                                                                                                                         | Quantity of this order item                                                                                                                                                                                                                                                                                                 |
-| orderItems[i].promoText                                                                                 | string &#124; undefined                                                                                                        | Product promotion text                                                                                                                                                                                                                                                                                                      |
-| orderItems[i].note                                                                                      | string &#124; undefined                                                                                                        | Note from customer about the order item, e.g. no ice                                                                                                                                                                                                                                                                        |
-| orderItems[i].modifierGroups                                                                            | Array                                                                                                                          | All modifiers attached to this order item                                                                                                                                                                                                                                                                                   |
-| orderItems[i].modifierGroups[j]                                                                         | Object                                                                                                                         | A modifier                                                                                                                                                                                                                                                                                                                  |
-| orderItems[i].modifierGroups[j].externalModifierGroupId                                                 | string (UUID) &#124; undefined                                                                                                 | External Identifier of this modifier group                                                                                                                                                                                                                                                                                  |
-| orderItems[i].modifierGroups[j].name                                                                    | string                                                                                                                         | Name of this modifier group, e.g. "Excluded ingredients"                                                                                                                                                                                                                                                                    |
-| orderItems[i].modifierGroups[j].modifiers                                                               | Array                                                                                                                          | All modifiers attached to this modifier group                                                                                                                                                                                                                                                                               |
-| orderItems[i].modifierGroups[j].modifiers[k]                                                            | Object                                                                                                                         | A modifier                                                                                                                                                                                                                                                                                                                  |
-| orderItems[i].modifierGroups[j].modifiers[k].externalModifierId                                         | string &#124; undefined                                                                                                        | External Identifier of this modifier                                                                                                                                                                                                                                                                                        |
-| orderItems[i].modifierGroups[j].modifiers[k].name                                                       | string                                                                                                                         | Name of this modifier, e.g. "Onions"                                                                                                                                                                                                                                                                                        |
-| orderItems[i].modifierGroups[j].modifiers[k].price                                                      | string (number)                                                                                                                | Price of this modifier (Unit Price)                                                                                                                                                                                                                                                                                         |
-| orderItems[i].modifierGroups[j].modifiers[k].quantity                                                   | number                                                                                                                         | Quantity of this modifier                                                                                                                                                                                                                                                                                                   |
-| orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups                                          | Array                                                                                                                          | A sub-modifier group                                                                                                                                                                                                                                                                                                        |
-| orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups[l].externalSubModifierGroupId            | string (UUID) &#124; undefined                                                                                                 | External Identifier of this sub-modifier group                                                                                                                                                                                                                                                                              |
-| orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups[l].name                                  | string                                                                                                                         | Name of this sub-modifier group, e.g. "Excluded ingredients"                                                                                                                                                                                                                                                                |
-| orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups[l].subModifiers                          | Array                                                                                                                          | All sub-modifiers attached to this sub-modifier group                                                                                                                                                                                                                                                                       |
-| orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups[l].subModifiers[m]                       | Object                                                                                                                         | A sub-modifier                                                                                                                                                                                                                                                                                                              |
-| orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups[l].subModifiers[m].externalSubModifierId | string  &#124; undefined                                                                                                       | External Identifier of this sub-modifier                                                                                                                                                                                                                                                                                    |
-| orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups[l].subModifiers[m].name                  | string                                                                                                                         | Name of this sub-modifier, e.g. "Onions"                                                                                                                                                                                                                                                                                    |
-| orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups[l].subModifiers[m].price                 | string (number)                                                                                                                | Price of this sub-modifier (Unit Price)                                                                                                                                                                                                                                                                                     |
-| orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups[l].subModifiers[m].quantity              | number                                                                                                                         | Quantity of this sub-modifier                                                                                                                                                                                                                                                                                               |
-
+| storeId                                                                                                 | string (UUID)                                                                                                | The Store Id for the store that is sending the delivery                                                                                                                                                                                                                                                                     |
+| externalOrderId                                                                                         | string &#124; undefined                                                                                      | The external order id sent when creating a order. If no external order id was sent it will be undefined                                                                                                                                                                                                                     |
+| didiFoodOrderId                                                                                         | string &#124; undefined                                                                                      | Unique Identifier from Didi Food order. If not a Didi Food order it will be undefined                                                                                                                                                                                                                                       |
+| didiFoodOrderIndex                                                                                      | string &#124; undefined                                                                                      | Order Index provided by Didi Food. If not a Didi Food order it will be undefined                                                                                                                                                                                                                                            |
+| rappiOrderId                                                                                            | string &#124; undefined                                                                                      | Unique Identifier from Rappi order. If not a Rappi order it will be undefined                                                                                                                                                                                                                                               |
+| uberEatsOrderId                                                                                         | string &#124; undefined                                                                                      | Unique Identifier from Uber Eats order. If not an Uber Eats order it will be undefined                                                                                                                                                                                                                                      |
+| eventType                                                                                               | string ("ORDER_CREATED")                                                                                     | Type of the event                                                                                                                                                                                                                                                                                                           |
+| occurredAt                                                                                              | string (Date)                                                                                                | The date time when the event occurred                                                                                                                                                                                                                                                                                       |
+| orderStatus                                                                                             | string ( <br/> &nbsp;&nbsp;"NEW" <br/> &nbsp;&nbsp;"ACCEPTED" <br/> )                                        | Order status. If order is made from PideDirecto webpage or app it will be in status "NEW" and needs to be either accepted or rejected by API acceptOrder or rejectOrder or in PideDirecto Admin. Otherwise if created by the API createDeliveryOrder or from PideDirecto Admin by the store it will have status "ACCEPTED". |
+| orderType                                                                                               | string ( <br/> &nbsp;&nbsp;"TAKE_AWAY_ORDER" <br/> &nbsp;&nbsp;"DELIVERY_ORDER" <br/> )                      | The type of the order                                                                                                                                                                                                                                                                                                       |
+| pickupTime                                                                                              | string (Date) &#124; undefined                                                                               | Time the driver can pickup the order at earliest                                                                                                                                                                                                                                                                            |
+| pickupTimeType                                                                                          | string ( <br/> &nbsp;&nbsp;"ASAP" <br/> &nbsp;&nbsp;"PLANNED" <br/> ) &#124; undefined                       | The type of the pickup time                                                                                                                                                                                                                                                                                                 |
+| storeName                                                                                               | string                                                                                                       | Name of the store                                                                                                                                                                                                                                                                                                           |
+| storeStreet                                                                                             | string                                                                                                       | Street of the store                                                                                                                                                                                                                                                                                                         |
+| storeLocation                                                                                           | Object                                                                                                       | GPS coordinates of the store                                                                                                                                                                                                                                                                                                |
+| storeLocation.lat                                                                                       | number                                                                                                       | Latitude GPS coordinate                                                                                                                                                                                                                                                                                                     |
+| storeLocation.lng                                                                                       | number                                                                                                       | Longitude GPS coordinate                                                                                                                                                                                                                                                                                                    |
+| customerId                                                                                              | string (UUID)                                                                                                | Unique identifier of the customer in pidedirecto                                                                                                                                                                                                                                                                            |
+| customerName                                                                                            | string                                                                                                       | Name of the customer                                                                                                                                                                                                                                                                                                        |
+| customerEmail                                                                                           | string &#124; undefined                                                                                      | Email of the customer                                                                                                                                                                                                                                                                                                       |
+| customerPhoneNumber                                                                                     | string                                                                                                       | Phone number to the customer                                                                                                                                                                                                                                                                                                |
+| customerAddress                                                                                         | Object &#124; undefined                                                                                      | The delivery address if `orderType` is "DELIVERY_ORDER" otherwise undefined                                                                                                                                                                                                                                                 |
+| customerAddress.location                                                                                | Object                                                                                                       | GPS coordinates of the delivery address                                                                                                                                                                                                                                                                                     |
+| customerAddress.location.lat                                                                            | number                                                                                                       | Latitude GPS coordinate                                                                                                                                                                                                                                                                                                     |
+| customerAddress.location.lng                                                                            | number                                                                                                       | Longitude GPS coordinate                                                                                                                                                                                                                                                                                                    |
+| customerAddress.street                                                                                  | string                                                                                                       | Street name and number of the delivery address                                                                                                                                                                                                                                                                              |
+| customerAddress.instructions                                                                            | string &#124; undefined                                                                                      | Other delivery instruction of the delivery address                                                                                                                                                                                                                                                                          |
+| subtotal                                                                                                | string (number)                                                                                              | Total cost of the order items without discount                                                                                                                                                                                                                                                                              |
+| productDiscount                                                                                         | string (number) &#124; undefined                                                                             | Total product discount of the order items                                                                                                                                                                                                                                                                                   |
+| promoCode                                                                                               | string (number) &#124; undefined                                                                             | Promo code used with order                                                                                                                                                                                                                                                                                                  |
+| promoCodeDiscount                                                                                       | string (number) &#124; undefined                                                                             | Total discount received from using a promo code                                                                                                                                                                                                                                                                             |
+| discount                                                                                                | string (number) &#124; undefined                                                                             | The sum of all discounts that apply to this order (total discount)                                                                                                                                                                                                                                                          |
+| isBigOrder                                                                                              | boolean &#124; undefined                                                                                     | True to indicate when the order should be delivered by a vehicle larger than usual (larger than a motorcycle).                                                                                                                                                                                                              |
+| deliveryCost                                                                                            | string (number) &#124; undefined                                                                             | Delivery cost that the customer pays for the order                                                                                                                                                                                                                                                                          |
+| total                                                                                                   | string (number)                                                                                              | Total cost that the customer pays for the order (delivery cost included)                                                                                                                                                                                                                                                    |
+| paymentMethod                                                                                           | string ( <br/> &nbsp;&nbsp;"CARD" <br/> &nbsp;&nbsp;"CASH" <br/> &nbsp;&nbsp;"PAYMENT_TERMINAL" <br/> )      | The payment method of the delivery address. Can be either "CARD", "CASH" or "PAYMENT_TERMINAL". If "CARD" the driver will not charge customer anything.                                                                                                                                                                     |
+| cardNumber                                                                                              | string &#124; undefined                                                                                      | The card number with the following format " \*\*\*\*last 4 digits ". Only if the paymentMethod is "CARD" or "PAYMENT_TERMINAL"                                                                                                                                                                                              |
+| cardType                                                                                                | string ( <br/> &nbsp;&nbsp;"CREDIT" <br/> &nbsp;&nbsp;"DEBIT" <br/>) &#124; undefined                        | The card type. Only if the paymentMethod is "CARD" or "PAYMENT_TERMINAL"                                                                                                                                                                                                                                                    |
+| payments                                                                                                | Array &#124; undefined                                                                                       | All payments used to pay the order.                                                                                                                                                                                                                                                                                         |
+| payments[i]                                                                                             | Object                                                                                                       | Contains the payment information                                                                                                                                                                                                                                                                                            |
+| payments[i].paymentTerminalPaymentId                                                                    | string (UUID) &#124; undefined                                                                               | Id of the payment if the payments[i].paymentMethod is "PAYMENT_TERMINAL"                                                                                                                                                                                                                                                    |
+| payments[i].amount                                                                                      | string                                                                                                       | Amount of the payment                                                                                                                                                                                                                                                                                                       |
+| payments[i].paymentMethod                                                                               | string ( <br/> &nbsp;&nbsp;"CARD" <br/> &nbsp;&nbsp;"CASH" <br/> &nbsp;&nbsp;"PAYMENT_TERMINAL" <br/> )      | The payment method of the payments[i]                                                                                                                                                                                                                                                                                       |
+| payments[i].cardNumber                                                                                  | string &#124; undefined                                                                                      | The card number with the following format " \*\*\*\*last 4 digits ". Only if the payments[i].paymentMethod is "CARD" or "PAYMENT_TERMINAL"                                                                                                                                                                                  |
+| payments[i].cardType                                                                                    | string ( <br/> &nbsp;&nbsp;"CREDIT" <br/> &nbsp;&nbsp;"DEBIT" <br/>) &#124; undefined                        | The card type. Only if the payments[i].paymentMethod is "CARD" or "PAYMENT_TERMINAL"                                                                                                                                                                                                                                        |
+| orderItems                                                                                              | Array                                                                                                        | All order items ordered in this order                                                                                                                                                                                                                                                                                       |
+| orderItems[i]                                                                                           | Object                                                                                                       | An order item                                                                                                                                                                                                                                                                                                               |
+| orderItems[i].productId                                                                                 | string (UUID)                                                                                                | Product id of this order item                                                                                                                                                                                                                                                                                               |
+| orderItems[i].externalProductId                                                                         | string &#124; undefined                                                                                      | External Product id of this order item                                                                                                                                                                                                                                                                                      |
+| orderItems[i].name                                                                                      | string                                                                                                       | Name of this order item                                                                                                                                                                                                                                                                                                     |
+| orderItems[i].unitPrice                                                                                 | string (number)                                                                                              | Unit price of this order item                                                                                                                                                                                                                                                                                               |
+| orderItems[i].discountedUnitPrice                                                                       | string (number) &#124; undefined                                                                             | The discounted price of this order item. E.g. if product has a discount price it will be the price for customer instead of `unitPrice`                                                                                                                                                                                      |
+| orderItems[i].quantity                                                                                  | number                                                                                                       | Quantity of this order item                                                                                                                                                                                                                                                                                                 |
+| orderItems[i].promoText                                                                                 | string &#124; undefined                                                                                      | Product promotion text                                                                                                                                                                                                                                                                                                      |
+| orderItems[i].note                                                                                      | string &#124; undefined                                                                                      | Note from customer about the order item, e.g. no ice                                                                                                                                                                                                                                                                        |
+| orderItems[i].modifierGroups                                                                            | Array                                                                                                        | All modifiers attached to this order item                                                                                                                                                                                                                                                                                   |
+| orderItems[i].modifierGroups[j]                                                                         | Object                                                                                                       | A modifier                                                                                                                                                                                                                                                                                                                  |
+| orderItems[i].modifierGroups[j].externalModifierGroupId                                                 | string (UUID) &#124; undefined                                                                               | External Identifier of this modifier group                                                                                                                                                                                                                                                                                  |
+| orderItems[i].modifierGroups[j].name                                                                    | string                                                                                                       | Name of this modifier group, e.g. "Excluded ingredients"                                                                                                                                                                                                                                                                    |
+| orderItems[i].modifierGroups[j].modifiers                                                               | Array                                                                                                        | All modifiers attached to this modifier group                                                                                                                                                                                                                                                                               |
+| orderItems[i].modifierGroups[j].modifiers[k]                                                            | Object                                                                                                       | A modifier                                                                                                                                                                                                                                                                                                                  |
+| orderItems[i].modifierGroups[j].modifiers[k].externalModifierId                                         | string &#124; undefined                                                                                      | External Identifier of this modifier                                                                                                                                                                                                                                                                                        |
+| orderItems[i].modifierGroups[j].modifiers[k].name                                                       | string                                                                                                       | Name of this modifier, e.g. "Onions"                                                                                                                                                                                                                                                                                        |
+| orderItems[i].modifierGroups[j].modifiers[k].price                                                      | string (number)                                                                                              | Price of this modifier (Unit Price)                                                                                                                                                                                                                                                                                         |
+| orderItems[i].modifierGroups[j].modifiers[k].quantity                                                   | number                                                                                                       | Quantity of this modifier                                                                                                                                                                                                                                                                                                   |
+| orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups                                          | Array                                                                                                        | A sub-modifier group                                                                                                                                                                                                                                                                                                        |
+| orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups[l].externalSubModifierGroupId            | string (UUID) &#124; undefined                                                                               | External Identifier of this sub-modifier group                                                                                                                                                                                                                                                                              |
+| orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups[l].name                                  | string                                                                                                       | Name of this sub-modifier group, e.g. "Excluded ingredients"                                                                                                                                                                                                                                                                |
+| orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups[l].subModifiers                          | Array                                                                                                        | All sub-modifiers attached to this sub-modifier group                                                                                                                                                                                                                                                                       |
+| orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups[l].subModifiers[m]                       | Object                                                                                                       | A sub-modifier                                                                                                                                                                                                                                                                                                              |
+| orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups[l].subModifiers[m].externalSubModifierId | string &#124; undefined                                                                                      | External Identifier of this sub-modifier                                                                                                                                                                                                                                                                                    |
+| orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups[l].subModifiers[m].name                  | string                                                                                                       | Name of this sub-modifier, e.g. "Onions"                                                                                                                                                                                                                                                                                    |
+| orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups[l].subModifiers[m].price                 | string (number)                                                                                              | Price of this sub-modifier (Unit Price)                                                                                                                                                                                                                                                                                     |
+| orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups[l].subModifiers[m].quantity              | number                                                                                                       | Quantity of this sub-modifier                                                                                                                                                                                                                                                                                               |
 
 #### Example
 
@@ -1055,67 +1063,82 @@ This event is will be emitted when a new order is created.
   "paymentMethod": "CARD",
   "cardNumber": "****4242",
   "cardType": "DEBIT",
-  "payments": [{
-    "paymentTerminalPaymentId": "4698b9e3-3115-4964-bde1-f51722330c6f",
-    "amount": "169.99",
-    "paymentMethod": "PAYMENT_TERMINAL",
-    "cardNumber": "****4242",
-    "cardType": "DEBIT"
-  }],
-  "orderItems": [{
-    "productId": "42ae7980-2994-4362-8b44-8492920e8499",
-    "name": "Cheeseburger",
-    "unitPrice": "129.99",
-    "quantity": "1",
-    "modifierGroups": [{
-      "name": "Drinks",
-      "modifiers": [{
-        "name": "Coffee",
-        "price": "0",
-        "quantity": 1,
-        "subModifierGroups": [{
-          "name": "Type of Milk",
-          "subModifiers": [{
-            "name": "Oat Milk",
-            "price": "0",
-            "quantity": 1
-          }]
-        }]
-      }]
-    }]
-  }, {
-    "productId": "42ae7980-2994-4362-8b44-8492920e8499",
-    "name": "Coca Cola",
-    "unitPrice": "30",
-    "discountedUnitPrice": "20",
-    "quantity": "1",
-    "note": "no ice",
-    "modifierGroups": [{
-      "name": "Excluded ingredients",
-      "modifiers": [{
-        "name": "Onions",
-        "price": "0"
-      }]
-    }]
-  }]
+  "payments": [
+    {
+      "paymentTerminalPaymentId": "4698b9e3-3115-4964-bde1-f51722330c6f",
+      "amount": "169.99",
+      "paymentMethod": "PAYMENT_TERMINAL",
+      "cardNumber": "****4242",
+      "cardType": "DEBIT"
+    }
+  ],
+  "orderItems": [
+    {
+      "productId": "42ae7980-2994-4362-8b44-8492920e8499",
+      "name": "Cheeseburger",
+      "unitPrice": "129.99",
+      "quantity": "1",
+      "modifierGroups": [
+        {
+          "name": "Drinks",
+          "modifiers": [
+            {
+              "name": "Coffee",
+              "price": "0",
+              "quantity": 1,
+              "subModifierGroups": [
+                {
+                  "name": "Type of Milk",
+                  "subModifiers": [
+                    {
+                      "name": "Oat Milk",
+                      "price": "0",
+                      "quantity": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "productId": "42ae7980-2994-4362-8b44-8492920e8499",
+      "name": "Coca Cola",
+      "unitPrice": "30",
+      "discountedUnitPrice": "20",
+      "quantity": "1",
+      "note": "no ice",
+      "modifierGroups": [
+        {
+          "name": "Excluded ingredients",
+          "modifiers": [
+            {
+              "name": "Onions",
+              "price": "0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
 ```
 
-
-
 ### Event Type ORDER_REJECTED
+
 This event is will be emitted when an order with status NEW is rejected by the store.
 Note that this event is not emitted for delivery orders since they are already in state ACCEPTED when created.
 
-| Body Parameter  | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Description                                                                                             |
-|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| orderId         | string (UUID)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Unique identifier of the order in pidedirecto                                                           |
-| storeId         | string (UUID)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | The Store Id for the store that is sending the delivery                                                 |
-| externalOrderId | string &#124; undefined                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | The external order id sent when creating a order. If no external order id was sent it will be undefined |
-| eventType       | string ("ORDER_REJECTED")                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | Type of the event                                                                                       |
-| occurredAt      | string (Date)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | The date time when the event occurred                                                                   |
-| reason          | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/>  &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/>  &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/>   &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/>   &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order was rejected                                                                       |
-
+| Body Parameter  | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Description                                                                                             |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| orderId         | string (UUID)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Unique identifier of the order in pidedirecto                                                           |
+| storeId         | string (UUID)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | The Store Id for the store that is sending the delivery                                                 |
+| externalOrderId | string &#124; undefined                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | The external order id sent when creating a order. If no external order id was sent it will be undefined |
+| eventType       | string ("ORDER_REJECTED")                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Type of the event                                                                                       |
+| occurredAt      | string (Date)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | The date time when the event occurred                                                                   |
+| reason          | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/> &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/> &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/> &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/> &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order was rejected                                                                       |
 
 #### Example
 
@@ -1130,20 +1153,18 @@ Note that this event is not emitted for delivery orders since they are already i
 }
 ```
 
-
-
 ### Event Type ORDER_ACCEPTED
+
 This event is will be emitted when an order with status NEW is accepted by the store.
 Note that this event is not emitted for delivery orders since they are already in state ACCEPTED when created.
 
 | Body Parameter  | Type                      | Description                                                                                             |
-|-----------------|---------------------------|---------------------------------------------------------------------------------------------------------|
+| --------------- | ------------------------- | ------------------------------------------------------------------------------------------------------- |
 | orderId         | string (UUID)             | Unique identifier of the order in pidedirecto                                                           |
 | storeId         | string (UUID)             | The Store Id for the store that is sending the delivery                                                 |
 | externalOrderId | string &#124; undefined   | The external order id sent when creating a order. If no external order id was sent it will be undefined |
 | eventType       | string ("ORDER_ACCEPTED") | Type of the event                                                                                       |
 | occurredAt      | string (Date)             | The date time when the event occurred                                                                   |
-
 
 #### Example
 
@@ -1157,20 +1178,18 @@ Note that this event is not emitted for delivery orders since they are already i
 }
 ```
 
-
-
 ### Event Type ORDER_CANCELLED
+
 This event is emitted when order is cancelled.
 
-| Body Parameter  | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Description                                                                                             |
-|-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| orderId         | string (UUID)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | Unique identifier of the order in pidedirecto                                                           |
-| storeId         | string (UUID)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | The Store Id for the store that is sending the delivery                                                 |
-| externalOrderId | string &#124; undefined                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | The external order id sent when creating a order. If no external order id was sent it will be undefined |
-| eventType       | string ("ORDER_CANCELLED")                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Type of the event                                                                                       |
-| occurredAt      | string (Date)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | The date time when the event occurred                                                                   |
-| reason          | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/>  &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/>  &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/>   &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/>   &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order was cancelled                                                                      |
-
+| Body Parameter  | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Description                                                                                             |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| orderId         | string (UUID)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Unique identifier of the order in pidedirecto                                                           |
+| storeId         | string (UUID)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | The Store Id for the store that is sending the delivery                                                 |
+| externalOrderId | string &#124; undefined                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | The external order id sent when creating a order. If no external order id was sent it will be undefined |
+| eventType       | string ("ORDER_CANCELLED")                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | Type of the event                                                                                       |
+| occurredAt      | string (Date)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | The date time when the event occurred                                                                   |
+| reason          | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/> &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/> &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/> &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/> &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order was cancelled                                                                      |
 
 #### Example
 
@@ -1185,13 +1204,12 @@ This event is emitted when order is cancelled.
 }
 ```
 
-
-
 ### Event Type DRIVER_ACCEPTED_DELIVERY
+
 This event is emitted when a driver accepted the delivery of an order.
 
 | Body Parameter       | Type                                | Description                                                                                             |
-|----------------------|-------------------------------------|---------------------------------------------------------------------------------------------------------|
+| -------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | orderId              | string (UUID)                       | Unique identifier of the order in pidedirecto                                                           |
 | storeId              | string (UUID)                       | The Store Id for the store that is sending the delivery                                                 |
 | externalOrderId      | string &#124; undefined             | The external order id sent when creating a order. If no external order id was sent it will be undefined |
@@ -1200,7 +1218,8 @@ This event is emitted when a driver accepted the delivery of an order.
 | driverName           | string                              | First and last name of driver                                                                           |
 | driverPhoneNumber    | string                              | Phone number to driver                                                                                  |
 | deliverySecurityCode | string &#124; undefined             | A pin security code made of numbers that the user must give to the driver when receiving a delivery     |
-
+| rappiQrCode          | string &#124; undefined             | A QR code for the driver to scan accept the rappi order                                                 |
+| rappiValidationCode  | string &#124; undefined             | A validation code for the driver to accept the rappi order                                              |
 
 #### Example
 
@@ -1217,13 +1236,12 @@ This event is emitted when a driver accepted the delivery of an order.
 }
 ```
 
-
-
 ### Event Type DRIVER_ARRIVED_AT_STORE
+
 This event is emitted when a driver pressed arrived at the store button in drivers app.
 
 | Body Parameter  | Type                               | Description                                                                                             |
-|-----------------|------------------------------------|---------------------------------------------------------------------------------------------------------|
+| --------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | orderId         | string (UUID)                      | Unique identifier of the order in pidedirecto                                                           |
 | storeId         | string (UUID)                      | The Store Id for the store that is sending the delivery                                                 |
 | externalOrderId | string &#124; undefined            | The external order id sent when creating a order. If no external order id was sent it will be undefined |
@@ -1242,13 +1260,12 @@ This event is emitted when a driver pressed arrived at the store button in drive
 }
 ```
 
-
-
 ### Event Type DRIVER_PICKED_UP_DELIVERY
+
 This event is emitted when a driver pressed picked up at store button in drivers app.
 
 | Body Parameter  | Type                                 | Description                                                                                             |
-|-----------------|--------------------------------------|---------------------------------------------------------------------------------------------------------|
+| --------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------- |
 | orderId         | string (UUID)                        | Unique identifier of the order in pidedirecto                                                           |
 | storeId         | string (UUID)                        | The Store Id for the store that is sending the delivery                                                 |
 | externalOrderId | string &#124; undefined              | The external order id sent when creating a order. If no external order id was sent it will be undefined |
@@ -1267,13 +1284,12 @@ This event is emitted when a driver pressed picked up at store button in drivers
 }
 ```
 
-
-
 ### Event Type DRIVER_ARRIVED_AT_CLIENT
+
 This event is emitted when a driver pressed arrived at client button in drivers app.
 
 | Body Parameter  | Type                                | Description                                                                                             |
-|-----------------|-------------------------------------|---------------------------------------------------------------------------------------------------------|
+| --------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | orderId         | string (UUID)                       | Unique identifier of the order in pidedirecto                                                           |
 | storeId         | string (UUID)                       | The Store Id for the store that is sending the delivery                                                 |
 | externalOrderId | string &#124; undefined             | The external order id sent when creating a order. If no external order id was sent it will be undefined |
@@ -1292,15 +1308,14 @@ This event is emitted when a driver pressed arrived at client button in drivers 
 }
 ```
 
-
-
 ### Event Type DRIVER_CANCELLED
+
 This event is emitted when a driver who accepted the delivery for some reason will not deliver the delivery.
 It does not mean that the order is cancelled or rejected. However when order is cancelled or rejected this event will also be emitted if a driver has accepted the delivery already.
 To react on order cancelled or rejected listen to event types ORDER_CANCELLED and ORDER_REJECTED instead.
 
 | Body Parameter  | Type                        | Description                                                                                             |
-|-----------------|-----------------------------|---------------------------------------------------------------------------------------------------------|
+| --------------- | --------------------------- | ------------------------------------------------------------------------------------------------------- |
 | orderId         | string (UUID)               | Unique identifier of the order in pidedirecto                                                           |
 | storeId         | string (UUID)               | The Store Id for the store that is sending the delivery                                                 |
 | externalOrderId | string &#124; undefined     | The external order id sent when creating a order. If no external order id was sent it will be undefined |
@@ -1319,13 +1334,12 @@ To react on order cancelled or rejected listen to event types ORDER_CANCELLED an
 }
 ```
 
-
-
 ### Event Type ORDER_COMPLETED
+
 This event is emitted when a driver pressed delivered to client button in drivers app.
 
 | Body Parameter  | Type                       | Description                                                                                             |
-|-----------------|----------------------------|---------------------------------------------------------------------------------------------------------|
+| --------------- | -------------------------- | ------------------------------------------------------------------------------------------------------- |
 | orderId         | string (UUID)              | Unique identifier of the order in pidedirecto                                                           |
 | storeId         | string (UUID)              | The Store Id for the store that is sending the delivery                                                 |
 | externalOrderId | string &#124; undefined    | The external order id sent when creating a order. If no external order id was sent it will be undefined |
@@ -1346,10 +1360,11 @@ This event is emitted when a driver pressed delivered to client button in driver
 ```
 
 ### Event Type PAYMENT_LINK_PAID
+
 This event is emitted when a paymentLink is paid.
 
 | Body Parameter | Type                         | Description                                             |
-|----------------|------------------------------|---------------------------------------------------------|
+| -------------- | ---------------------------- | ------------------------------------------------------- |
 | paymentLinkId  | string (UUID)                | Unique identifier of the paymentLink in pidedirecto     |
 | orderId        | string (UUID)                | Unique identifier of the order in pidedirecto           |
 | storeId        | string (UUID)                | The Store Id for the store that is sending the delivery |
@@ -1357,7 +1372,7 @@ This event is emitted when a paymentLink is paid.
 | status         | string ("PAYED")             | The status of the payment of the paymentLink ("PAYED")  |
 | url            | string                       | A URL for pay the paymentLink                           |
 | eventType      | string ("PAYMENT_LINK_PAID") | Type of the event                                       |
-| paidAt         | string (Date)                | The date time when the paymentLink was payed            | 
+| paidAt         | string (Date)                | The date time when the paymentLink was payed            |
 | occurredAt     | string (Date)                | The date time when the event occurred                   |
 
 #### Example
@@ -1377,10 +1392,11 @@ This event is emitted when a paymentLink is paid.
 ```
 
 ### Event Type PAYMENT_LINK_FAILED
+
 This event is emitted when a paymentLink is paid.
 
 | Body Parameter | Type                           | Description                                             |
-|----------------|--------------------------------|---------------------------------------------------------|
+| -------------- | ------------------------------ | ------------------------------------------------------- |
 | paymentLinkId  | string (UUID)                  | Unique identifier of the paymentLink in pidedirecto     |
 | orderId        | string (UUID)                  | Unique identifier of the order in pidedirecto           |
 | storeId        | string (UUID)                  | The Store Id for the store that is sending the delivery |
@@ -1406,10 +1422,11 @@ This event is emitted when a paymentLink is paid.
 ```
 
 ### Event Type PAYMENT_LINK_CANCELLED
+
 This event is emitted when a paymentLink is paid.
 
 | Body Parameter | Type                              | Description                                                |
-|----------------|-----------------------------------|------------------------------------------------------------|
+| -------------- | --------------------------------- | ---------------------------------------------------------- |
 | paymentLinkId  | string (UUID)                     | Unique identifier of the paymentLink in pidedirecto        |
 | orderId        | string (UUID)                     | Unique identifier of the order in pidedirecto              |
 | storeId        | string (UUID)                     | The Store Id for the store that is sending the delivery    |
@@ -1437,73 +1454,76 @@ This event is emitted when a paymentLink is paid.
 ## Diagrams
 
 ### Diagram Order Creation
-![plot](./images/Sequence_Diagram_Create_Delivery_Order.png)
 
+![plot](./images/Sequence_Diagram_Create_Delivery_Order.png)
 
 ## Changelog
 
 ### 2023-10-03
+
 - API - Added discount field to ORDER_CREATED webhook event
 
 ### 2023-02-20
+
 - API - Renamed isWithinDeliveryRadius to deliveryAvailable and added deliveryNotAvailableReason to [POST getDeliveryEstimate](#POST-getDeliveryEstimate) api
 - DOCS - Added diagram to show the sequence of a delivery made in PideDirecto External Api
 
 ### 2022-06-14
+
 - API - Added `ApiCallLimitExceeded` error to [POST uploadStoreMenu](#POST-uploadStoreMenu) api
 - DOCS - Renamed Error Name `OrderCannotBeCancelledError` to `OrderCannotBeCancelled` in docs since it was not correct
 
 ### 2022-11-10
-- API [BREAKING CHANGE] - Renamed the following [POST uploadStoreMenu](#POST-uploadStoreMenu) api request parameters 
 
-```storeMenu.categories[i].products[j].modifiers``` to  ```modifierGroups```
-```storeMenu.categories[i].products[j].modifiers[k].externalModifierId``` to  ```externalModifierGroupId```
-```storeMenu.categories[i].products[j].modifiers[k].modifierItems``` to  ```modifiers```
-```storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].modifierId``` to  ```externalModifierId```
-```storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].modifierId``` to  ```externalModifierId```
-```storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers``` to  ```subModifierGroups```
-```storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers[k].externalSubModifierId``` to  ```externalSubModifierGroupId```
-```storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers[k].subModifierItems``` to  ```subModifiers```
-```storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers[k].subModifierItems[l].externalSubModifierItemId``` to  ```externalSubModifierId```
-```storeMenu.modifierItems``` to  ```modifiers```
+- API [BREAKING CHANGE] - Renamed the following [POST uploadStoreMenu](#POST-uploadStoreMenu) api request parameters
 
+`storeMenu.categories[i].products[j].modifiers` to `modifierGroups`
+`storeMenu.categories[i].products[j].modifiers[k].externalModifierId` to `externalModifierGroupId`
+`storeMenu.categories[i].products[j].modifiers[k].modifierItems` to `modifiers`
+`storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].modifierId` to `externalModifierId`
+`storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].modifierId` to `externalModifierId`
+`storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers` to `subModifierGroups`
+`storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers[k].externalSubModifierId` to `externalSubModifierGroupId`
+`storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers[k].subModifierItems` to `subModifiers`
+`storeMenu.categories[i].products[j].modifiers[k].modifierItems[l].subModifiers[k].subModifierItems[l].externalSubModifierItemId` to `externalSubModifierId`
+`storeMenu.modifierItems` to `modifiers`
 
 - API [BREAKING CHANGE] - Renamed the following [Event Type ORDER_CREATED](#Event-Type-ORDER_CREATED) webhook event body data fields (old data is still send for backwards compatibility but is deprecated and will be removed in the future)
 
-```orderItems[i].modifiers``` to  ```modifierGroups```
-```orderItems[i].modifiers[j].externalModifierId``` to  ```externalModifierGroupId```
-```orderItems[i].modifiers[j].items``` to  ```modifiers```
-```orderItems[i].modifiers[j].items[k].externalModifierItemId``` to  ```externalModifierId```
-```orderItems[i].modifiers[j].items[k].subModifiers``` to  ```subModifierGroups```
-```orderItems[i].modifiers[j].items[k].subModifiers[l].externalSubModifierId``` to  ```externalSubModifierGroupId```
-```orderItems[i].modifiers[j].items[k].subModifiers[l].items``` to  ```subModifiers```
-```orderItems[i].modifiers[j].items[k].subModifiers[l].items[m].externalSubModifierItemId``` to  ```externalSubModifierId```
-
-
+`orderItems[i].modifiers` to `modifierGroups`
+`orderItems[i].modifiers[j].externalModifierId` to `externalModifierGroupId`
+`orderItems[i].modifiers[j].items` to `modifiers`
+`orderItems[i].modifiers[j].items[k].externalModifierItemId` to `externalModifierId`
+`orderItems[i].modifiers[j].items[k].subModifiers` to `subModifierGroups`
+`orderItems[i].modifiers[j].items[k].subModifiers[l].externalSubModifierId` to `externalSubModifierGroupId`
+`orderItems[i].modifiers[j].items[k].subModifiers[l].items` to `subModifiers`
+`orderItems[i].modifiers[j].items[k].subModifiers[l].items[m].externalSubModifierItemId` to `externalSubModifierId`
 
 ### 2022-06-14
+
 - API - Changed createDeliveryOrder request requirements (Added Neighborhood, ZipCode, City, State, Country)
 
 - ### 2022-06-14
 - API - Added getDriverPosition endpoint and documentation
 
 ### 2022-05-20
+
 - DOCS - Added subModifier and subModifier items to Order docs
 
 ### 2022-04-28
-- DOCS - Added External Modifier Id and External Option Item Id to Order Created update
 
+- DOCS - Added External Modifier Id and External Option Item Id to Order Created update
 
 - ### 2021-10-22
 - API - Added new api endpoint for changing product price POST changeProductPrice
 
-
 ### 2021-10-20
+
 - API - Added new reason REJECTED_BY_ADMIN for webhook event types ORDER_CANCELLED abd ORDER_REJECTED
 - DOCS - Correct some descriptions
 
-
 ### 2021-10-04
+
 - API - Added reason parameter to request in cancelOrder API
 - API - Added new acceptOrder API
 - API - Added new rejectOrder API
@@ -1511,16 +1531,16 @@ This event is emitted when a paymentLink is paid.
 - API - Added body parameter to response in Event Type ORDER_CREATED
 - DOCS - Fixed spelling error ocurredAt => occurredAt
 
-
 ### 2021-09-24
+
 - API - Added reasons for webhook event types ORDER_CANCELLED abd ORDER_REJECTED
 - API - Changed webhook event type DELIVERY_DELIVERED to ORDER_COMPLETED
 - DOCS - Updated events examples
 - DOCS - Made index more condense by removing sub-sub-headers
 - DOCS - Updated Webhook section with more info
 
-
 ### 2021-09-23
+
 - API - Added new webhook event types
   - ORDER_CREATED
   - ORDER_REJECTED
@@ -1538,19 +1558,23 @@ This event is emitted when a paymentLink is paid.
 - DOCS - Updated cancelDelivery section to explain when cancelling is posible
 
 ### 2021-12-01
+
 - API - Added externalProductId to changeProductPrice api
 - DOCS - Updated changeProductPrice section with the externalProductId information
 
 ### 2022-03-15
+
 - API - Added didiFoodOrderId, uberEatsOrderId, rappiOrderId and app to orderCreated event
 - DOCS - Updated orderCreated section with the didiFoodOrderId, uberEatsOrderId, rappiOrderId and app information
 
 ### 2024-05-16
+
 - API - Added isBigOrder to createDeliveryOrder request and add isBigOrder to Event Type ORDER_CREATED response.
 - DOCS - Updated createDeliveryOrder section with the isBigOrder request parameter.
 - DOCS - Updated Event Type ORDER_CREATED section with the isBigOrder response parameter.
 
 ### 2024-05-27
+
 - API - Added PAYMENT_LINK as type of paymentMethod in createDeliveryOrder.
 - API - Added new webhook event types
   - PAYMENT_LINK_PAID
@@ -1560,16 +1584,21 @@ This event is emitted when a paymentLink is paid.
 - DOCS - Describe Event Type PAYMENT_LINK_PAID, PAYMENT_LINK_FAILED and PAYMENT_LINK_CANCELLED
 
 ### 2024-05-27
+
 - API - Added card info and payments info to Event Type ORDER_CREATED response.
 - DOCS - Updated Event Type ORDER_CREATED section with the card info and payments info response parameter.
 
 ### 2024-06-25
+
 - DOCS - Updated getDeliveryEstimate section to add Request and Response example.
 
 ### 2024-07-11
+
 - API - Added new createPaymentLink API
 - DOCS - Describe createPaymentLink section more in details
 - DOCS - Updated index with payment link webhook events
-- 
+-
+
 ### 2024-08-08
+
 - DOCS - Added PIDEDIRECTOPOS as app for ORDER_CREATED WebhookEvent
