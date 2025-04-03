@@ -933,6 +933,7 @@ If you have a fixed agreed delivery cost you can omit calling [getDeliveryEstima
 | externalOrderId              | string &#124; undefined                                                                       | An external order id that can be used outside PideDirecto to identify the order in the integrating system                                                                                                                                          |
 | webhookUrl                   | string (URL) &#124; undefined                                                                 | An webhookUrl that will be used to send order/delivery updates to. If not provided the configured general webhookUrl will be used. If none is configured no webhook will be called.                                                                |
 | webhookHeaders               | Object &#124; undefined                                                                       | An object containing headers to add to the webhook request. Where object field is the header name and field value is the header value to send.                                                                                                     |
+| directoProtectionCost        | string &#124; undefined                                                                       | Order protection cost. (To enable this field contact support, otherwise you will get an error when sending it.) (If the protection is enabled and is not sending in the request will take the default protection cost.)                            |
 | isBigOrder                   | boolean &#124; undefined                                                                      | True to indicate when the order should be delivered by a vehicle larger than usual (larger than a motorcycle).                                                                                                                                     |
 
 
@@ -1785,6 +1786,10 @@ This event is emitted when a paymentLink is paid.
 ### 2024-12-17
 - API - Added getOrder api endpoint.
 - DOCS - Added getOrder api documentation and add response and request example. 
+
+### 2025-01-21
+- API - Added directoProtectionCost to createDeliveryOrder request.
+- DOCS - Updated createDeliveryOrder section with the directoProtectionCost request parameter.
 
 ### 2025-03-26
 - API - Added pideDirectoProtectionCost and directoProtectionPaidByCustomer to ORDER_CREATED WebhookEvent response and getOrder api response.
