@@ -12,9 +12,13 @@
     },
     "code-runner.executorMap": {
         "python": " pipenv run python $fullFileName",
-        "typescript": " npx tsx $fullFileName"
+        "typescript": " pd run $fullFileName"
     },
     "code-runner.runInTerminal": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "javascript.updateImportsOnFileMove.importModuleSpecifier": "always",
+    "javascript.preferences.importModuleSpecifier": "non-relative",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "typescript.preferences.importModuleSpecifier": "non-relative"
 }
