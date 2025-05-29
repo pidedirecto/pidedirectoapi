@@ -2012,3 +2012,7 @@ This event is emitted when a paymentLink is paid.
 ### 2025-03-26
 - API - Added pideDirectoProtectionCost and directoProtectionPaidByCustomer to ORDER_CREATED WebhookEvent response and getOrder api response.
 - DOCS - Added pideDirectoProtectionCost and directoProtectionPaidByCustomer to ORDER_CREATED WebhookEvent response table and getOrder api response table.
+
+### 2025-05-29
+- API - Added getOrdersApi
+- DOCS - Added getOrdersApi Documentation
