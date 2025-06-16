@@ -22,6 +22,7 @@
   - [POST getDriverPosition](#post-getdriverposition)
 - [PaymentLink API](#paymentLink-api)
   - [POST createPaymentLink](#post-createpaymentlink)
+- [PosBusinessDay API](#posBusinessDay-api)
 
 - [Webhook Events](#webhook-events)
   - [Event Type ORDER_CREATED](#event-type-order_created)
@@ -756,7 +757,7 @@ Use this API method to get info from multiple orders in a date range.
 #### Request
 | Body Parameter | Type                  | Description                                   |
 |----------------|-----------------------|-----------------------------------------------|
-| storeId        | string (UUID)         | Unique identifier of the order in PideDirecto |
+| storeId        | string (UUID)         | Unique identifier of the store in PideDirecto |
 | startDate      | Date &#124; undefined | The start Date of the dates range             |
 | endDate        | Date &#124; undefined | The end Date of the dates range               |
 
@@ -1351,7 +1352,85 @@ Response
 }
 ```
 
+## PosBusinessDay Api
 
+### POST getPosBusinessDaysSummary
+
+Use this api to get info from multiple posBusinessDays in the date range.
+
+#### Request
+| Body Parameter | Type                  | Description                                   |
+|----------------|-----------------------|-----------------------------------------------|
+| storeId        | string (UUID)         | Unique identifier of the store in PideDirecto |
+| startDate      | Date &#124; undefined | The start Date of the dates range             |
+| endDate        | Date &#124; undefined | The end Date of the dates range               |
+
+
+#### Response Success
+Response Status Code 200
+
+The response of this API will be a list of the following object
+
+
+| Body Parameter                        | Type                           | Description                                                                           |
+|---------------------------------------|--------------------------------|---------------------------------------------------------------------------------------|
+| posBusinessDayId                      | string (UUID)                  | Unique identifier of the posBusinessDay created.                                      |
+| openedAt                              | string (Date)                  | Date the order last modified.                                                         |
+| closedAt                              | string (Date) &#124; undefined | Date the order created.                                                               |
+| orders                                | number                         | The number of orders consider by the pos business day                                 | 
+| totalWithTaxes                        | number                         | The total amount of the orders including taxes                                        | 
+| totalWithoutTaxes                     | number                         | The total amount of the orders discounting the taxes                                  | 
+| totalByPaymentMethod                  | Array &#124; undefined         | A list that summarize the amounts per payment method consider by the pos business day |
+| totalByPaymentMethod[i].paymentMethod | string                         | The name of the paymentMethod                                                         |
+| totalByPaymentMethod[i].total         | number                         | The total corresponding to the payment method                                         |
+| orderTaxes                            | Array &#124; undefined         | A list of all the applied taxes and the corresponding amount                          |
+| orderTaxes[i].taxName                 | string                         | The name of the applied tax                                                           |
+| orderTaxes[i].total                   | number                         | The total corresponding to the tax applied                                            |
+
+#### Response Error
+Here is a list of unique errors that be returned for this API endpoint.
+
+| HTTP Status Codes           | Error Name           | Description                                                                                    |
+|-----------------------------|----------------------|------------------------------------------------------------------------------------------------|
+| 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
+| 500 - Internal Server Error | UnknownError         | - An unknown server error has occurred, try again.                                             |
+
+#### Example
+Request
+
+```json
+{
+  "storeId": "8ab03a24-e63f-4296-a8a3-4a8cf6709e15",
+  "startDate": "2021-09-15T19:32:37Z",
+  "endDate": "2021-10-15T19:32:37Z"
+}
+```
+
+#### Example
+Response:
+```json
+[{
+  "posBusinessDayId": "8ab03a24-e63f-4296-a8a3-4a8cf6709e15",
+  "openedAt": "2021-09-15T19:32:37Z",
+  "closedAt": "2021-10-15T19:32:37Z",
+  "orders": 100,
+  "totalWithTaxes": 10000,
+  "totalWithoutTaxes": 8400,
+  "totalByPaymentMethod": [
+    {
+      "CREDIT_CARD": 5000
+    }, 
+    {
+      "CASH": 5000
+    }
+  ],
+  "orderTaxes": [
+    {
+      "IVA": 1600
+    }
+  ]
+}]
+```
 
 ## Webhook Events
 
