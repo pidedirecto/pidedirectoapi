@@ -2095,3 +2095,8 @@ This event is emitted when a paymentLink is paid.
 ### 2025-05-29
 - API - Added getOrdersApi
 - DOCS - Added getOrdersApi Documentation
+
+
+### 2025-06-16
+- API Added getPosBusinessDaysSummary
+- DOCS Added getPosBusinessDaysSummary Documentation
