@@ -23,6 +23,7 @@
 - [PaymentLink API](#paymentLink-api)
   - [POST createPaymentLink](#post-createpaymentlink)
 - [PosBusinessDay API](#posBusinessDay-api)
+  - [POS getPosBusinessDaysSummary](#post-getPosBusinessDaysSummary)
 
 - [Webhook Events](#webhook-events)
   - [Event Type ORDER_CREATED](#event-type-order_created)
