@@ -18,6 +18,7 @@
   - [POST rejectOrder](#post-rejectorder)
   - [POST getDeliveryEstimate](#post-getdeliveryestimate)
   - [POST createDeliveryOrder](#post-createdeliveryorder)
+  - [POST createTakeAwayOrder](#post-createTakeAwayOrder)
   - [POST cancelOrder](#post-cancelorder)
   - [POST getDriverPosition](#post-getdriverposition)
 - [PaymentLink API](#paymentLink-api)
@@ -1161,12 +1162,12 @@ If you have a fixed agreed delivery cost you can omit calling [getDeliveryEstima
 #### Response Success
 Response Status Code 200
 
-| Body Parameter | Type                      | Description                                               |
-|----------------|---------------------------|-----------------------------------------------------------|
-| orderId        | string (UUID)             | Unique identifier of the order in PideDirecto             |
-| trackingUrl    | string                    | A URL for tracking the delivery inside PideDirecto system |
-| deliveryCost   | string (number)           | The cost of the delivery                                  |
-| paymentLinkUrl | string &#124; undefined   | A URL for pay the paymentLink                             |
+| Body Parameter | Type                      | Description                                              |
+|----------------|---------------------------|----------------------------------------------------------|
+| orderId        | string (UUID)             | Unique identifier of the order in PideDirecto            |
+| trackingUrl    | string                    | A URL to tracking the delivery inside PideDirecto system |
+| deliveryCost   | string (number)           | The cost of the delivery                                 |
+| paymentLinkUrl | string &#124; undefined   | A URL to pay the paymentLink                             |
 
 #### Response Error
 Here is a list of unique errors that be returned for this API endpoint.
@@ -1214,7 +1215,68 @@ Response
 }
 ```
 
+### POST createTakeAwayOrder
 
+Use this API method to request a takeaway order.
+
+#### Request
+
+| Body Parameter      | Type                                                                                          | Description                                                                                                                                                                                                 |
+|---------------------|-----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| storeId             | string (UUID)                                                                                 | The Store Id for the store that is sending the delivery                                                                                                                                                     |
+| customerName        | string                                                                                        | Name of the customer                                                                                                                                                                                        |
+| customerPhoneNumber | string                                                                                        | Phone number to the customer                                                                                                                                                                                |
+| paymentMethod       | string ( <br/> &nbsp;&nbsp;"CARD" <br/> &nbsp;&nbsp;"CASH" <br/> &nbsp;&nbsp;"PAYMENT_LINK" ) | The payment method of the order. Can be either "CARD", "CASH" or "PAYMENT_LINK". If "CARD" will not charge customer anything. If "PAYMENT_LINK" a payment link will be created with the total of the order. |
+| orderCost           | string (number)                                                                               | The cost of the order.                                                                                                                                                                                      |
+| pickupTime          | string (Date) &#124; undefined                                                                | Time the customer can pickup the order at earliest. This parameter can be omitted if you want the customer to pickup order ASAP.                                                                            |
+| externalOrderId     | string &#124; undefined                                                                       | An external order id that can be used outside PideDirecto to identify the order in the integrating system                                                                                                   |
+| webhookUrl          | string (URL) &#124; undefined                                                                 | An webhookUrl that will be used to send order updates to. If not provided the configured general webhookUrl will be used. If none is configured no webhook will be called.                                  |
+| webhookHeaders      | Object &#124; undefined                                                                       | An object containing headers to add to the webhook request. Where object field is the header name and field value is the header value to send.                                                              |
+
+#### Response Success
+
+Response Status Code 200
+
+| Body Parameter | Type                    | Description                                           |
+|----------------|-------------------------|-------------------------------------------------------|
+| orderId        | string (UUID)           | Unique identifier of the order in PideDirecto         |
+| trackingUrl    | string &#124; undefined | A URL to tracking the order inside PideDirecto system |
+| paymentLinkUrl | string &#124; undefined | A URL to pay the paymentLink                          |
+
+#### Response Error
+
+Here is a list of unique errors that be returned for this API endpoint.
+
+| HTTP Status Codes           | Error Name           | Description                                                                                    |
+|-----------------------------|----------------------|------------------------------------------------------------------------------------------------|
+| 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
+| 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                               |
+
+#### Example
+
+Request:
+
+```json
+{
+  "storeId": "38981f83-853c-4193-a3c2-97f05582e0ad",
+  "customerName": "John Doe",
+  "customerPhoneNumber": "+521550000000",
+  "paymentMethod": "CASH",
+  "orderCost": "100.50",
+  "pickupTime": null,
+  "externalOrderId": "id-283789500217743",
+  "webhookUrl": null
+}
+```
+
+Response
+
+```json
+{
+  "orderId": "37d13197-0fa5-4d0b-85ad-ae06dd40177a",
+  "trackingUrl": "https://tktsixcentenario.test.pidedirecto.mx/paymentlink/7TLvvnVAWoNwFKVJNfzFaL"
+}
+```
 
 ### POST cancelOrder
 Use this API method to cancel an order. Orders can only be cancelled if no driver has accepted the order.
@@ -2101,3 +2163,8 @@ This event is emitted when a paymentLink is paid.
 ### 2025-06-16
 - API Added getPosBusinessDaysSummary
 - DOCS Added getPosBusinessDaysSummary Documentation
+
+### 2025-08-06
+
+- API Added new createTakeAwayOrder API endpoint
+- DOCS Describe createTakeAwayOrder method and add documentation
