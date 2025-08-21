@@ -562,6 +562,7 @@ Response Status Code 200
 | Body Parameter                                                                                          | Type                                                                                                                                                                    | Description                                                                                                                                                                                                                                                                                                                 |
 | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | orderId                                                                                                 | string (UUID)                                                                                                                                                           | Unique identifier of the order created.                                                                                                                                                                                                                                                                                     |
+| shortOrderId                                                                                            | string                                                                                                                                                                  | First 6 digits of the orderId for easy reference.                                                                                                                                                                                                                                                                           |
 | storeId                                                                                                 | string (UUID)                                                                                                                                                           | Unique identifier of the store.                                                                                                                                                                                                                                                                                             |
 | externalOrderId                                                                                         | string &#124; undefined                                                                                                                                                 | An external order id that can be used outside PideDirecto to identify the order in the integrating system.                                                                                                                                                                                                                  |
 | didiFoodOrderId                                                                                         | string &#124; undefined                                                                                                                                                 | Unique Identifier from Didi Food order. If not a Didi Food order it will be undefined.                                                                                                                                                                                                                                      |
@@ -686,6 +687,7 @@ Response:
 ```json
 {
   "orderId": "730e3c7f-8921-4fa9-b560-6c714b594559",
+  "shortOrderId": "730E3C",
   "storeId": "91bdaf57-50f3-4fd6-984e-0397840a6487",
   "externalOrderId": "id-89134546",
   "orderStatus": "NEW",
@@ -1227,6 +1229,7 @@ Response Status Code 200
 | Body Parameter | Type                    | Description                                              |
 | -------------- | ----------------------- | -------------------------------------------------------- |
 | orderId        | string (UUID)           | Unique identifier of the order in PideDirecto            |
+| shortOrderId   | string                  | First 6 digits of the orderId for easy reference.        |
 | trackingUrl    | string                  | A URL to tracking the delivery inside PideDirecto system |
 | deliveryCost   | string (number)         | The cost of the delivery                                 |
 | paymentLinkUrl | string &#124; undefined | A URL to pay the paymentLink                             |
@@ -1275,6 +1278,7 @@ Response
 ```json
 {
   "orderId": "37d13197-0fa5-4d0b-85ad-ae06dd40177a",
+  "shortOrderId": "37D131",
   "deliveryCost": "31",
   "trackingUrl": "https://tktsixcentenario.test.pidedirecto.mx/paymentlink/7TLvvnVAWoNwFKVJNfzFaL"
 }
@@ -2281,3 +2285,11 @@ This event is emitted when a paymentLink is paid.
 - API Added notes field to createDeliveryOrder request.
 - DOCS Complement createTakeAwayOrder request with new notes field.
 - DOCS Complement createDeliveryOrder request with new notes field.
+
+### 2025-08-21
+
+- API - Added shortOrderId to getOrder API response.
+- API - Added shortOrderId to createDeliveryOrder API response.
+- DOCS - Updated getOrder and createDeliveryOrder response tables with shortOrderId field.
+- DOCS - Updated example responses to include shortOrderId field.
+- DOCS - Updated shortOrderId examples to uppercase format in getOrder and createDeliveryOrder responses.
