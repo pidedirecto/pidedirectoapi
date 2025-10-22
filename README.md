@@ -2333,3 +2333,7 @@ This event is emitted when a paymentLink is paid.
 
 - API - Added support for "TRANSFER", "CUSTOMER_CREDIT_ACCOUNT" and "MULTIPLE" payment methods for order response. 
 - DOCS - Updated getOrder and getOrders response.paymentMethod to include "TRANSFER", "CUSTOMER_CREDIT_ACCOUNT" and "MULTIPLE" payment methods as response.
+
+### 2025-10-22
+- API - add support for tips in getOrder and getOrders response.
+- DOCS - Updated getOrder and getOrders response to include tips.
