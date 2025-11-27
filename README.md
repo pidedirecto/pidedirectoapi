@@ -1909,58 +1909,75 @@ If you have a fixed agreed delivery cost you can omit calling [getDeliveryEstima
 
 #### Request
 
-| Body Parameter               | Type                                                                                          | Description                                                                                                                                                                                                                                        |
-| ---------------------------- | --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| storeId                      | string (UUID)                                                                                 | The Store Id for the store that is sending the delivery                                                                                                                                                                                            |
-| deliveryEstimateId           | string (UUID) &#124; undefined                                                                | Delivery Estimate Id received from [getDeliveryEstimate](#POST-getDeliveryEstimate) API method, pass this if you need to know the delivery cost in advance. If not passed you will not know the delivery cost in advance before creating the order |
-| customerName                 | string                                                                                        | Name of the customer                                                                                                                                                                                                                               |
-| customerPhoneNumber          | string                                                                                        | Phone number to the customer                                                                                                                                                                                                                       |
-| customerAddress              | Object                                                                                        | The delivery address                                                                                                                                                                                                                               |
-| customerAddress.location     | Object                                                                                        | GPS coordinates of the delivery address                                                                                                                                                                                                            |
-| customerAddress.location.lat | number                                                                                        | Latitude GPS coordinate                                                                                                                                                                                                                            |
-| customerAddress.location.lng | number                                                                                        | Longitude GPS coordinate                                                                                                                                                                                                                           |
-| customerAddress.street       | string                                                                                        | Street name and number of the delivery address &#124; You can include the full address retrieved by Google and leave empty neighborhood, zipCode, city, state and country                                                                          |
-| customerAddress.neighborhood | string &#124; undefined                                                                       | Neighborhood name of the delivery address                                                                                                                                                                                                          |
-| customerAddress.zipCode      | string &#124; undefined                                                                       | ZipCode of the delivery address                                                                                                                                                                                                                    |
-| customerAddress.city         | string &#124; undefined                                                                       | City of the delivery address                                                                                                                                                                                                                       |
-| customerAddress.state        | string &#124; undefined                                                                       | State of the delivery address                                                                                                                                                                                                                      |
-| customerAddress.country      | string &#124; undefined                                                                       | Country of the delivery address                                                                                                                                                                                                                    |
-| customerAddress.instructions | string &#124; undefined                                                                       | Other delivery instruction of the delivery address                                                                                                                                                                                                 |
-| paymentMethod                | string ( <br/> &nbsp;&nbsp;"CARD" <br/> &nbsp;&nbsp;"CASH" <br/> &nbsp;&nbsp;"PAYMENT_LINK" ) | The payment method of the delivery address. Can be either "CARD", "CASH" or "PAYMENT_LINK". If "CARD" the driver will not charge customer anything. If "PAYMENT_LINK" a payment link will be created with the total of the order.                  |
-| orderCost                    | string (number)                                                                               | The cost of the order.                                                                                                                                                                                                                             |
-| driverTip                    | string (number); undefined                                                                    | Extra driver tip (TEST ENV)                                                                                                                                                                                                                        |
-| pickupTime                   | string (Date) &#124; undefined                                                                | Time the driver can pickup the order at earliest. This parameter can be omitted if you want the driver to pickup order ASAP.                                                                                                                       |
-| driverInstructions           | string &#124; undefined                                                                       | Pickup instructions to show the driver                                                                                                                                                                                                             |
-| askDriverForOrderPhoto       | boolean &#124; undefined                                                                      | Ask driver to take a photo of the order (NOT YET IMPLEMENTED)                                                                                                                                                                                      |
-| askDriverForSurvey           | boolean &#124; undefined                                                                      | Ask driver to complete a survey after delivering the order (NOT YET IMPLEMENTED)                                                                                                                                                                   |
-| externalOrderId              | string &#124; undefined                                                                       | An external order id that can be used outside PideDirecto to identify the order in the integrating system                                                                                                                                          |
-| notes                        | string &#124; undefined                                                                       | Notes related about the order. This notes are for the store.                                                                                                                                                                                       |
-| webhookUrl                   | string (URL) &#124; undefined                                                                 | An webhookUrl that will be used to send order/delivery updates to. If not provided the configured general webhookUrl will be used. If none is configured no webhook will be called.                                                                |
-| webhookHeaders               | Object &#124; undefined                                                                       | An object containing headers to add to the webhook request. Where object field is the header name and field value is the header value to send.                                                                                                     |
-| directoProtectionCost        | string &#124; undefined                                                                       | Order protection cost. (To enable this field contact support, otherwise you will get an error when sending it.) (If the protection is enabled and is not sending in the request will take the default protection cost.)                            |
-| isBigOrder                   | boolean &#124; undefined                                                                      | True to indicate when the order should be delivered by a vehicle larger than usual (larger than a motorcycle).                                                                                                                                     |
+| Body Parameter                                             | Type                                                                                          | Description                                                                                                                                                                                                                                        |
+|------------------------------------------------------------|-----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| storeId                                                    | string (UUID)                                                                                 | The Store Id for the store that is sending the delivery                                                                                                                                                                                            |
+| deliveryEstimateId                                         | string (UUID) &#124; undefined                                                                | Delivery Estimate Id received from [getDeliveryEstimate](#POST-getDeliveryEstimate) API method, pass this if you need to know the delivery cost in advance. If not passed you will not know the delivery cost in advance before creating the order |
+| customerName                                               | string                                                                                        | Name of the customer                                                                                                                                                                                                                               |
+| customerPhoneNumber                                        | string                                                                                        | Phone number to the customer                                                                                                                                                                                                                       |
+| customerAddress                                            | Object                                                                                        | The delivery address                                                                                                                                                                                                                               |
+| customerAddress.location                                   | Object                                                                                        | GPS coordinates of the delivery address                                                                                                                                                                                                            |
+| customerAddress.location.lat                               | number                                                                                        | Latitude GPS coordinate                                                                                                                                                                                                                            |
+| customerAddress.location.lng                               | number                                                                                        | Longitude GPS coordinate                                                                                                                                                                                                                           |
+| customerAddress.street                                     | string                                                                                        | Street name and number of the delivery address &#124; You can include the full address retrieved by Google and leave empty neighborhood, zipCode, city, state and country                                                                          |
+| customerAddress.neighborhood                               | string &#124; undefined                                                                       | Neighborhood name of the delivery address                                                                                                                                                                                                          |
+| customerAddress.zipCode                                    | string &#124; undefined                                                                       | ZipCode of the delivery address                                                                                                                                                                                                                    |
+| customerAddress.city                                       | string &#124; undefined                                                                       | City of the delivery address                                                                                                                                                                                                                       |
+| customerAddress.state                                      | string &#124; undefined                                                                       | State of the delivery address                                                                                                                                                                                                                      |
+| customerAddress.country                                    | string &#124; undefined                                                                       | Country of the delivery address                                                                                                                                                                                                                    |
+| customerAddress.instructions                               | string &#124; undefined                                                                       | Other delivery instruction of the delivery address                                                                                                                                                                                                 |
+| paymentMethod                                              | string ( <br/> &nbsp;&nbsp;"CARD" <br/> &nbsp;&nbsp;"CASH" <br/> &nbsp;&nbsp;"PAYMENT_LINK" ) | The payment method of the delivery address. Can be either "CARD", "CASH" or "PAYMENT_LINK". If "CARD" the driver will not charge customer anything. If "PAYMENT_LINK" a payment link will be created with the total of the order.                  |
+| orderCost                                                  | string (number)                                                                               | The cost of the order.                                                                                                                                                                                                                             |
+| driverTip                                                  | string (number); undefined                                                                    | Extra driver tip (TEST ENV)                                                                                                                                                                                                                        |
+| pickupTime                                                 | string (Date) &#124; undefined                                                                | Time the driver can pickup the order at earliest. This parameter can be omitted if you want the driver to pickup order ASAP.                                                                                                                       |
+| driverInstructions                                         | string &#124; undefined                                                                       | Pickup instructions to show the driver                                                                                                                                                                                                             |
+| askDriverForOrderPhoto                                     | boolean &#124; undefined                                                                      | Ask driver to take a photo of the order (NOT YET IMPLEMENTED)                                                                                                                                                                                      |
+| askDriverForSurvey                                         | boolean &#124; undefined                                                                      | Ask driver to complete a survey after delivering the order (NOT YET IMPLEMENTED)                                                                                                                                                                   |
+| externalOrderId                                            | string &#124; undefined                                                                       | An external order id that can be used outside PideDirecto to identify the order in the integrating system                                                                                                                                          |
+| notes                                                      | string &#124; undefined                                                                       | Notes related about the order. This notes are for the store.                                                                                                                                                                                       |
+| items                                                      | Array &#124; undefined                                                                        | List of the products in the order                                                                                                                                                                                                                  |
+| items[i].menuItemId                                        | string (UUID)                                                                                 | The unique identifier of the menu item that represents the specific product within the catalog.                                                                                                                                                    |
+| items[i].externalProductId                                 | string &#124; undefined                                                                       | Identifier of the product in the integrator’s system, used for external reference.                                                                                                                                                                 |
+| items[i].name                                              | string                                                                                        | Name of the product                                                                                                                                                                                                                                |
+| items[i].unitPrice                                         | string (number)                                                                               | The unit price of the product                                                                                                                                                                                                                      |
+| items[i].quantity                                          | number                                                                                        | The quantity of the product                                                                                                                                                                                                                        |
+| items[i].note                                              | string &#124; undefined                                                                       | Optional note of the product                                                                                                                                                                                                                       |
+| items[i].modifierGroups                                    | Array &#124; undefined                                                                        | List of the modifier groups for the product                                                                                                                                                                                                        |
+| items[i].modifierGroups[i].modifierGroupId                 | string (UUID)                                                                                 | The unique identifier of the modifier group that represents the specific modifier group within the catalog.                                                                                                                                        |
+| items[i].modifierGroups[i].externalModifierGroupId         | string &#124; undefined                                                                       | Identifier of the modifier group in the integrator’s system, used for external reference.                                                                                                                                                          |
+| items[i].modifierGroups[i].name                            | string                                                                                        | Name of the modifier group                                                                                                                                                                                                                         |
+| items[i].modifierGroups[i].modifiers                       | Array &#124; undefined                                                                        | List of modifiers in the modifier group                                                                                                                                                                                                            |
+| items[i].modifierGroups[i].modifiers[i].modifierId         | string (UUID)                                                                                 | The unique identifier of the modifier that represents the specific modifier within the catalog.                                                                                                                                                    |
+| items[i].modifierGroups[i].modifiers[i].externalModifierId | string &#124; undefined                                                                       | Identifier of the modifier in the integrator’s system, used for external reference.                                                                                                                                                                |
+| items[i].modifierGroups[i].modifiers[i].name               | string                                                                                        | Name of the modifier                                                                                                                                                                                                                               |
+| items[i].modifierGroups[i].modifiers[i].price              | string (number)                                                                               | Price of the modifier                                                                                                                                                                                                                              |
+| items[i].modifierGroups[i].modifiers[i].quantity           | number                                                                                        | Quantity of the modifier                                                                                                                                                                                                                           |
+| webhookUrl                                                 | string (URL) &#124; undefined                                                                 | An webhookUrl that will be used to send order/delivery updates to. If not provided the configured general webhookUrl will be used. If none is configured no webhook will be called.                                                                |
+| webhookHeaders                                             | Object &#124; undefined                                                                       | An object containing headers to add to the webhook request. Where object field is the header name and field value is the header value to send.                                                                                                     |
+| directoProtectionCost                                      | string &#124; undefined                                                                       | Order protection cost. (To enable this field contact support, otherwise you will get an error when sending it.) (If the protection is enabled and is not sending in the request will take the default protection cost.)                            |
+| isBigOrder                                                 | boolean &#124; undefined                                                                      | True to indicate when the order should be delivered by a vehicle larger than usual (larger than a motorcycle).                                                                                                                                     |
 
 #### Response Success
 
 Response Status Code 200
 
-| Body Parameter | Type                    | Description                                              |
-| -------------- | ----------------------- | -------------------------------------------------------- |
-| orderId        | string (UUID)           | Unique identifier of the order in PideDirecto            |
-| shortOrderId   | string                  | First 6 digits of the orderId for easy reference.        |
-| trackingUrl    | string                  | A URL to tracking the delivery inside PideDirecto system |
-| deliveryCost   | string (number)         | The cost of the delivery                                 |
-| paymentLinkUrl | string &#124; undefined | A URL to pay the paymentLink                             |
+| Body Parameter  | Type                     | Description                                              |
+|-----------------|--------------------------|----------------------------------------------------------|
+| orderId         | string (UUID)            | Unique identifier of the order in PideDirecto            |
+| shortOrderId    | string                   | First 6 digits of the orderId for easy reference.        |
+| trackingUrl     | string                   | A URL to tracking the delivery inside PideDirecto system |
+| deliveryCost    | string (number)          | The cost of the delivery                                 |
+| paymentLinkUrl  | string &#124; undefined  | A URL to pay the paymentLink                             |
 
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
 
-| HTTP Status Codes           | Error Name              | Description                                                                                                          |
-| --------------------------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| 400 - Bad Request           | InvalidArgumentError    | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request                       |
-| 400 - Bad Request           | NotWithinDeliveryRadius | - The delivery is not within the delivery radius of the store. <br/> - Check delivery estimate before creating order |
-| 500 - Internal Server Error | UnknownError            | An unknown server error has occurred, try again.                                                                     |
+| HTTP Status Codes           | Error Name               | Description                                                                                                          |
+|-----------------------------|--------------------------|----------------------------------------------------------------------------------------------------------------------|
+| 400 - Bad Request           | InvalidArgumentError     | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request                       |
+| 400 - Bad Request           | NotWithinDeliveryRadius  | - The delivery is not within the delivery radius of the store. <br/> - Check delivery estimate before creating order |
+| 500 - Internal Server Error | UnknownError             | - An unknown server error has occurred, try again.                                                                   |
 
 #### Example
 
@@ -1980,14 +1997,43 @@ Request:
     "instructions": "Leave it at outside the door"
   },
   "paymentMethod": "CASH",
-  "orderCost": "100.50",
+  "orderCost": "128",
   "pickupTime": null,
   "driverInstructions": "Make sure the ice does not melt!",
   "askDriverForOrderPhoto": false,
   "askDriverForSurvey": false,
   "externalOrderId": "id-283789500217743",
   "webhookUrl": null,
-  "notes": "Notes related to my order. i.g (Add extra fries)"
+  "notes": "Notes related to my order. i.g (Add extra fries)",
+  "items":[
+    {
+      "menuItemId":"1b3f6768-9c9f-4592-a36d-d698432dc266",
+      "name":"Pan De Ajo (1 Pieza)",
+      "unitPrice":"19",
+      "quantity":5,
+      "note":"sin pan, ni ajo"
+    },
+    {
+      "menuItemId":"5e5a22ed-5be5-4de6-8c1f-af62c1c01ab8",
+      "name":"nuevo",
+      "unitPrice":"33",
+      "quantity":1,
+      "modifierGroups":[
+        {
+          "modifierGroupId":"e728d1cf-8f4f-40c1-adbe-7fe36d3a972f",
+          "name":"nuevo",
+          "modifiers":[
+            {
+              "modifierId":"6e32ac9c-dde5-4a50-b017-f053faba6031",
+              "name":"nuevo",
+              "price":"0",
+              "quantity":1
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
 ```
 
@@ -2008,28 +2054,45 @@ Use this API method to request a takeaway order.
 
 #### Request
 
-| Body Parameter      | Type                                                                                          | Description                                                                                                                                                                                                 |
-| ------------------- | --------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| storeId             | string (UUID)                                                                                 | The Store Id for the store that is sending the delivery                                                                                                                                                     |
-| customerName        | string                                                                                        | Name of the customer                                                                                                                                                                                        |
-| customerPhoneNumber | string                                                                                        | Phone number to the customer                                                                                                                                                                                |
-| paymentMethod       | string ( <br/> &nbsp;&nbsp;"CARD" <br/> &nbsp;&nbsp;"CASH" <br/> &nbsp;&nbsp;"PAYMENT_LINK" ) | The payment method of the order. Can be either "CARD", "CASH" or "PAYMENT_LINK". If "CARD" will not charge customer anything. If "PAYMENT_LINK" a payment link will be created with the total of the order. |
-| orderCost           | string (number)                                                                               | The cost of the order.                                                                                                                                                                                      |
-| pickupTime          | string (Date) &#124; undefined                                                                | Time the customer can pickup the order at earliest. This parameter can be omitted if you want the customer to pickup order ASAP. The date must be in UTC format.                                            |
-| externalOrderId     | string &#124; undefined                                                                       | An external order id that can be used outside PideDirecto to identify the order in the integrating system                                                                                                   |
-| notes               | string &#124; undefined                                                                       | Notes related about the order. This notes are for the store.                                                                                                                                                |
-| webhookUrl          | string (URL) &#124; undefined                                                                 | An webhookUrl that will be used to send order updates to. If not provided the configured general webhookUrl will be used. If none is configured no webhook will be called.                                  |
-| webhookHeaders      | Object &#124; undefined                                                                       | An object containing headers to add to the webhook request. Where object field is the header name and field value is the header value to send.                                                              |
+| Body Parameter                                             | Type                                                                                          | Description                                                                                                                                                                                                 |
+|------------------------------------------------------------|-----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| storeId                                                    | string (UUID)                                                                                 | The Store Id for the store that is sending the delivery                                                                                                                                                     |
+| customerName                                               | string                                                                                        | Name of the customer                                                                                                                                                                                        |
+| customerPhoneNumber                                        | string                                                                                        | Phone number to the customer                                                                                                                                                                                |
+| paymentMethod                                              | string ( <br/> &nbsp;&nbsp;"CARD" <br/> &nbsp;&nbsp;"CASH" <br/> &nbsp;&nbsp;"PAYMENT_LINK" ) | The payment method of the order. Can be either "CARD", "CASH" or "PAYMENT_LINK". If "CARD" will not charge customer anything. If "PAYMENT_LINK" a payment link will be created with the total of the order. |
+| orderCost                                                  | string (number)                                                                               | The cost of the order.                                                                                                                                                                                      |
+| pickupTime                                                 | string (Date) &#124; undefined                                                                | Time the customer can pickup the order at earliest. This parameter can be omitted if you want the customer to pickup order ASAP. The date must be in UTC format.                                            |
+| externalOrderId                                            | string &#124; undefined                                                                       | An external order id that can be used outside PideDirecto to identify the order in the integrating system                                                                                                   |
+| notes                                                      | string &#124; undefined                                                                       | Notes related about the order. This notes are for the store.                                                                                                                                                |
+| webhookUrl                                                 | string (URL) &#124; undefined                                                                 | An webhookUrl that will be used to send order updates to. If not provided the configured general webhookUrl will be used. If none is configured no webhook will be called.                                  |
+| webhookHeaders                                             | Object &#124; undefined                                                                       | An object containing headers to add to the webhook request. Where object field is the header name and field value is the header value to send.                                                              |
+| items                                                      | Array &#124; undefined                                                                        | List of the products in the order                                                                                                                                                                           |
+| items[i].menuItemId                                        | string (UUID)                                                                                 | The unique identifier of the menu item that represents the specific product within the catalog.                                                                                                             |
+| items[i].externalProductId                                 | string &#124; undefined                                                                       | Identifier of the product in the integrator’s system, used for external reference.                                                                                                                          |
+| items[i].name                                              | string                                                                                        | Name of the product                                                                                                                                                                                         |
+| items[i].unitPrice                                         | string (number)                                                                               | The unit price of the product                                                                                                                                                                               |
+| items[i].quantity                                          | number                                                                                        | The quantity of the product                                                                                                                                                                                 |
+| items[i].note                                              | string &#124; undefined                                                                       | Optional note of the product                                                                                                                                                                                |
+| items[i].modifierGroups                                    | Array &#124; undefined                                                                        | List of the modifier groups for the product                                                                                                                                                                 |
+| items[i].modifierGroups[i].modifierGroupId                 | string (UUID)                                                                                 | The unique identifier of the modifier group that represents the specific modifier group within the catalog.                                                                                                 |
+| items[i].modifierGroups[i].externalModifierGroupId         | string &#124; undefined                                                                       | Identifier of the modifier group in the integrator’s system, used for external reference.                                                                                                                   |
+| items[i].modifierGroups[i].name                            | string                                                                                        | Name of the modifier group                                                                                                                                                                                  |
+| items[i].modifierGroups[i].modifiers                       | Array &#124; undefined                                                                        | List of modifiers in the modifier group                                                                                                                                                                     |
+| items[i].modifierGroups[i].modifiers[i].modifierId         | string (UUID)                                                                                 | The unique identifier of the modifier that represents the specific modifier within the catalog.                                                                                                             |
+| items[i].modifierGroups[i].modifiers[i].externalModifierId | string &#124; undefined                                                                       | Identifier of the modifier in the integrator’s system, used for external reference.                                                                                                                         |
+| items[i].modifierGroups[i].modifiers[i].name               | string                                                                                        | Name of the modifier                                                                                                                                                                                        |
+| items[i].modifierGroups[i].modifiers[i].price              | string (number)                                                                               | Price of the modifier                                                                                                                                                                                       |
+| items[i].modifierGroups[i].modifiers[i].quantity           | number                                                                                        | Quantity of the modifier                                                                                                                                                                                    |
 
 #### Response Success
 
 Response Status Code 200
 
-| Body Parameter | Type                    | Description                                           |
-| -------------- | ----------------------- | ----------------------------------------------------- |
-| orderId        | string (UUID)           | Unique identifier of the order in PideDirecto         |
-| trackingUrl    | string &#124; undefined | A URL to tracking the order inside PideDirecto system |
-| paymentLinkUrl | string &#124; undefined | A URL to pay the paymentLink                          |
+| Body Parameter | Type                    | Description                                            |
+|----------------|-------------------------|--------------------------------------------------------|
+| orderId        | string (UUID)           | Unique identifier of the order in PideDirecto          |
+| trackingUrl    | string &#124; undefined | A URL to tracking the order inside PideDirecto system  |
+| paymentLinkUrl | string &#124; undefined | A URL to pay the paymentLink                           |
 
 #### Response Error
 
@@ -2050,11 +2113,40 @@ Request:
   "customerName": "John Doe",
   "customerPhoneNumber": "+521550000000",
   "paymentMethod": "CASH",
-  "orderCost": "100.50",
+  "orderCost": "128",
   "pickupTime": null,
   "externalOrderId": "id-283789500217743",
   "webhookUrl": null,
-  "notes": "Notes related to my order. i.g (Add extra fries)"
+  "notes": "Notes related to my order. i.g (Add extra fries)",
+  "items":[
+    {
+      "menuItemId":"1b3f6768-9c9f-4592-a36d-d698432dc266",
+      "name":"Pan De Ajo (1 Pieza)",
+      "unitPrice":"19",
+      "quantity":5,
+      "note":"sin pan, ni ajo"
+    },
+    {
+      "menuItemId":"5e5a22ed-5be5-4de6-8c1f-af62c1c01ab8",
+      "name":"nuevo",
+      "unitPrice":"33",
+      "quantity":1,
+      "modifierGroups":[
+        {
+          "modifierGroupId":"e728d1cf-8f4f-40c1-adbe-7fe36d3a972f",
+          "name":"nuevo",
+          "modifiers":[
+            {
+              "modifierId":"6e32ac9c-dde5-4a50-b017-f053faba6031",
+              "name":"nuevo",
+              "price":"0",
+              "quantity":1
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }
 ```
 
@@ -2075,7 +2167,7 @@ As soon as a driver has accepted the order or order is already cancelled/rejecte
 #### Request
 
 | Body Parameter | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Description                                   |
-| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
 | orderId        | string                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Unique identifier of the order in PideDirecto |
 | reason         | string ( <br/> &nbsp;&nbsp;"CLOSING_SOON" <br/> &nbsp;&nbsp;"PROBLEM_IN_RESTAURANT" <br/> &nbsp;&nbsp;"SOLD_OUT" <br/> &nbsp;&nbsp;"INCORRECT_PRICE" <br/> &nbsp;&nbsp;"DRIVER_NOT_FOUND" <br/> &nbsp;&nbsp;"REJECTED_BY_ADMIN" <br/> &nbsp;&nbsp;"EXTERNAL_COURIER_CANCEL" <br/> &nbsp;&nbsp;"UNASSIGNED_COURIER" <br/> &nbsp;&nbsp;"CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" <br/> &nbsp;&nbsp;"CANCELLED_DUE_TO_CLIENT_ERROR" <br/> &nbsp;&nbsp;"CANCELLED_BY_LACK_OF_CLIENT_CONTACT" <br/>) | Reason why the order is cancelled             |
 
@@ -2083,9 +2175,9 @@ As soon as a driver has accepted the order or order is already cancelled/rejecte
 
 Response Status Code 200
 
-| Body Parameter | Type | Description |
-| -------------- | ---- | ----------- |
-| N/A            | N/A  | N/A         |
+| Body Parameter | Type | Description   |
+| -------------- | ---- |---------------|
+| N/A            | N/A  | N/A           |
 
 #### Response Error
 
@@ -3028,3 +3120,7 @@ This event is emitted when a paymentLink is paid.
 ### 2025-11-05
 - API - Updated customerPhoneNumber to only accept valid phone numbers in createDeliveryOrder.
 - DOCS - Updated createDeliveryOrder customerPhoneNumber description.
+
+### 2025-11-12
+- API - Add support for items in createTakeAwayOrder and createDeliveryOrder request.
+- DOCS - Updated createTakeAwayOrder and createDeliveryOrder request documentation..
