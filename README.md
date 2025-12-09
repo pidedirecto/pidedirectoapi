@@ -2264,8 +2264,10 @@ Use this API method to create a promo code.
 Response Status Code 200
 
 | Body Parameter | Type          | Description                                        |
-| -------------- | ------------- | -------------------------------------------------- |
+|----------------|---------------|----------------------------------------------------|
 | promoCodeId    | string (UUID) | Unique identifier of the promo code in PideDirecto |
+| code           | string        | The code of the promo code                         |
+
 
 #### Response Error
 
@@ -2298,7 +2300,8 @@ Response
 
 ```json
 {
-  "promoCodeId": "78dbea40-783e-4173-9215-da91cf8207a6"
+  "promoCodeId": "78dbea40-783e-4173-9215-da91cf8207a6",
+  "code": "SUMMER2024"
 }
 ```
 
