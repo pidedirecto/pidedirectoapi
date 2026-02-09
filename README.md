@@ -2319,7 +2319,9 @@ Use this API method to create a promo code.
 
 | Body Parameter | Type                                                                                                                         | Description                                                 |
 | -------------- | ---------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| storeId        | string (UUID)                                                                                                                | Unique identifier of the store in PideDirecto               |
+| storeId        | string (UUID)                                                                                                                | Unique identifier of a store in PideDirecto. Required when storeIds is not provided. Use either storeId or storeIds.     |
+| storeIds       | Array &#124; undefined                                                                                                      | Optional. Array of store UUIDs to apply the promo code to. When provided, all stores must have the same pideDirectoApiKey (the one sent in the request header) configured. Use either storeId or storeIds. |
+| storeIds[i]    | string (UUID)                                                                                                                | Unique identifier of a store in PideDirecto                 |
 | code           | string                                                                                                                       | The promo code string                                       |
 | description    | string &#124; undefined                                                                                                      | Optional description of the promo code                      |
 | promoType      | string ( <br/> &nbsp;&nbsp;"FIRST_ORDER_PROMO" <br/> &nbsp;&nbsp;"ONE_TIME_PROMO" <br/> &nbsp;&nbsp;"REUSABLE_PROMO" <br/> ) | The type of promo code                                      |
@@ -2346,11 +2348,12 @@ Here is a list of unique errors that be returned for this API endpoint.
 | HTTP Status Codes           | Error Name           | Description                                                                                    |
 | --------------------------- | -------------------- | ---------------------------------------------------------------------------------------------- |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request <br/> - Parameter type is not correct in sent request |
+| 401 - Unauthorized          | UnauthorizedError    | - Not authorized to access one or more stores with the provided x-api-key <br/> - When storeIds is provided, all stores must have the same pideDirectoApiKey set |
 | 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                               |
 
 #### Example
 
-Request:
+Request (single store with storeId):
 
 ```json
 {
@@ -2361,6 +2364,21 @@ Request:
   "discount": "15",
   "discountType": "PERCENT",
   "customerIds": ["a1b2c3d4-e5f6-7890-abcd-ef1234567890"],
+  "startsAt": "2024-06-01T00:00:00Z",
+  "endsAt": "2024-08-31T23:59:59Z"
+}
+```
+
+Request (multiple stores with storeIds; all must have the same pideDirectoApiKey):
+
+```json
+{
+  "storeIds": ["38981f83-853c-4193-a3c2-97f05582e0ad", "4b825ef7-f4ac-42ec-b1bb-8eb662ef7acb"],
+  "code": "SUMMER2024",
+  "description": "Summer promotion discount",
+  "promoType": "REUSABLE_PROMO",
+  "discount": "15",
+  "discountType": "PERCENT",
   "startsAt": "2024-06-01T00:00:00Z",
   "endsAt": "2024-08-31T23:59:59Z"
 }
@@ -3193,3 +3211,8 @@ This event is emitted when a paymentLink is paid.
 
 - API - Added createPromoCode endpoint.
 - DOCS - Added PromoCode API section and createPromoCode endpoint documentation.
+
+### 2026-02-09
+
+- API - Added optional storeIds parameter to createPromoCode endpoint to support creating a promo code for multiple stores in a single request. When storeIds is provided, all stores must have the same pideDirectoApiKey (the one sent in the x-api-key header) configured.
+- DOCS - Updated createPromoCode request to document storeIds and the requirement that all stores share the same pideDirectoApiKey when using multiple store IDs.
