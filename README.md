@@ -2434,6 +2434,8 @@ Response Status Code 200
 | paymentMethods[i].orderTypes[j]         | string                         | An order type identifier                                             |
 | productCancellationReasons              | Array &#124; undefined         | List of custom product cancellation reasons configured for the store |
 | productCancellationReasons[i].reason    | string                         | The cancellation reason text                                         |
+| discountComments                        | Array &#124; undefined         | List of custom discount comments configured for the store            |
+| discountComments[i].comment             | string                         | The discount comment text                                            |
 
 #### Response Error
 
@@ -2493,6 +2495,10 @@ Response
   "productCancellationReasons": [
     { "reason": "Out of stock" },
     { "reason": "Item discontinued" }
+  ],
+  "discountComments": [
+    { "comment": "Employee discount" },
+    { "comment": "Loyalty reward" }
   ]
 }
 ```
