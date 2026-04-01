@@ -2417,7 +2417,7 @@ Response Status Code 200
 | store.name                              | string                         | The name of the store                                                |
 | store.phone                             | string                         | The phone number of the store                                        |
 | store.address                           | string &#124; undefined        | The formatted address of the store                                   |
-| store.deliveryTime                      | string &#124; undefined        | The custom delivery time configured for the store                    |
+| store.deliveryTime                      | number &#124; undefined        | Estimated delivery time in minutes                                   |
 | store.hours                             | string                         | The operating hours of the store                                     |
 | brand                                   | object &#124; undefined        | Brand information associated with the store, if any                  |
 | brand.brandId                           | string (UUID)                  | Unique identifier of the brand in PideDirecto                        |
@@ -2465,7 +2465,7 @@ Response
     "name": "My Store",
     "phone": "+525512345678",
     "address": "Av. Reforma 123, Ciudad de Mexico",
-    "deliveryTime": "30-45 min",
+    "deliveryTime": 40,
     "hours": "Mon-Fri 9:00-21:00"
   },
   "brand": {
