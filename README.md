@@ -22,6 +22,7 @@
   - [POST createDeliveryOrder](#post-createdeliveryorder)
   - [POST createTakeAwayOrder](#post-createTakeAwayOrder)
   - [POST cancelOrder](#post-cancelorder)
+  - [POST refundPaymentTerminalPayment](#post-refundpaymentterminalpayment)
   - [POST getDriverPosition](#post-getdriverposition)
 - [PaymentLink API](#paymentLink-api)
   - [POST createPaymentLink](#post-createpaymentlink)
@@ -42,6 +43,7 @@
   - [Event Type DRIVER_ARRIVED_AT_CLIENT](#event-type-driver_arrived_at_client)
   - [Event Type DRIVER_CANCELLED](#event-type-driver_cancelled)
   - [Event Type ORDER_COMPLETED](#event-type-order_completed)
+  - [Event Type ORDER_PAYMENT_TERMINAL_REFUNDED](#event-type-order_payment_terminal_refunded)
   - [Event Type PAYMENT_LINK_PAID](#event-type-payment_link_paid)
   - [Event Type PAYMENT_LINK_FAILED](#event-type-payment_link_failed)
   - [Event Type PAYMENT_LINK_CANCELLED](#event-type-payment_link_cancelled)
@@ -2295,6 +2297,59 @@ Request:
 }
 ```
 
+### POST refundPaymentTerminalPayment
+
+Use this API method to start a **full refund** of a **Kushki** payment terminal charge that is linked to an order (the same `paymentTerminalPaymentId` that appears on the order’s `payments` from [POST getOrder](#post-getorder) / order webhooks).
+
+Refunds are completed asynchronously with Kushki. When Kushki notifies us that the refund was **approved**, we update the order (including totals and refund metadata) and, if your integration has webhooks enabled for the order, emit [Event Type ORDER_PAYMENT_TERMINAL_REFUNDED](#event-type-order_payment_terminal_refunded) with an updated order snapshot (same field shape as [Event Type ORDER_CREATED](#event-type-order_created)).
+
+Only refunds **initiated through this external API** trigger order updates and that webhook; terminal refunds started from other channels do not.
+
+#### Request
+
+
+| Body Parameter             | Type          | Description                                                                 |
+| -------------------------- | ------------- | --------------------------------------------------------------------------- |
+| orderId                    | string (UUID) | Unique identifier of the order in PideDirecto                               |
+| paymentTerminalPaymentId   | string (UUID) | Terminal payment id linked to the order (`payments[].paymentTerminalPaymentId`) |
+
+
+#### Response Success
+
+Response Status Code 200
+
+
+| Body Parameter                      | Type   | Description |
+| ----------------------------------- | ------ | ----------- |
+| paymentTerminalPaymentId            | string | Id of the refund terminal payment record created for this refund request |
+| paymentTerminalPaymentStatus      | string | Status after the refund request to Kushki (may still be pending on the terminal side) |
+| paymentTerminalPaymentFailedReason  | string | undefined   |
+| message                             | string | undefined   |
+
+
+#### Response Error
+
+Here is a list of unique errors that be returned for this API endpoint.
+
+
+| HTTP Status Codes           | Error Name             | Description                                                                              |
+| --------------------------- | ---------------------- | ---------------------------------------------------------------------------------------- |
+| 400 - Bad Request           | InvalidArgumentError   | - Required parameter not sent in request - Parameter type is not correct in sent request - Order payment does not match or provider is not Kushki |
+| 403 - Forbidden             | AccessForbiddenError   | The API key is not allowed to access this order’s store                                  |
+| 500 - Internal Server Error | UnknownError           | An unknown server error has occurred, try again.                                         |
+
+
+#### Example
+
+Request:
+
+```json
+{
+  "orderId": "37d13197-0fa5-4d0b-85ad-ae06dd40177a",
+  "paymentTerminalPaymentId": "6efaa5c9-1e1a-4fec-ba72-d2b76d480a9e"
+}
+```
+
 ### POST getDriverPosition
 
 Use this API method to retrieve the driver position of the requested orderId.
@@ -3145,6 +3200,37 @@ This event is emitted when a driver pressed delivered to client button in driver
 }
 ```
 
+### Event Type ORDER_PAYMENT_TERMINAL_REFUNDED
+
+This event is emitted when a **Kushki** payment terminal refund that was **started via** [POST refundPaymentTerminalPayment](#post-refundpaymentterminalpayment) is **approved** according to Kushki’s webhook, and the order has been updated in PideDirecto (totals, taxes, and refund metadata).
+
+The JSON body uses the **same fields as** [Event Type ORDER_CREATED](#event-type-order_created) (full order snapshot), with `eventType` set to `ORDER_PAYMENT_TERMINAL_REFUNDED`. Values such as `total` and `payments` reflect the order **after** the refund.
+
+This event is only sent when webhooks are enabled for the order (same rules as other order webhooks, including POS orders when `sendWebhookEventsForPosOrdersEnabled` is on for the store).
+
+
+| Body Parameter  | Type                                      | Description                                                                 |
+| --------------- | ----------------------------------------- | --------------------------------------------------------------------------- |
+| orderId         | string (UUID)                             | Unique identifier of the order in pidedirecto                               |
+| storeId         | string (UUID)                             | The Store Id for the store                                                  |
+| externalOrderId | string                                    | undefined                                                                   |
+| eventType       | string ("ORDER_PAYMENT_TERMINAL_REFUNDED") | Type of the event                                                          |
+| occurredAt      | string (Date)                             | The date time when the event was queued                                     |
+| (other fields)  | (same as ORDER_CREATED data payload)      | See [Event Type ORDER_CREATED](#event-type-order_created)                   |
+
+
+#### Example
+
+```json
+{
+  "orderId": "37d13197-0fa5-4d0b-85ad-ae06dd40177a",
+  "storeId": "38981f83-853c-4193-a3c2-97f05582e0ad",
+  "externalOrderId": "id-283789500217743",
+  "eventType": "ORDER_PAYMENT_TERMINAL_REFUNDED",
+  "occurredAt": "2021-09-15T19:32:37Z"
+}
+```
+
 ### Event Type PAYMENT_LINK_PAID
 
 This event is emitted when a paymentLink is paid.
@@ -3250,6 +3336,11 @@ This event is emitted when a paymentLink is paid.
 plot
 
 ## Changelog
+
+### 2026-04-21
+
+- API - Added [POST refundPaymentTerminalPayment](#post-refundpaymentterminalpayment) for Kushki payment terminal refunds (external API)
+- API - Added webhook event [ORDER_PAYMENT_TERMINAL_REFUNDED](#event-type-order_payment_terminal_refunded) with order snapshot after approved external-api terminal refund
 
 ### 2023-10-03
 
