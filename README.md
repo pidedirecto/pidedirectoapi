@@ -36,6 +36,7 @@
   - [Event Type ORDER_CREATED](#event-type-order_created)
   - [Event Type ORDER_REJECTED](#event-type-order_rejected)
   - [Event Type ORDER_ACCEPTED](#event-type-order_accepted)
+  - [Event Type ORDER_READY_FOR_PICKUP](#event-type-order_ready_for_pickup)
   - [Event Type ORDER_CANCELLED](#event-type-order_cancelled)
   - [Event Type DRIVER_ACCEPTED_DELIVERY](#event-type-driver_accepted_delivery)
   - [Event Type DRIVER_ARRIVED_AT_STORE](#event-type-driver_arrived_at_store)
@@ -94,7 +95,6 @@ Please contact your Account Manager to add new locations or if you need to know 
 
 All API endpoints return the following status codes along with the header `"Content-Type": "application/json"`.
 
-
 | HTTP Status Codes           | Description                                                                                                                                         |
 | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 200 - OK                    | Successful request                                                                                                                                  |
@@ -103,32 +103,21 @@ All API endpoints return the following status codes along with the header `"Cont
 | 404 - Not Found             | Invalid API endpoint                                                                                                                                |
 | 500 - Internal Server Error | An unknown server error has occurred, try again.                                                                                                    |
 
-
-  
-
-
 All errors returned by API returns at least the following
-
 
 | Body Parameter | Type   | Description                                       |
 | -------------- | ------ | ------------------------------------------------- |
 | name           | string | A unique name of the error                        |
 | message        | string | A readable description about the error in english |
 
-
-  
-
-
 Here is a list of unique general errors that be returned in all API endpoints.
 Check the documentation for a specific endpoint to see other Error Names specific to that endpoint.
-
 
 | HTTP Status Codes           | Error Name        | Description                                                                                                                |
 | --------------------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | 401 - Unauthorized          | UnauthorizedError | - Wrong or no API key is provided in header x-api-key - API Key does not have permission to call api for specific resource |
 | 404 - Not Found             | NotFound          | Invalid API endpoint                                                                                                       |
 | 500 - Internal Server Error | UnknownError      | An unknown server error has occurred, try again.                                                                           |
-
 
 ## Webhook
 
@@ -157,7 +146,6 @@ Since you need to be a verified driver to be able to receiver deliveries to deli
 Use this API method to upload a group of products to a store.
 
 #### Request
-
 
 | Body Parameter                                                                                                                    | Type                                                                                                      | Description                                                                                                                                                                                                                                                                                                                                                          |
 | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -209,28 +197,23 @@ Use this API method to upload a group of products to a store.
 | storeMenu.modifiers[i].price                                                                                                      | string                                                                                                    | Price of the modifier                                                                                                                                                                                                                                                                                                                                                |
 | storeMenu.modifiers[i].imageUrl                                                                                                   | string                                                                                                    | undefined                                                                                                                                                                                                                                                                                                                                                            |
 
-
 #### Response Success
 
 Response Status Code 200
-
 
 | Body Parameter | Type | Description |
 | -------------- | ---- | ----------- |
 | N/A            | N/A  | N/A         |
 
-
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
-
 
 | HTTP Status Codes           | Error Name           | Description                                                                                                                                                                    |
 | --------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request - Product with productId not found - Neither productId nor externalProductId was sent |
 | 429 - Too Many Requests     | ApiCallLimitExceeded | Occurs in case uploadStoreMenu API is called more than twice within 2 minutes                                                                                                  |
 | 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                                                                                                               |
-
 
 #### Example
 
@@ -307,7 +290,6 @@ Use this API method to upload a group of products to a store.
 
 #### Request
 
-
 | Body Parameter                                       | Type                                                                                                      | Description                                                                                                                                                                                                                                                                                                                                                          |
 | ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | storeId                                              | string (UUID)                                                                                             | The Store Id of the store that the menu is going to be added                                                                                                                                                                                                                                                                                                         |
@@ -360,28 +342,23 @@ Use this API method to upload a group of products to a store.
 | storeMenu.modifierGroups[i].modifiers[i].price       | string                                                                                                    | undefined                                                                                                                                                                                                                                                                                                                                                            |
 | storeMenu.modifierGroups[i].modifiers[i].type        | string ( "SINGLE" "MULTIPLE" )                                                                            | Type of the modifier                                                                                                                                                                                                                                                                                                                                                 |
 
-
 #### Response Success
 
 Response Status Code 200
-
 
 | Body Parameter | Type | Description |
 | -------------- | ---- | ----------- |
 | N/A            | N/A  | N/A         |
 
-
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
-
 
 | HTTP Status Codes           | Error Name           | Description                                                                                                                                                                    |
 | --------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request - Product with productId not found - Neither productId nor externalProductId was sent |
 | 429 - Too Many Requests     | ApiCallLimitExceeded | Occurs in case uploadStoreMenu API is called more than twice within 2 minutes                                                                                                  |
 | 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                                                                                                               |
-
 
 #### Example
 
@@ -454,16 +431,13 @@ Use this API method to retrieve the store menu
 
 #### Request
 
-
 | Body Parameter | Type          | Description                                                  |
 | -------------- | ------------- | ------------------------------------------------------------ |
 | storeId        | string (UUID) | The Store Id of the store that the menu is going to be added |
 
-
 #### Response Success
 
 Response Status Code 200
-
 
 | Property                                                                  | Type          | Description                                  |
 | ------------------------------------------------------------------------- | ------------- | -------------------------------------------- |
@@ -522,7 +496,6 @@ Response Status Code 200
 | modifierGroups[i].modifiers[j].subModifierGroups[k].subModifiers[l].name  | string        | Name of the sub-modifier                     |
 | modifierGroups[i].modifiers[j].subModifierGroups[k].subModifiers[l].price | string        | undefined                                    |
 | modifierGroups[i].modifiers[j].subModifierGroups[k].subModifiers[l].type  | string        | Type of sub-modifier: "SINGLE" or "MULTIPLE" |
-
 
 #### Example
 
@@ -1163,34 +1136,28 @@ Use this API method to change the product price.
 
 #### Request
 
-
 | Body Parameter    | Type            | Description                                                                                                    |
 | ----------------- | --------------- | -------------------------------------------------------------------------------------------------------------- |
 | productId         | string (UUID)   | - The Product Id you want to change - Not required if you send only a externalProductId                        |
 | externalProductId | string          | - The external product id you configured previously in the product - It is ignored if you send a productId too |
 | price             | string (number) | The new product price                                                                                          |
 
-
 #### Response Success
 
 Response Status Code 200
-
 
 | Body Parameter | Type | Description |
 | -------------- | ---- | ----------- |
 | N/A            | N/A  | N/A         |
 
-
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
-
 
 | HTTP Status Codes           | Error Name           | Description                                                                                                                                                                    |
 | --------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request - Product with productId not found - Neither productId nor externalProductId was sent |
 | 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                                                                                                               |
-
 
 #### Example
 
@@ -1209,33 +1176,27 @@ Use this API method to change the product visibility.
 
 #### Request
 
-
 | Body Parameter    | Type          | Description                                                        |
 | ----------------- | ------------- | ------------------------------------------------------------------ |
 | storeId           | string (UUID) | - The store id of the product                                      |
 | externalProductId | string (UUID) | - The external product id you configured previously in the product |
 
-
 #### Response Success
 
 Response Status Code 200
-
 
 | Body Parameter | Type | Description |
 | -------------- | ---- | ----------- |
 | N/A            | N/A  | N/A         |
 
-
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
-
 
 | HTTP Status Codes           | Error Name           | Description                                                                                                                                                                    |
 | --------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request - Product with productId not found - Neither productId nor externalProductId was sent |
 | 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                                                                                                               |
-
 
 #### Example
 
@@ -1254,34 +1215,28 @@ Use this API method to change the product visibility.
 
 #### Request
 
-
 | Body Parameter    | Type          | Description                                                        |
 | ----------------- | ------------- | ------------------------------------------------------------------ |
 | storeId           | string (UUID) | - The store id of the product                                      |
 | externalProductId | string (UUID) | - The external product id you configured previously in the product |
 | hiddenUntil       | string (Date) | undefined                                                          |
 
-
 #### Response Success
 
 Response Status Code 200
-
 
 | Body Parameter | Type | Description |
 | -------------- | ---- | ----------- |
 | N/A            | N/A  | N/A         |
 
-
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
-
 
 | HTTP Status Codes           | Error Name           | Description                                                                                                                                                                    |
 | --------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request - Product with productId not found - Neither productId nor externalProductId was sent |
 | 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                                                                                                               |
-
 
 #### Example
 
@@ -1303,16 +1258,13 @@ Use this API method to get info from an order.
 
 #### Request
 
-
 | Body Parameter | Type   | Description                                   |
 | -------------- | ------ | --------------------------------------------- |
 | orderId        | string | Unique identifier of the order in PideDirecto |
 
-
 #### Response Success
 
 Response Status Code 200
-
 
 | Body Parameter                                                                                          | Type                                                                                                                          | Description                                                                                                                                                                                                                                                                                                                 |
 | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1427,17 +1379,14 @@ Response Status Code 200
 | modifiedAt                                                                                              | string (Date)                                                                                                                 | Date the order last modified.                                                                                                                                                                                                                                                                                               |
 | createdAt                                                                                               | string (Date)                                                                                                                 | Date the order created.                                                                                                                                                                                                                                                                                                     |
 
-
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
-
 
 | HTTP Status Codes           | Error Name           | Description                                                                              |
 | --------------------------- | -------------------- | ---------------------------------------------------------------------------------------- |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request |
 | 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                         |
-
 
 #### Example
 
@@ -1563,20 +1512,17 @@ Use this API method to get info from multiple orders in a date range.
 
 #### Request
 
-
 | Body Parameter | Type          | Description                                   |
 | -------------- | ------------- | --------------------------------------------- |
 | storeId        | string (UUID) | Unique identifier of the store in PideDirecto |
 | startDate      | Date          | undefined                                     |
 | endDate        | Date          | undefined                                     |
 
-
 #### Response Success
 
 Response Status Code 200
 
 The response of this API will be a list of the following object
-
 
 | Body Parameter                                                                                          | Type                                                                                                                          | Description                                                                                                                                                                                                                                                                                                                 |
 | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1689,17 +1635,14 @@ The response of this API will be a list of the following object
 | modifiedAt                                                                                              | string (Date)                                                                                                                 | Date the order last modified.                                                                                                                                                                                                                                                                                               |
 | createdAt                                                                                               | string (Date)                                                                                                                 | Date the order created.                                                                                                                                                                                                                                                                                                     |
 
-
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
-
 
 | HTTP Status Codes           | Error Name           | Description                                                                              |
 | --------------------------- | -------------------- | ---------------------------------------------------------------------------------------- |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request |
 | 500 - Internal Server Error | UnknownError         | - An unknown server error has occurred, try again.                                       |
-
 
 #### Example
 
@@ -1830,33 +1773,27 @@ If store cannot accept an order it has to be rejected, see [POST rejectOrder](#P
 
 #### Request
 
-
 | Body Parameter | Type   | Description                                   |
 | -------------- | ------ | --------------------------------------------- |
 | orderId        | string | Unique identifier of the order in PideDirecto |
-
 
 #### Response Success
 
 Response Status Code 200
 
-
 | Body Parameter | Type | Description |
 | -------------- | ---- | ----------- |
 | N/A            | N/A  | N/A         |
 
-
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
-
 
 | HTTP Status Codes           | Error Name                 | Description                                                                              |
 | --------------------------- | -------------------------- | ---------------------------------------------------------------------------------------- |
 | 400 - Bad Request           | InvalidArgumentError       | - Required parameter not sent in request - Parameter type is not correct in sent request |
 | 400 - Bad Request           | OrderCannotBeAcceptedError | Order cannot be accepted since current order state does not allow it                     |
 | 500 - Internal Server Error | UnknownError               | An unknown server error has occurred, try again.                                         |
-
 
 #### Example
 
@@ -1876,34 +1813,28 @@ If store cannot reject an order it has to be accepted, see [POST rejectOrder](#P
 
 #### Request
 
-
 | Body Parameter | Type                                                                                                                                                                                                                                                                                 | Description                                   |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------- |
 | orderId        | string                                                                                                                                                                                                                                                                               | Unique identifier of the order in PideDirecto |
 | reason         | string ( "CLOSING_SOON" "PROBLEM_IN_RESTAURANT" "SOLD_OUT" "INCORRECT_PRICE" "DRIVER_NOT_FOUND" "REJECTED_BY_ADMIN" "EXTERNAL_COURIER_CANCEL" "UNASSIGNED_COURIER" "CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" "CANCELLED_DUE_TO_CLIENT_ERROR" "CANCELLED_BY_LACK_OF_CLIENT_CONTACT" ) | Reason why the order is rejected              |
 
-
 #### Response Success
 
 Response Status Code 200
-
 
 | Body Parameter | Type | Description |
 | -------------- | ---- | ----------- |
 | N/A            | N/A  | N/A         |
 
-
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
-
 
 | HTTP Status Codes           | Error Name             | Description                                                                              |
 | --------------------------- | ---------------------- | ---------------------------------------------------------------------------------------- |
 | 400 - Bad Request           | InvalidArgumentError   | - Required parameter not sent in request - Parameter type is not correct in sent request |
 | 400 - Bad Request           | OrderCannotBeCancelled | Order cannot be rejected since current order state does not allow it                     |
 | 500 - Internal Server Error | UnknownError           | An unknown server error has occurred, try again.                                         |
-
 
 #### Example
 
@@ -1923,7 +1854,6 @@ If you don't care about the driving duration or a guaranteed delivery cost you c
 
 #### Request
 
-
 | Body Parameter       | Type          | Description                                             |
 | -------------------- | ------------- | ------------------------------------------------------- |
 | storeId              | string (UUID) | The Store Id for the store that is sending the delivery |
@@ -1931,11 +1861,9 @@ If you don't care about the driving duration or a guaranteed delivery cost you c
 | deliveryLocation.lat | number        | Latitude GPS coordinate                                 |
 | deliveryLocation.lng | number        | Longitude GPS coordinate                                |
 
-
 #### Response Success
 
 Response Status Code 200
-
 
 | Body Parameter             | Type                                                       | Description                                                                                                                                         |
 | -------------------------- | ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1952,17 +1880,14 @@ Response Status Code 200
 | deliveryAvailable          | boolean                                                    | Boolean that indicates if PideDirecto is able to make the delivery (isWithinDeliveryRadius new field)                                               |
 | deliveryNotAvailableReason | string ( "NOT_WITHIN_DELIVERY_RADIUS" "DRIVERS_SHORTAGE" ) | String that indicates why the delivery is not available                                                                                             |
 
-
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
-
 
 | HTTP Status Codes           | Error Name           | Description                                                                              |
 | --------------------------- | -------------------- | ---------------------------------------------------------------------------------------- |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request |
 | 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                         |
-
 
 #### Example
 
@@ -2007,7 +1932,6 @@ Then when creating order pass the `deliveryEstimateId`.
 If you have a fixed agreed delivery cost you can omit calling [getDeliveryEstimate](#POST-getDeliveryEstimate) and skip passing any `deliveryEstimateId`.
 
 #### Request
-
 
 | Body Parameter                                             | Type                                    | Description                                                                                                                                                                                                                       |
 | ---------------------------------------------------------- | --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -2060,11 +1984,9 @@ If you have a fixed agreed delivery cost you can omit calling [getDeliveryEstima
 | directoProtectionCost                                      | string                                  | undefined                                                                                                                                                                                                                         |
 | isBigOrder                                                 | boolean                                 | undefined                                                                                                                                                                                                                         |
 
-
 #### Response Success
 
 Response Status Code 200
-
 
 | Body Parameter | Type            | Description                                              |
 | -------------- | --------------- | -------------------------------------------------------- |
@@ -2074,18 +1996,15 @@ Response Status Code 200
 | deliveryCost   | string (number) | The cost of the delivery                                 |
 | paymentLinkUrl | string          | undefined                                                |
 
-
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
-
 
 | HTTP Status Codes           | Error Name              | Description                                                                                                    |
 | --------------------------- | ----------------------- | -------------------------------------------------------------------------------------------------------------- |
 | 400 - Bad Request           | InvalidArgumentError    | - Required parameter not sent in request - Parameter type is not correct in sent request                       |
 | 400 - Bad Request           | NotWithinDeliveryRadius | - The delivery is not within the delivery radius of the store. - Check delivery estimate before creating order |
 | 500 - Internal Server Error | UnknownError            | An unknown server error has occurred, try again.                                                               |
-
 
 #### Example
 
@@ -2149,7 +2068,6 @@ Use this API method to request a takeaway order.
 
 #### Request
 
-
 | Body Parameter                                             | Type                                    | Description                                                                                                                                                                                                 |
 | ---------------------------------------------------------- | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | storeId                                                    | string (UUID)                           | The Store Id for the store that is sending the delivery                                                                                                                                                     |
@@ -2183,11 +2101,9 @@ Use this API method to request a takeaway order.
 | webhookUrl                                                 | string (URL)                            | undefined                                                                                                                                                                                                   |
 | webhookHeaders                                             | Object                                  | undefined                                                                                                                                                                                                   |
 
-
 #### Response Success
 
 Response Status Code 200
-
 
 | Body Parameter | Type          | Description                                   |
 | -------------- | ------------- | --------------------------------------------- |
@@ -2195,17 +2111,14 @@ Response Status Code 200
 | trackingUrl    | string        | undefined                                     |
 | paymentLinkUrl | string        | undefined                                     |
 
-
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
-
 
 | HTTP Status Codes           | Error Name           | Description                                                                              |
 | --------------------------- | -------------------- | ---------------------------------------------------------------------------------------- |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request |
 | 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                         |
-
 
 #### Example
 
@@ -2257,34 +2170,28 @@ As soon as a driver has accepted the order or order is already cancelled/rejecte
 
 #### Request
 
-
 | Body Parameter | Type                                                                                                                                                                                                                                                                                 | Description                                   |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------- |
 | orderId        | string                                                                                                                                                                                                                                                                               | Unique identifier of the order in PideDirecto |
 | reason         | string ( "CLOSING_SOON" "PROBLEM_IN_RESTAURANT" "SOLD_OUT" "INCORRECT_PRICE" "DRIVER_NOT_FOUND" "REJECTED_BY_ADMIN" "EXTERNAL_COURIER_CANCEL" "UNASSIGNED_COURIER" "CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" "CANCELLED_DUE_TO_CLIENT_ERROR" "CANCELLED_BY_LACK_OF_CLIENT_CONTACT" ) | Reason why the order is cancelled             |
 
-
 #### Response Success
 
 Response Status Code 200
-
 
 | Body Parameter | Type | Description |
 | -------------- | ---- | ----------- |
 | N/A            | N/A  | N/A         |
 
-
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
-
 
 | HTTP Status Codes           | Error Name             | Description                                                                              |
 | --------------------------- | ---------------------- | ---------------------------------------------------------------------------------------- |
 | 400 - Bad Request           | InvalidArgumentError   | - Required parameter not sent in request - Parameter type is not correct in sent request |
 | 400 - Bad Request           | OrderCannotBeCancelled | Order cannot be cancelled since current order state does not allow it                    |
 | 500 - Internal Server Error | UnknownError           | An unknown server error has occurred, try again.                                         |
-
 
 #### Example
 
@@ -2307,37 +2214,31 @@ Only refunds **initiated through this external API** trigger order updates and t
 
 #### Request
 
-
-| Body Parameter             | Type          | Description                                                                 |
-| -------------------------- | ------------- | --------------------------------------------------------------------------- |
-| orderId                    | string (UUID) | Unique identifier of the order in PideDirecto                               |
-| paymentTerminalPaymentId   | string (UUID) | Terminal payment id linked to the order (`payments[].paymentTerminalPaymentId`) |
-
+| Body Parameter           | Type          | Description                                                                     |
+| ------------------------ | ------------- | ------------------------------------------------------------------------------- |
+| orderId                  | string (UUID) | Unique identifier of the order in PideDirecto                                   |
+| paymentTerminalPaymentId | string (UUID) | Terminal payment id linked to the order (`payments[].paymentTerminalPaymentId`) |
 
 #### Response Success
 
 Response Status Code 200
 
-
-| Body Parameter                      | Type   | Description |
-| ----------------------------------- | ------ | ----------- |
-| paymentTerminalPaymentId            | string | Id of the refund terminal payment record created for this refund request |
-| paymentTerminalPaymentStatus      | string | Status after the refund request to Kushki (may still be pending on the terminal side) |
-| paymentTerminalPaymentFailedReason  | string | undefined   |
-| message                             | string | undefined   |
-
+| Body Parameter                     | Type   | Description                                                                           |
+| ---------------------------------- | ------ | ------------------------------------------------------------------------------------- |
+| paymentTerminalPaymentId           | string | Id of the refund terminal payment record created for this refund request              |
+| paymentTerminalPaymentStatus       | string | Status after the refund request to Kushki (may still be pending on the terminal side) |
+| paymentTerminalPaymentFailedReason | string | undefined                                                                             |
+| message                            | string | undefined                                                                             |
 
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
 
-
-| HTTP Status Codes           | Error Name             | Description                                                                              |
-| --------------------------- | ---------------------- | ---------------------------------------------------------------------------------------- |
-| 400 - Bad Request           | InvalidArgumentError   | - Required parameter not sent in request - Parameter type is not correct in sent request - Order payment does not match or provider is not Kushki |
-| 403 - Forbidden             | AccessForbiddenError   | The API key is not allowed to access this order’s store                                  |
-| 500 - Internal Server Error | UnknownError           | An unknown server error has occurred, try again.                                         |
-
+| HTTP Status Codes           | Error Name           | Description                                                                                                                                       |
+| --------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request - Order payment does not match or provider is not Kushki |
+| 403 - Forbidden             | AccessForbiddenError | The API key is not allowed to access this order’s store                                                                                           |
+| 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                                                                                  |
 
 #### Example
 
@@ -2357,16 +2258,13 @@ Make sure that the orderId exists, and it is not finished.
 
 #### Request
 
-
 | Body Parameter | Type          | Description                                   |
 | -------------- | ------------- | --------------------------------------------- |
 | orderId        | string (UUID) | Unique identifier of the order in PideDirecto |
 
-
 #### Response Success
 
 Response Status Code 200
-
 
 | Body Parameter     | Type          | Description                                    |
 | ------------------ | ------------- | ---------------------------------------------- |
@@ -2375,17 +2273,14 @@ Response Status Code 200
 | driverPosition.lat | number        | Latitude GPS coordinate                        |
 | driverPosition.lng | number        | Longitude GPS coordinate                       |
 
-
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
-
 
 | HTTP Status Codes           | Error Name           | Description                                                                              |
 | --------------------------- | -------------------- | ---------------------------------------------------------------------------------------- |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request |
 | 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                         |
-
 
 #### Example
 
@@ -2418,34 +2313,28 @@ only way to create an order with paymentLink is only creating a delivery order, 
 
 #### Request
 
-
 | Body Parameter | Type          | Description                                                                 |
 | -------------- | ------------- | --------------------------------------------------------------------------- |
 | storeId        | string (UUID) | The Store Id for the store that is creating the payment link.               |
 | amount         | number        | The total amount of the payment link. The amount must be greater than zero. |
 
-
 #### Response Success
 
 Response Status Code 200
-
 
 | Body Parameter | Type          | Description                                          |
 | -------------- | ------------- | ---------------------------------------------------- |
 | paymentLinkId  | string (UUID) | Unique identifier of the payment link in PideDirecto |
 | paymentLinkUrl | string        | A URL for pay the paymentLink                        |
 
-
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
-
 
 | HTTP Status Codes           | Error Name           | Description                                                                              |
 | --------------------------- | -------------------- | ---------------------------------------------------------------------------------------- |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request |
 | 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                         |
-
 
 #### Example
 
@@ -2475,7 +2364,6 @@ Use this API method to create a promo code.
 
 #### Request
 
-
 | Body Parameter | Type                                                             | Description                                                                                                          |
 | -------------- | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | storeId        | string (UUID)                                                    | Unique identifier of a store in PideDirecto. Required when storeIds is not provided. Use either storeId or storeIds. |
@@ -2491,29 +2379,24 @@ Use this API method to create a promo code.
 | startsAt       | string (Date)                                                    | The date when the promo code starts being valid                                                                      |
 | endsAt         | string (Date)                                                    | The date when the promo code stops being valid                                                                       |
 
-
 #### Response Success
 
 Response Status Code 200
-
 
 | Body Parameter | Type          | Description                                        |
 | -------------- | ------------- | -------------------------------------------------- |
 | promoCodeId    | string (UUID) | Unique identifier of the promo code in PideDirecto |
 | code           | string        | The code of the promo code                         |
 
-
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
-
 
 | HTTP Status Codes           | Error Name           | Description                                                                                                                                                |
 | --------------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request                                                                   |
 | 401 - Unauthorized          | UnauthorizedError    | - Not authorized to access one or more stores with the provided x-api-key - When storeIds is provided, all stores must have the same pideDirectoApiKey set |
 | 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                                                                                           |
-
 
 #### Example
 
@@ -2537,7 +2420,10 @@ Request (multiple stores with storeIds; all must have the same pideDirectoApiKey
 
 ```json
 {
-  "storeIds": ["38981f83-853c-4193-a3c2-97f05582e0ad", "4b825ef7-f4ac-42ec-b1bb-8eb662ef7acb"],
+  "storeIds": [
+    "38981f83-853c-4193-a3c2-97f05582e0ad",
+    "4b825ef7-f4ac-42ec-b1bb-8eb662ef7acb"
+  ],
   "code": "SUMMER2024",
   "description": "Summer promotion discount",
   "promoType": "REUSABLE_PROMO",
@@ -2565,16 +2451,13 @@ Use this API method to get the catalog information of a store, including store d
 
 #### Request
 
-
 | Body Parameter | Type          | Description                                   |
 | -------------- | ------------- | --------------------------------------------- |
 | storeId        | string (UUID) | Unique identifier of the store in PideDirecto |
 
-
 #### Response Success
 
 Response Status Code 200
-
 
 | Body Parameter                       | Type          | Description                                             |
 | ------------------------------------ | ------------- | ------------------------------------------------------- |
@@ -2601,18 +2484,15 @@ Response Status Code 200
 | discountComments                     | Array         | undefined                                               |
 | discountComments[i].comment          | string        | The discount comment text                               |
 
-
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
-
 
 | HTTP Status Codes           | Error Name           | Description                                                                              |
 | --------------------------- | -------------------- | ---------------------------------------------------------------------------------------- |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request |
 | 401 - Unauthorized          | UnauthorizedError    | - Not authorized to access the store with the provided x-api-key                         |
 | 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                         |
-
 
 #### Example
 
@@ -2677,20 +2557,17 @@ Use this api to get info from multiple posBusinessDays in the date range.
 
 #### Request
 
-
 | Body Parameter | Type          | Description                                   |
 | -------------- | ------------- | --------------------------------------------- |
 | storeId        | string (UUID) | Unique identifier of the store in PideDirecto |
 | startDate      | Date          | undefined                                     |
 | endDate        | Date          | undefined                                     |
 
-
 #### Response Success
 
 Response Status Code 200
 
 The response of this API will be a list of the following object
-
 
 | Body Parameter                        | Type          | Description                                           |
 | ------------------------------------- | ------------- | ----------------------------------------------------- |
@@ -2707,17 +2584,14 @@ The response of this API will be a list of the following object
 | orderTaxes[i].taxName                 | string        | The name of the applied tax                           |
 | orderTaxes[i].total                   | number        | The total corresponding to the tax applied            |
 
-
 #### Response Error
 
 Here is a list of unique errors that be returned for this API endpoint.
-
 
 | HTTP Status Codes           | Error Name           | Description                                                                              |
 | --------------------------- | -------------------- | ---------------------------------------------------------------------------------------- |
 | 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request |
 | 500 - Internal Server Error | UnknownError         | - An unknown server error has occurred, try again.                                       |
-
 
 #### Example
 
@@ -2766,7 +2640,6 @@ Response:
 ### Event Type ORDER_CREATED
 
 This event is will be emitted when a new order is created.
-
 
 | Body Parameter                                                                                          | Type                                                                          | Description                                                                                                                                                                                                                                                                                                                 |
 | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -2849,7 +2722,6 @@ This event is will be emitted when a new order is created.
 | orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups[l].subModifiers[m].name                  | string                                                                        | Name of this sub-modifier, e.g. "Onions"                                                                                                                                                                                                                                                                                    |
 | orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups[l].subModifiers[m].price                 | string (number)                                                               | Price of this sub-modifier (Unit Price)                                                                                                                                                                                                                                                                                     |
 | orderItems[i].modifierGroups[j].modifiers[k].subModifierGroups[l].subModifiers[m].quantity              | number                                                                        | Quantity of this sub-modifier                                                                                                                                                                                                                                                                                               |
-
 
 #### Example
 
@@ -2956,7 +2828,6 @@ This event is will be emitted when a new order is created.
 This event is will be emitted when an order with status NEW is rejected by the store.
 Note that this event is not emitted for delivery orders since they are already in state ACCEPTED when created.
 
-
 | Body Parameter  | Type                                                                                                                                                                                                                                                                                 | Description                                             |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------- |
 | orderId         | string (UUID)                                                                                                                                                                                                                                                                        | Unique identifier of the order in pidedirecto           |
@@ -2965,7 +2836,6 @@ Note that this event is not emitted for delivery orders since they are already i
 | eventType       | string ("ORDER_REJECTED")                                                                                                                                                                                                                                                            | Type of the event                                       |
 | occurredAt      | string (Date)                                                                                                                                                                                                                                                                        | The date time when the event occurred                   |
 | reason          | string ( "CLOSING_SOON" "PROBLEM_IN_RESTAURANT" "SOLD_OUT" "INCORRECT_PRICE" "DRIVER_NOT_FOUND" "REJECTED_BY_ADMIN" "EXTERNAL_COURIER_CANCEL" "UNASSIGNED_COURIER" "CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" "CANCELLED_DUE_TO_CLIENT_ERROR" "CANCELLED_BY_LACK_OF_CLIENT_CONTACT" ) | Reason why the order was rejected                       |
-
 
 #### Example
 
@@ -2985,7 +2855,6 @@ Note that this event is not emitted for delivery orders since they are already i
 This event is will be emitted when an order with status NEW is accepted by the store.
 Note that this event is not emitted for delivery orders since they are already in state ACCEPTED when created.
 
-
 | Body Parameter  | Type                      | Description                                             |
 | --------------- | ------------------------- | ------------------------------------------------------- |
 | orderId         | string (UUID)             | Unique identifier of the order in pidedirecto           |
@@ -2993,7 +2862,6 @@ Note that this event is not emitted for delivery orders since they are already i
 | externalOrderId | string                    | undefined                                               |
 | eventType       | string ("ORDER_ACCEPTED") | Type of the event                                       |
 | occurredAt      | string (Date)             | The date time when the event occurred                   |
-
 
 #### Example
 
@@ -3007,10 +2875,37 @@ Note that this event is not emitted for delivery orders since they are already i
 }
 ```
 
+### Event Type ORDER_READY_FOR_PICKUP
+
+This event is emitted when an order is marked ready for pickup by the store, including auto-mark-ready flows.
+
+
+| Body Parameter  | Type                              | Description                                             |
+| --------------- | --------------------------------- | ------------------------------------------------------- |
+| orderId         | string (UUID)                     | Unique identifier of the order in pidedirecto           |
+| storeId         | string (UUID)                     | The Store Id for the store that is sending the delivery |
+| externalOrderId | string                            | undefined                                               |
+| eventType       | string ("ORDER_READY_FOR_PICKUP") | Type of the event                                       |
+| occurredAt      | string (Date)                     | The date time when the event occurred                   |
+| markedReadyForPickupAt | string (Date)               | The date time when the order was marked ready for pickup |
+
+
+#### Example
+
+```json
+{
+  "orderId": "37d13197-0fa5-4d0b-85ad-ae06dd40177a",
+  "storeId": "38981f83-853c-4193-a3c2-97f05582e0ad",
+  "externalOrderId": "id-283789500217743",
+  "eventType": "ORDER_READY_FOR_PICKUP",
+  "occurredAt": "2021-09-15T19:32:37Z",
+  "markedReadyForPickupAt": "2021-09-15T19:32:37Z"
+}
+```
+
 ### Event Type ORDER_CANCELLED
 
 This event is emitted when order is cancelled.
-
 
 | Body Parameter  | Type                                                                                                                                                                                                                                                                                 | Description                                             |
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------- |
@@ -3020,7 +2915,6 @@ This event is emitted when order is cancelled.
 | eventType       | string ("ORDER_CANCELLED")                                                                                                                                                                                                                                                           | Type of the event                                       |
 | occurredAt      | string (Date)                                                                                                                                                                                                                                                                        | The date time when the event occurred                   |
 | reason          | string ( "CLOSING_SOON" "PROBLEM_IN_RESTAURANT" "SOLD_OUT" "INCORRECT_PRICE" "DRIVER_NOT_FOUND" "REJECTED_BY_ADMIN" "EXTERNAL_COURIER_CANCEL" "UNASSIGNED_COURIER" "CANCELLED_BY_CLIENT_DUE_TO_WAITING_TIME" "CANCELLED_DUE_TO_CLIENT_ERROR" "CANCELLED_BY_LACK_OF_CLIENT_CONTACT" ) | Reason why the order was cancelled                      |
-
 
 #### Example
 
@@ -3039,7 +2933,6 @@ This event is emitted when order is cancelled.
 
 This event is emitted when a driver accepted the delivery of an order.
 
-
 | Body Parameter       | Type                                | Description                                             |
 | -------------------- | ----------------------------------- | ------------------------------------------------------- |
 | orderId              | string (UUID)                       | Unique identifier of the order in pidedirecto           |
@@ -3050,7 +2943,6 @@ This event is emitted when a driver accepted the delivery of an order.
 | driverName           | string                              | First and last name of driver                           |
 | driverPhoneNumber    | string                              | Phone number to driver                                  |
 | deliverySecurityCode | string                              | undefined                                               |
-
 
 #### Example
 
@@ -3071,7 +2963,6 @@ This event is emitted when a driver accepted the delivery of an order.
 
 This event is emitted when a driver pressed arrived at the store button in drivers app.
 
-
 | Body Parameter  | Type                               | Description                                             |
 | --------------- | ---------------------------------- | ------------------------------------------------------- |
 | orderId         | string (UUID)                      | Unique identifier of the order in pidedirecto           |
@@ -3079,7 +2970,6 @@ This event is emitted when a driver pressed arrived at the store button in drive
 | externalOrderId | string                             | undefined                                               |
 | eventType       | string ("DRIVER_ARRIVED_AT_STORE") | Type of the event                                       |
 | occurredAt      | string (Date)                      | The date time when the event occurred                   |
-
 
 #### Example
 
@@ -3097,7 +2987,6 @@ This event is emitted when a driver pressed arrived at the store button in drive
 
 This event is emitted when a driver pressed picked up at store button in drivers app.
 
-
 | Body Parameter  | Type                                 | Description                                             |
 | --------------- | ------------------------------------ | ------------------------------------------------------- |
 | orderId         | string (UUID)                        | Unique identifier of the order in pidedirecto           |
@@ -3105,7 +2994,6 @@ This event is emitted when a driver pressed picked up at store button in drivers
 | externalOrderId | string                               | undefined                                               |
 | eventType       | string ("DRIVER_PICKED_UP_DELIVERY") | Type of the event                                       |
 | occurredAt      | string (Date)                        | The date time when the event occurred                   |
-
 
 #### Example
 
@@ -3123,7 +3011,6 @@ This event is emitted when a driver pressed picked up at store button in drivers
 
 This event is emitted when a driver pressed arrived at client button in drivers app.
 
-
 | Body Parameter  | Type                                | Description                                             |
 | --------------- | ----------------------------------- | ------------------------------------------------------- |
 | orderId         | string (UUID)                       | Unique identifier of the order in pidedirecto           |
@@ -3131,7 +3018,6 @@ This event is emitted when a driver pressed arrived at client button in drivers 
 | externalOrderId | string                              | undefined                                               |
 | eventType       | string ("DRIVER_ARRIVED_AT_CLIENT") | Type of the event                                       |
 | occurredAt      | string (Date)                       | The date time when the event occurred                   |
-
 
 #### Example
 
@@ -3151,7 +3037,6 @@ This event is emitted when a driver who accepted the delivery for some reason wi
 It does not mean that the order is cancelled or rejected. However when order is cancelled or rejected this event will also be emitted if a driver has accepted the delivery already.
 To react on order cancelled or rejected listen to event types ORDER_CANCELLED and ORDER_REJECTED instead.
 
-
 | Body Parameter  | Type                        | Description                                             |
 | --------------- | --------------------------- | ------------------------------------------------------- |
 | orderId         | string (UUID)               | Unique identifier of the order in pidedirecto           |
@@ -3159,7 +3044,6 @@ To react on order cancelled or rejected listen to event types ORDER_CANCELLED an
 | externalOrderId | string                      | undefined                                               |
 | eventType       | string ("DRIVER_CANCELLED") | Type of the event                                       |
 | occurredAt      | string (Date)               | The date time when the event occurred                   |
-
 
 #### Example
 
@@ -3177,7 +3061,6 @@ To react on order cancelled or rejected listen to event types ORDER_CANCELLED an
 
 This event is emitted when a driver pressed delivered to client button in drivers app.
 
-
 | Body Parameter  | Type                       | Description                                             |
 | --------------- | -------------------------- | ------------------------------------------------------- |
 | orderId         | string (UUID)              | Unique identifier of the order in pidedirecto           |
@@ -3186,7 +3069,6 @@ This event is emitted when a driver pressed delivered to client button in driver
 | eventType       | string                     | ORDER_COMPLETED                                         |
 | eventType       | string ("ORDER_COMPLETED") | Type of the event                                       |
 | occurredAt      | string (Date)              | The date time when the event occurred                   |
-
 
 #### Example
 
@@ -3208,16 +3090,14 @@ The JSON body uses the **same fields as** [Event Type ORDER_CREATED](#event-type
 
 This event is only sent when webhooks are enabled for the order (same rules as other order webhooks, including POS orders when `sendWebhookEventsForPosOrdersEnabled` is on for the store).
 
-
-| Body Parameter  | Type                                      | Description                                                                 |
-| --------------- | ----------------------------------------- | --------------------------------------------------------------------------- |
-| orderId         | string (UUID)                             | Unique identifier of the order in pidedirecto                               |
-| storeId         | string (UUID)                             | The Store Id for the store                                                  |
-| externalOrderId | string                                    | undefined                                                                   |
-| eventType       | string ("ORDER_PAYMENT_TERMINAL_REFUNDED") | Type of the event                                                          |
-| occurredAt      | string (Date)                             | The date time when the event was queued                                     |
-| (other fields)  | (same as ORDER_CREATED data payload)      | See [Event Type ORDER_CREATED](#event-type-order_created)                   |
-
+| Body Parameter  | Type                                       | Description                                               |
+| --------------- | ------------------------------------------ | --------------------------------------------------------- |
+| orderId         | string (UUID)                              | Unique identifier of the order in pidedirecto             |
+| storeId         | string (UUID)                              | The Store Id for the store                                |
+| externalOrderId | string                                     | undefined                                                 |
+| eventType       | string ("ORDER_PAYMENT_TERMINAL_REFUNDED") | Type of the event                                         |
+| occurredAt      | string (Date)                              | The date time when the event was queued                   |
+| (other fields)  | (same as ORDER_CREATED data payload)       | See [Event Type ORDER_CREATED](#event-type-order_created) |
 
 #### Example
 
@@ -3235,7 +3115,6 @@ This event is only sent when webhooks are enabled for the order (same rules as o
 
 This event is emitted when a paymentLink is paid.
 
-
 | Body Parameter | Type                         | Description                                             |
 | -------------- | ---------------------------- | ------------------------------------------------------- |
 | paymentLinkId  | string (UUID)                | Unique identifier of the paymentLink in pidedirecto     |
@@ -3247,7 +3126,6 @@ This event is emitted when a paymentLink is paid.
 | eventType      | string ("PAYMENT_LINK_PAID") | Type of the event                                       |
 | paidAt         | string (Date)                | The date time when the paymentLink was payed            |
 | occurredAt     | string (Date)                | The date time when the event occurred                   |
-
 
 #### Example
 
@@ -3269,7 +3147,6 @@ This event is emitted when a paymentLink is paid.
 
 This event is emitted when a paymentLink is paid.
 
-
 | Body Parameter | Type                           | Description                                             |
 | -------------- | ------------------------------ | ------------------------------------------------------- |
 | paymentLinkId  | string (UUID)                  | Unique identifier of the paymentLink in pidedirecto     |
@@ -3280,7 +3157,6 @@ This event is emitted when a paymentLink is paid.
 | url            | string                         | A URL for pay the paymentLink                           |
 | eventType      | string ("PAYMENT_LINK_FAILED") | Type of the event                                       |
 | occurredAt     | string (Date)                  | The date time when the event occurred                   |
-
 
 #### Example
 
@@ -3301,7 +3177,6 @@ This event is emitted when a paymentLink is paid.
 
 This event is emitted when a paymentLink is paid.
 
-
 | Body Parameter | Type                              | Description                                                |
 | -------------- | --------------------------------- | ---------------------------------------------------------- |
 | paymentLinkId  | string (UUID)                     | Unique identifier of the paymentLink in pidedirecto        |
@@ -3312,7 +3187,6 @@ This event is emitted when a paymentLink is paid.
 | url            | string                            | A URL for pay the paymentLink                              |
 | eventType      | string ("PAYMENT_LINK_CANCELLED") | Type of the event                                          |
 | occurredAt     | string (Date)                     | The date time when the event occurred                      |
-
 
 #### Example
 
@@ -3337,10 +3211,136 @@ plot
 
 ## Changelog
 
+### 2026-04-23
+
+- API - Added webhook event ORDER_READY_FOR_PICKUP when an order is marked ready for pickup.
+- DOCS - Added ORDER_READY_FOR_PICKUP webhook event documentation.
+
 ### 2026-04-21
 
 - API - Added [POST refundPaymentTerminalPayment](#post-refundpaymentterminalpayment) for Kushki payment terminal refunds (external API)
 - API - Added webhook event [ORDER_PAYMENT_TERMINAL_REFUNDED](#event-type-order_payment_terminal_refunded) with order snapshot after approved external-api terminal refund
+
+### 2026-04-06
+
+- API - Removed `store.deliveryTime` from getStoreCatalog response.
+- DOCS - Updated getStoreCatalog response documentation and example to omit delivery time.
+
+### 2026-03-30
+
+- API - Added new getStoreCatalog endpoint to retrieve store catalog information including store details, brand, payment methods and product cancellation reasons.
+- DOCS - Added Store Catalog API section and getStoreCatalog endpoint documentation.
+
+### 2026-02-09
+
+- API - Added optional storeIds parameter to createPromoCode endpoint to support creating a promo code for multiple stores in a single request. When storeIds is provided, all stores must have the same pideDirectoApiKey (the one sent in the x-api-key header) configured.
+- DOCS - Updated createPromoCode request to document storeIds and the requirement that all stores share the same pideDirectoApiKey when using multiple store IDs.
+
+### 2025-12-8
+
+- API - Added createPromoCode endpoint.
+- DOCS - Added PromoCode API section and createPromoCode endpoint documentation.
+
+### 2025-10-28
+
+- API - add new getStoreMenu endpoint.
+- DOCS - Updated getStoreMenu endpoint documentation.
+
+### 2025-10-22
+
+- API - add support for tips in getOrder and getOrders response.
+- DOCS - Updated getOrder and getOrders response to include tips.
+
+### 2025-09-03
+
+- API - Added support for "TRANSFER", "CUSTOMER_CREDIT_ACCOUNT" and "MULTIPLE" payment methods for order response.
+- DOCS - Updated getOrder and getOrders response.paymentMethod to include "TRANSFER", "CUSTOMER_CREDIT_ACCOUNT" and "MULTIPLE" payment methods as response.
+
+### 2025-08-21
+
+- API - Added shortOrderId to getOrder API response.
+- API - Added shortOrderId to createDeliveryOrder API response.
+- DOCS - Updated getOrder and createDeliveryOrder response tables with shortOrderId field.
+- DOCS - Updated example responses to include shortOrderId field.
+- DOCS - Updated shortOrderId examples to uppercase format in getOrder and createDeliveryOrder responses.
+
+### 2025-08-12
+
+- API Added notes field to createTakeAwayOrder request.
+- API Added notes field to createDeliveryOrder request.
+- DOCS Complement createTakeAwayOrder request with new notes field.
+- DOCS Complement createDeliveryOrder request with new notes field.
+
+### 2025-08-06
+
+- API Added new createTakeAwayOrder API endpoint
+- DOCS Describe createTakeAwayOrder method and add documentation
+
+### 2025-06-16
+
+- API Added getPosBusinessDaysSummary
+- DOCS Added getPosBusinessDaysSummary Documentation
+
+### 2025-05-29
+
+- API - Added getOrdersApi
+- DOCS - Added getOrdersApi Documentation
+
+### 2025-03-26
+
+- API - Added pideDirectoProtectionCost and directoProtectionPaidByCustomer to ORDER_CREATED WebhookEvent response and getOrder api response.
+- DOCS - Added pideDirectoProtectionCost and directoProtectionPaidByCustomer to ORDER_CREATED WebhookEvent response table and getOrder api response table.
+
+### 2025-01-21
+
+- API - Added directoProtectionCost to createDeliveryOrder request.
+- DOCS - Updated createDeliveryOrder section with the directoProtectionCost request parameter.
+
+### 2024-12-17
+
+- API - Added getOrder api endpoint.
+- DOCS - Added getOrder api documentation and add response and request example.
+
+### 2024-10-15
+
+- API - Added paymentLinkUrl and PAYMENT_LINK paymentMethod to ORDER_CREATED WebhookEvent.
+- DOCS - Added paymentLinkUrl and PAYMENT_LINK paymentMethod to ORDER_CREATED WebhookEvent
+
+### 2024-08-08
+
+- DOCS - Added PIDEDIRECTOPOS as app for ORDER_CREATED WebhookEvent
+
+### 2024-07-11
+
+- API - Added new createPaymentLink API
+- DOCS - Describe createPaymentLink section more in details
+- DOCS - Updated index with payment link webhook events
+-
+
+### 2024-06-25
+
+- DOCS - Updated getDeliveryEstimate section to add Request and Response example.
+
+### 2024-05-27
+
+- API - Added PAYMENT_LINK as type of paymentMethod in createDeliveryOrder.
+- API - Added new webhook event types
+  - PAYMENT_LINK_PAID
+  - PAYMENT_LINK_FAILED
+  - PAYMENT_LINK_CANCELLED
+- DOCS - Updated createDeliveryOrder section with the PAYMENT_LINK payment method request parameter.
+- DOCS - Describe Event Type PAYMENT_LINK_PAID, PAYMENT_LINK_FAILED and PAYMENT_LINK_CANCELLED
+
+### 2024-05-27
+
+- API - Added card info and payments info to Event Type ORDER_CREATED response.
+- DOCS - Updated Event Type ORDER_CREATED section with the card info and payments info response parameter.
+
+### 2024-05-16
+
+- API - Added isBigOrder to createDeliveryOrder request and add isBigOrder to Event Type ORDER_CREATED response.
+- DOCS - Updated createDeliveryOrder section with the isBigOrder request parameter.
+- DOCS - Updated Event Type ORDER_CREATED section with the isBigOrder response parameter.
 
 ### 2023-10-03
 
@@ -3350,11 +3350,6 @@ plot
 
 - API - Renamed isWithinDeliveryRadius to deliveryAvailable and added deliveryNotAvailableReason to [POST getDeliveryEstimate](#POST-getDeliveryEstimate) api
 - DOCS - Added diagram to show the sequence of a delivery made in PideDirecto External Api
-
-### 2022-06-14
-
-- API - Added `ApiCallLimitExceeded` error to [POST uploadStoreMenu](#POST-uploadStoreMenu) api
-- DOCS - Renamed Error Name `OrderCannotBeCancelledError` to `OrderCannotBeCancelled` in docs since it was not correct
 
 ### 2022-11-10
 
@@ -3384,8 +3379,15 @@ plot
 
 ### 2022-06-14
 
+- API - Added `ApiCallLimitExceeded` error to [POST uploadStoreMenu](#POST-uploadStoreMenu) api
+- DOCS - Renamed Error Name `OrderCannotBeCancelledError` to `OrderCannotBeCancelled` in docs since it was not correct
+
+### 2022-06-14
+
 - API - Changed createDeliveryOrder request requirements (Added Neighborhood, ZipCode, City, State, Country)
-- ### 2022-06-14
+
+### 2022-06-14
+
 - API - Added getDriverPosition endpoint and documentation
 
 ### 2022-05-20
@@ -3395,7 +3397,19 @@ plot
 ### 2022-04-28
 
 - DOCS - Added External Modifier Id and External Option Item Id to Order Created update
-- ### 2021-10-22
+
+### 2022-03-15
+
+- API - Added didiFoodOrderId, uberEatsOrderId, rappiOrderId and app to orderCreated event
+- DOCS - Updated orderCreated section with the didiFoodOrderId, uberEatsOrderId, rappiOrderId and app information
+
+### 2021-12-01
+
+- API - Added externalProductId to changeProductPrice api
+- DOCS - Updated changeProductPrice section with the externalProductId information
+
+### 2021-10-22
+
 - API - Added new api endpoint for changing product price POST changeProductPrice
 
 ### 2021-10-20
@@ -3437,134 +3451,3 @@ plot
 - DOCS - Added more details about errors in docs to section "HTTP Status Codes and Errors"
 - DOCS - Added more details about errors in docs to each API endoint section "Response Error"
 - DOCS - Updated cancelDelivery section to explain when cancelling is posible
-
-### 2021-12-01
-
-- API - Added externalProductId to changeProductPrice api
-- DOCS - Updated changeProductPrice section with the externalProductId information
-
-### 2022-03-15
-
-- API - Added didiFoodOrderId, uberEatsOrderId, rappiOrderId and app to orderCreated event
-- DOCS - Updated orderCreated section with the didiFoodOrderId, uberEatsOrderId, rappiOrderId and app information
-
-### 2024-05-16
-
-- API - Added isBigOrder to createDeliveryOrder request and add isBigOrder to Event Type ORDER_CREATED response.
-- DOCS - Updated createDeliveryOrder section with the isBigOrder request parameter.
-- DOCS - Updated Event Type ORDER_CREATED section with the isBigOrder response parameter.
-
-### 2024-05-27
-
-- API - Added PAYMENT_LINK as type of paymentMethod in createDeliveryOrder.
-- API - Added new webhook event types
-  - PAYMENT_LINK_PAID
-  - PAYMENT_LINK_FAILED
-  - PAYMENT_LINK_CANCELLED
-- DOCS - Updated createDeliveryOrder section with the PAYMENT_LINK payment method request parameter.
-- DOCS - Describe Event Type PAYMENT_LINK_PAID, PAYMENT_LINK_FAILED and PAYMENT_LINK_CANCELLED
-
-### 2024-05-27
-
-- API - Added card info and payments info to Event Type ORDER_CREATED response.
-- DOCS - Updated Event Type ORDER_CREATED section with the card info and payments info response parameter.
-
-### 2024-06-25
-
-- DOCS - Updated getDeliveryEstimate section to add Request and Response example.
-
-### 2024-07-11
-
-- API - Added new createPaymentLink API
-- DOCS - Describe createPaymentLink section more in details
-- DOCS - Updated index with payment link webhook events
-- 
-
-### 2024-08-08
-
-- DOCS - Added PIDEDIRECTOPOS as app for ORDER_CREATED WebhookEvent
-
-### 2024-10-15
-
-- API - Added paymentLinkUrl and PAYMENT_LINK paymentMethod to ORDER_CREATED WebhookEvent.
-- DOCS - Added paymentLinkUrl and PAYMENT_LINK paymentMethod to ORDER_CREATED WebhookEvent
-
-### 2024-12-17
-
-- API - Added getOrder api endpoint.
-- DOCS - Added getOrder api documentation and add response and request example.
-
-### 2025-01-21
-
-- API - Added directoProtectionCost to createDeliveryOrder request.
-- DOCS - Updated createDeliveryOrder section with the directoProtectionCost request parameter.
-
-### 2025-03-26
-
-- API - Added pideDirectoProtectionCost and directoProtectionPaidByCustomer to ORDER_CREATED WebhookEvent response and getOrder api response.
-- DOCS - Added pideDirectoProtectionCost and directoProtectionPaidByCustomer to ORDER_CREATED WebhookEvent response table and getOrder api response table.
-
-### 2025-05-29
-
-- API - Added getOrdersApi
-- DOCS - Added getOrdersApi Documentation
-
-### 2025-06-16
-
-- API Added getPosBusinessDaysSummary
-- DOCS Added getPosBusinessDaysSummary Documentation
-
-### 2025-08-06
-
-- API Added new createTakeAwayOrder API endpoint
-- DOCS Describe createTakeAwayOrder method and add documentation
-
-### 2025-08-12
-
-- API Added notes field to createTakeAwayOrder request.
-- API Added notes field to createDeliveryOrder request.
-- DOCS Complement createTakeAwayOrder request with new notes field.
-- DOCS Complement createDeliveryOrder request with new notes field.
-
-### 2025-08-21
-
-- API - Added shortOrderId to getOrder API response.
-- API - Added shortOrderId to createDeliveryOrder API response.
-- DOCS - Updated getOrder and createDeliveryOrder response tables with shortOrderId field.
-- DOCS - Updated example responses to include shortOrderId field.
-- DOCS - Updated shortOrderId examples to uppercase format in getOrder and createDeliveryOrder responses.
-
-### 2025-09-03
-
-- API - Added support for "TRANSFER", "CUSTOMER_CREDIT_ACCOUNT" and "MULTIPLE" payment methods for order response.
-- DOCS - Updated getOrder and getOrders response.paymentMethod to include "TRANSFER", "CUSTOMER_CREDIT_ACCOUNT" and "MULTIPLE" payment methods as response.
-
-### 2025-10-22
-
-- API - add support for tips in getOrder and getOrders response.
-- DOCS - Updated getOrder and getOrders response to include tips.
-
-### 2025-10-28
-
-- API - add new getStoreMenu endpoint.
-- DOCS - Updated getStoreMenu endpoint documentation.
-
-### 2025-12-8
-
-- API - Added createPromoCode endpoint.
-- DOCS - Added PromoCode API section and createPromoCode endpoint documentation.
-
-### 2026-02-09
-
-- API - Added optional storeIds parameter to createPromoCode endpoint to support creating a promo code for multiple stores in a single request. When storeIds is provided, all stores must have the same pideDirectoApiKey (the one sent in the x-api-key header) configured.
-- DOCS - Updated createPromoCode request to document storeIds and the requirement that all stores share the same pideDirectoApiKey when using multiple store IDs.
-
-### 2026-03-30
-
-- API - Added new getStoreCatalog endpoint to retrieve store catalog information including store details, brand, payment methods and product cancellation reasons.
-- DOCS - Added Store Catalog API section and getStoreCatalog endpoint documentation.
-
-### 2026-04-06
-
-- API - Removed `store.deliveryTime` from getStoreCatalog response.
-- DOCS - Updated getStoreCatalog response documentation and example to omit delivery time.
