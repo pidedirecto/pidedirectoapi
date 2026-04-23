@@ -22,6 +22,8 @@
   - [POST createDeliveryOrder](#post-createdeliveryorder)
   - [POST createTakeAwayOrder](#post-createTakeAwayOrder)
   - [POST cancelOrder](#post-cancelorder)
+  - [POST markOrderReadyForPickup](#post-markorderreadyforpickup)
+  - [POST completeOrder](#post-completeorder)
   - [POST getDriverPosition](#post-getdriverposition)
 - [PaymentLink API](#paymentLink-api)
   - [POST createPaymentLink](#post-createpaymentlink)
@@ -2295,6 +2297,92 @@ Request:
 }
 ```
 
+### POST markOrderReadyForPickup
+
+Use this API method to mark an order as ready for pickup. The order must be in status **ACCEPTED**; otherwise the request may fail.
+
+#### Request
+
+
+| Body Parameter | Type   | Description                                   |
+| -------------- | ------ | --------------------------------------------- |
+| orderId        | string | Unique identifier of the order in PideDirecto |
+
+
+#### Response Success
+
+Response Status Code 200
+
+
+| Body Parameter | Type | Description |
+| -------------- | ---- | ----------- |
+| N/A            | N/A  | N/A         |
+
+
+#### Response Error
+
+Here is a list of unique errors that be returned for this API endpoint.
+
+
+| HTTP Status Codes           | Error Name           | Description                                                                              |
+| --------------------------- | -------------------- | ---------------------------------------------------------------------------------------- |
+| 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request |
+| 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                         |
+
+
+#### Example
+
+Request:
+
+```json
+{
+  "orderId": "37d13197-0fa5-4d0b-85ad-ae06dd40177a"
+}
+```
+
+### POST completeOrder
+
+Use this API method to complete an order. The order must be in status **ACCEPTED** and must not have pending separated orders; otherwise the request may fail.
+
+#### Request
+
+
+| Body Parameter | Type   | Description                                   |
+| -------------- | ------ | --------------------------------------------- |
+| orderId        | string | Unique identifier of the order in PideDirecto |
+
+
+#### Response Success
+
+Response Status Code 200
+
+
+| Body Parameter | Type | Description |
+| -------------- | ---- | ----------- |
+| N/A            | N/A  | N/A         |
+
+
+#### Response Error
+
+Here is a list of unique errors that be returned for this API endpoint.
+
+
+| HTTP Status Codes           | Error Name           | Description                                                                              |
+| --------------------------- | -------------------- | ---------------------------------------------------------------------------------------- |
+| 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request |
+| 500 - Internal Server Error | UnknownError         | An unknown server error has occurred, try again.                                         |
+
+
+#### Example
+
+Request:
+
+```json
+{
+  "orderId": "37d13197-0fa5-4d0b-85ad-ae06dd40177a"
+}
+```
+
 ### POST getDriverPosition
 
 Use this API method to retrieve the driver position of the requested orderId.
@@ -3250,6 +3338,10 @@ This event is emitted when a paymentLink is paid.
 plot
 
 ## Changelog
+
+### 2026-04-16
+
+- API - Added [POST markOrderReadyForPickup](#post-markorderreadyforpickup) and [POST completeOrder](#post-completeorder) to external API
 
 ### 2023-10-03
 
