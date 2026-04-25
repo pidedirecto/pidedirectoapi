@@ -1406,7 +1406,7 @@ Response:
   "orderId": "730e3c7f-8921-4fa9-b560-6c714b594559",
   "shortOrderId": "730E3C",
   "storeId": "91bdaf57-50f3-4fd6-984e-0397840a6487",
-  "externalOrderId": "id-89134546",
+  "externalOrderId": "id-adda5465234234",
   "orderStatus": "NEW",
   "orderType": "DELIVERY_ORDER",
   "pickupTime": "2021-10-05T14:00:00Z",
@@ -2095,7 +2095,7 @@ Use this API method to request a takeaway order.
 | items[i].modifierGroups[j].modifiers[k].price              | string (number)                         | Unit price of the modifier (e.g. "10.00").                                                                                                                                                                  |
 | items[i].modifierGroups[j].modifiers[k].quantity           | number                                  | Quantity of this modifier.                                                                                                                                                                                  |
 | pickupTime                                                 | string (Date)                           | undefined                                                                                                                                                                                                   |
-| externalOrderId                                            | string                                  | undefined                                                                                                                                                                                                   |
+| externalOrderId                                            | string                                  | Make sure it is an unique ID, minimum 12 characters, alphanumeric                                                                                                                                           |
 | notes                                                      | string                                  | undefined                                                                                                                                                                                                   |
 | webhookUrl                                                 | string (URL)                            | undefined                                                                                                                                                                                                   |
 | webhookHeaders                                             | Object                                  | undefined                                                                                                                                                                                                   |
