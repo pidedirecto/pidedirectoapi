@@ -1664,7 +1664,7 @@ Response:
   {
     "orderId": "730e3c7f-8921-4fa9-b560-6c714b594559",
     "storeId": "91bdaf57-50f3-4fd6-984e-0397840a6487",
-    "externalOrderId": "id-89134546",
+    "externalOrderId": "id-adda13289134546",
     "orderStatus": "NEW",
     "orderType": "DELIVERY_ORDER",
     "pickupTime": "2021-10-05T14:00:00Z",
