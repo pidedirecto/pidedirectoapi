@@ -3416,3 +3416,8 @@ plot
 
 - API - Removed `store.deliveryTime` from getStoreCatalog response.
 - DOCS - Updated getStoreCatalog response documentation and example to omit delivery time.
+
+### 2026-05-28
+
+- API - Added createdOnDeviceId to ORDER_CREATED WebhookEvent response.
+- DOCS - Added createdOnDeviceId to ORDER_CREATED WebhookEvent response table and example JSON.
