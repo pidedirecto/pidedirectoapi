@@ -2672,6 +2672,7 @@ This event is will be emitted when a new order is created.
 | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | orderId                                                                                                 | string (UUID)                                                                 | Unique identifier of the order in pidedirecto                                                                                                                                                                                                                                                                               |
 | app                                                                                                     | string ( "PIDEDIRECTO", "PIDEDIRECTOPOS", "UBER_EATS", "RAPPI", "DIDI_FOOD" ) | Name of the App where the order was created                                                                                                                                                                                                                                                                                 |
+| createdOnDeviceId                                                                                       | string (UUID)                                                                 | Unique identifier of the device the order was created on. Undefined for integration orders (Rappi, Uber Eats, Didi).                                                                                                                                                                                                         |
 | storeId                                                                                                 | string (UUID)                                                                 | The Store Id for the store that is sending the delivery                                                                                                                                                                                                                                                                     |
 | externalOrderId                                                                                         | string                                                                        | undefined                                                                                                                                                                                                                                                                                                                   |
 | didiFoodOrderId                                                                                         | string                                                                        | undefined                                                                                                                                                                                                                                                                                                                   |
@@ -2756,6 +2757,7 @@ This event is will be emitted when a new order is created.
 {
   "orderId": "37d13197-0fa5-4d0b-85ad-ae06dd40177a",
   "storeId": "38981f83-853c-4193-a3c2-97f05582e0ad",
+  "createdOnDeviceId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
   "externalOrderId": "id-283789500217743",
   "eventType": "ORDER_CREATED",
   "occurredAt": "2021-09-15T19:32:37Z",
@@ -3441,3 +3443,8 @@ plot
 
 - API - Removed `store.deliveryTime` from getStoreCatalog response.
 - DOCS - Updated getStoreCatalog response documentation and example to omit delivery time.
+
+### 2026-05-28
+
+- API - Added createdOnDeviceId to ORDER_CREATED WebhookEvent response.
+- DOCS - Added createdOnDeviceId to ORDER_CREATED WebhookEvent response table and example JSON.
