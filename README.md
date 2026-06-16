@@ -1511,11 +1511,12 @@ Use this API method to get info from multiple orders in a date range.
 
 #### Request
 
-| Body Parameter | Type          | Description                                   |
-| -------------- | ------------- | --------------------------------------------- |
-| storeId        | string (UUID) | Unique identifier of the store in PideDirecto |
-| startDate      | Date          | undefined                                     |
-| endDate        | Date          | undefined                                     |
+| Body Parameter | Type                                                                                                                                                                                                                  | Description                                                                                        |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| storeId        | string (UUID)                                                                                                                                                                                                         | Unique identifier of the store in PideDirecto                                                      |
+| startDate      | Date                                                                                                                                                                                                                  | Start of the date range (inclusive).                                                               |
+| endDate        | Date                                                                                                                                                                                                                  | End of the date range (exclusive).                                                                 |
+| orderStatus    | string ( "NEW" "CANCELLED" "REJECTED" "ACCEPTED" "COMPLETE" "PENDING" "RETURNING" "RETURNED" "RETURNED_BY_CUSTOMER" "MERGED" "CLOSED" ) | Optional. Filter orders by status. When omitted, orders of all statuses in the date range are returned. |
 
 #### Response Success
 
@@ -1640,8 +1641,8 @@ Here is a list of unique errors that be returned for this API endpoint.
 
 | HTTP Status Codes           | Error Name           | Description                                                                              |
 | --------------------------- | -------------------- | ---------------------------------------------------------------------------------------- |
-| 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request |
-| 500 - Internal Server Error | UnknownError         | - An unknown server error has occurred, try again.                                       |
+| 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request - orderStatus is not a valid OrderStatus |
+| 500 - Internal Server Error | UnknownError         | - An unknown server error has occurred, try again.                                                                              |
 
 #### Example
 
@@ -1651,7 +1652,8 @@ Request:
 {
   "storeId": "8ab03a24-e63f-4296-a8a3-4a8cf6709e15",
   "startDate": "2021-09-15T19:32:37Z",
-  "endDate": "2021-10-15T19:32:37Z"
+  "endDate": "2021-10-15T19:32:37Z",
+  "orderStatus": "NEW"
 }
 ```
 
@@ -3414,3 +3416,8 @@ plot
 
 - API - Removed `store.deliveryTime` from getStoreCatalog response.
 - DOCS - Updated getStoreCatalog response documentation and example to omit delivery time.
+
+### 2026-06-15
+
+- API - Added optional orderStatus parameter to getOrders endpoint to filter orders by status.
+- DOCS - Updated getOrders request to document orderStatus filter parameter.
