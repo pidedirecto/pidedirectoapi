@@ -14,30 +14,33 @@ Use this API method to get the catalog information of a store, including store d
 
 Response Status Code 200
 
-| Body Parameter                       | Type          | Description                                             |
-| ------------------------------------ | ------------- | ------------------------------------------------------- |
-| store                                | object        | Store details                                           |
-| store.name                           | string        | The name of the store                                   |
-| store.phone                          | string        | The phone number of the store                           |
-| store.address                        | string        | undefined                                               |
-| store.hours                          | string        | The operating hours of the store                        |
-| brand                                | object        | undefined                                               |
-| brand.brandId                        | string (UUID) | Unique identifier of the brand in PideDirecto           |
-| brand.name                           | string        | The name of the brand                                   |
-| brand.storeIds                       | Array         | List of store IDs associated with the brand             |
-| brand.storeIds[i]                    | string (UUID) | Unique identifier of a store in PideDirecto             |
-| paymentMethods                       | Array         | undefined                                               |
-| paymentMethods[i].paymentMethodId    | string (UUID) | Unique identifier of the payment method                 |
-| paymentMethods[i].paymentMethod      | string        | The type of payment method                              |
-| paymentMethods[i].name               | string        | The display name of the payment method                  |
-| paymentMethods[i].channels           | Array         | List of channels where this payment method is available |
-| paymentMethods[i].channels[j]        | string        | A channel app identifier                                |
-| paymentMethods[i].orderTypes         | Array         | List of order types that support this payment method    |
-| paymentMethods[i].orderTypes[j]      | string        | An order type identifier                                |
-| productCancellationReasons           | Array         | undefined                                               |
-| productCancellationReasons[i].reason | string        | The cancellation reason text                            |
-| discountComments                     | Array         | undefined                                               |
-| discountComments[i].comment          | string        | The discount comment text                               |
+| Body Parameter | Type | Description |
+| -------------- | ---- | ----------- |
+| store | object | Store details |
+| &nbsp;&nbsp;name | string | The name of the store |
+| &nbsp;&nbsp;phone | string | The phone number of the store |
+| &nbsp;&nbsp;address | string | undefined |
+| &nbsp;&nbsp;hours | string | The operating hours of the store |
+| brand | object | undefined |
+| &nbsp;&nbsp;brandId | string (UUID) | Unique identifier of the brand in PideDirecto |
+| &nbsp;&nbsp;name | string | The name of the brand |
+| &nbsp;&nbsp;storeIds | Array | List of store IDs associated with the brand |
+| &nbsp;&nbsp;&nbsp;&nbsp;[i] | string (UUID) | Unique identifier of a store in PideDirecto |
+| paymentMethods | Array | undefined |
+| &nbsp;&nbsp;[i] | Object | A payment method |
+| &nbsp;&nbsp;&nbsp;&nbsp;paymentMethodId | string (UUID) | Unique identifier of the payment method |
+| &nbsp;&nbsp;&nbsp;&nbsp;paymentMethod | string | The type of payment method |
+| &nbsp;&nbsp;&nbsp;&nbsp;name | string | The display name of the payment method |
+| &nbsp;&nbsp;&nbsp;&nbsp;channels | Array | List of channels where this payment method is available |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[j] | string | A channel app identifier |
+| &nbsp;&nbsp;&nbsp;&nbsp;orderTypes | Array | List of order types that support this payment method |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[j] | string | An order type identifier |
+| productCancellationReasons | Array | undefined |
+| &nbsp;&nbsp;[i] | Object | A product cancellation reason |
+| &nbsp;&nbsp;&nbsp;&nbsp;reason | string | The cancellation reason text |
+| discountComments | Array | undefined |
+| &nbsp;&nbsp;[i] | Object | A discount comment |
+| &nbsp;&nbsp;&nbsp;&nbsp;comment | string | The discount comment text |
 
 ## Errors
 

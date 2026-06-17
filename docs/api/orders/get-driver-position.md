@@ -15,12 +15,12 @@ Make sure that the orderId exists, and it is not finished.
 
 Response Status Code 200
 
-| Body Parameter     | Type          | Description                                    |
-| ------------------ | ------------- | ---------------------------------------------- |
-| driverId           | string (UUID) | Unique identifier of the driver in PideDirecto |
-| driverPosition     | Object        | Object containing driver position              |
-| driverPosition.lat | number        | Latitude GPS coordinate                        |
-| driverPosition.lng | number        | Longitude GPS coordinate                       |
+| Body Parameter | Type | Description |
+| -------------- | ---- | ----------- |
+| driverId | string (UUID) | Unique identifier of the driver in PideDirecto |
+| driverPosition | Object | Object containing driver position |
+| &nbsp;&nbsp;lat | number | Latitude GPS coordinate |
+| &nbsp;&nbsp;lng | number | Longitude GPS coordinate |
 
 ## Errors
 

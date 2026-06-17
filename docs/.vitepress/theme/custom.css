@@ -27,6 +27,14 @@
   margin-bottom: 2rem;
 }
 
+.endpoint-page-title {
+  padding-bottom: 0;
+}
+
+.endpoint-page-title h1 {
+  margin-bottom: 2rem;
+}
+
 .vp-doc h1 + p {
   margin-top: 0;
 }
@@ -75,4 +83,50 @@
 .vp-doc td:first-child {
   white-space: nowrap;
   vertical-align: middle;
+}
+
+.param-table-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.35rem;
+  padding: 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--vp-c-text-2);
+  cursor: pointer;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.param-table-toggle:hover,
+.param-table-toggle:focus-visible {
+  background: var(--vp-c-default-soft);
+  color: var(--vp-c-text-1);
+  outline: none;
+}
+
+.param-table-toggle-icon {
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 6px solid currentColor;
+  transition: transform 0.15s ease;
+}
+
+.param-table-toggle[aria-expanded="true"] .param-table-toggle-icon {
+  transform: rotate(90deg);
+}
+
+.param-table-row--hidden {
+  display: none;
+}
+
+.vp-doc td:first-child {
+  white-space: normal;
 }

@@ -6,20 +6,20 @@ Use this API method to create a promo code.
 
 ## Request
 
-| Body Parameter | Type                                                             | Description                                                                                                          |
-| -------------- | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| storeId        | string (UUID)                                                    | Unique identifier of a store in PideDirecto. Required when storeIds is not provided. Use either storeId or storeIds. |
-| storeIds       | Array                                                            | undefined                                                                                                            |
-| storeIds[i]    | string (UUID)                                                    | Unique identifier of a store in PideDirecto                                                                          |
-| code           | string                                                           | The promo code string                                                                                                |
-| description    | string                                                           | undefined                                                                                                            |
-| promoType      | [PromoType](#promo-type) | The type of promo code                                                                                               |
-| discount       | string                                                           | The discount value                                                                                                   |
-| discountType   | [DiscountType](#discount-type)                                    | The type of discount                                                                                                 |
-| customerIds    | Array                                                            | undefined                                                                                                            |
-| customerIds[i] | string (UUID)                                                    | Unique identifier of a customer in PideDirecto                                                                       |
-| startsAt       | string (Date)                                                    | The date when the promo code starts being valid                                                                      |
-| endsAt         | string (Date)                                                    | The date when the promo code stops being valid                                                                       |
+| Body Parameter | Type | Description |
+| -------------- | ---- | ----------- |
+| storeId | string (UUID) | Unique identifier of a store in PideDirecto. Required when storeIds is not provided. Use either storeId or storeIds. |
+| storeIds | Array | undefined |
+| &nbsp;&nbsp;[i] | string (UUID) | Unique identifier of a store in PideDirecto |
+| code | string | The promo code string |
+| description | string | undefined |
+| promoType | [PromoType](#promo-type) | The type of promo code |
+| discount | string | The discount value |
+| discountType | [DiscountType](#discount-type) | The type of discount |
+| customerIds | Array | undefined |
+| &nbsp;&nbsp;[i] | string (UUID) | Unique identifier of a customer in PideDirecto |
+| startsAt | string (Date) | The date when the promo code starts being valid |
+| endsAt | string (Date) | The date when the promo code stops being valid |
 
 ## Response
 

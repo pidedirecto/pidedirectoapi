@@ -1,4 +1,4 @@
-import { defineConfig } from "vitepress"
+import { defineConfig } from "vitepress";
 
 export default defineConfig({
   title: "PideDirecto API",
@@ -35,10 +35,19 @@ export default defineConfig({
             text: "Products",
             collapsed: false,
             items: [
-              { text: "uploadStoreMenu", link: "/api/products/upload-store-menu" },
-              { text: "uploadStoreMenuV2", link: "/api/products/upload-store-menu-v2" },
+              {
+                text: "uploadStoreMenu",
+                link: "/api/products/upload-store-menu",
+              },
+              {
+                text: "uploadStoreMenuV2",
+                link: "/api/products/upload-store-menu-v2",
+              },
               { text: "getStoreMenu", link: "/api/products/get-store-menu" },
-              { text: "changeProductPrice", link: "/api/products/change-product-price" },
+              {
+                text: "changeProductPrice",
+                link: "/api/products/change-product-price",
+              },
               { text: "hideProduct", link: "/api/products/hide-product" },
               { text: "unHideProduct", link: "/api/products/un-hide-product" },
             ],
@@ -51,34 +60,58 @@ export default defineConfig({
               { text: "getOrders", link: "/api/orders/get-orders" },
               { text: "acceptOrder", link: "/api/orders/accept-order" },
               { text: "rejectOrder", link: "/api/orders/reject-order" },
-              { text: "getDeliveryEstimate", link: "/api/orders/get-delivery-estimate" },
-              { text: "createDeliveryOrder", link: "/api/orders/create-delivery-order" },
-              { text: "createTakeAwayOrder", link: "/api/orders/create-take-away-order" },
+              {
+                text: "getDeliveryEstimate",
+                link: "/api/orders/get-delivery-estimate",
+              },
+              {
+                text: "createDeliveryOrder",
+                link: "/api/orders/create-delivery-order",
+              },
+              {
+                text: "createTakeAwayOrder",
+                link: "/api/orders/create-take-away-order",
+              },
               { text: "cancelOrder", link: "/api/orders/cancel-order" },
-              { text: "markOrderReadyForPickup", link: "/api/orders/mark-order-ready-for-pickup" },
+              {
+                text: "markOrderReadyForPickup",
+                link: "/api/orders/mark-order-ready-for-pickup",
+              },
               { text: "completeOrder", link: "/api/orders/complete-order" },
-              { text: "getDriverPosition", link: "/api/orders/get-driver-position" },
+              {
+                text: "getDriverPosition",
+                link: "/api/orders/get-driver-position",
+              },
             ],
           },
           {
             text: "Payment Links",
             collapsed: false,
             items: [
-              { text: "createPaymentLink", link: "/api/payment-links/create-payment-link" },
+              {
+                text: "createPaymentLink",
+                link: "/api/payment-links/create-payment-link",
+              },
             ],
           },
           {
             text: "Promo Codes",
             collapsed: false,
             items: [
-              { text: "createPromoCode", link: "/api/promo-codes/create-promo-code" },
+              {
+                text: "createPromoCode",
+                link: "/api/promo-codes/create-promo-code",
+              },
             ],
           },
           {
             text: "Store Catalog",
             collapsed: false,
             items: [
-              { text: "getStoreCatalog", link: "/api/store-catalog/get-store-catalog" },
+              {
+                text: "getStoreCatalog",
+                link: "/api/store-catalog/get-store-catalog",
+              },
             ],
           },
           {
@@ -113,10 +146,22 @@ export default defineConfig({
             text: "Driver events",
             collapsed: false,
             items: [
-              { text: "DRIVER_ACCEPTED_DELIVERY", link: "/webhooks/driver-accepted-delivery" },
-              { text: "DRIVER_ARRIVED_AT_STORE", link: "/webhooks/driver-arrived-at-store" },
-              { text: "DRIVER_PICKED_UP_DELIVERY", link: "/webhooks/driver-picked-up-delivery" },
-              { text: "DRIVER_ARRIVED_AT_CLIENT", link: "/webhooks/driver-arrived-at-client" },
+              {
+                text: "DRIVER_ACCEPTED_DELIVERY",
+                link: "/webhooks/driver-accepted-delivery",
+              },
+              {
+                text: "DRIVER_ARRIVED_AT_STORE",
+                link: "/webhooks/driver-arrived-at-store",
+              },
+              {
+                text: "DRIVER_PICKED_UP_DELIVERY",
+                link: "/webhooks/driver-picked-up-delivery",
+              },
+              {
+                text: "DRIVER_ARRIVED_AT_CLIENT",
+                link: "/webhooks/driver-arrived-at-client",
+              },
               { text: "DRIVER_CANCELLED", link: "/webhooks/driver-cancelled" },
             ],
           },
@@ -124,9 +169,18 @@ export default defineConfig({
             text: "Payment link events",
             collapsed: false,
             items: [
-              { text: "PAYMENT_LINK_PAID", link: "/webhooks/payment-link-paid" },
-              { text: "PAYMENT_LINK_FAILED", link: "/webhooks/payment-link-failed" },
-              { text: "PAYMENT_LINK_CANCELLED", link: "/webhooks/payment-link-cancelled" },
+              {
+                text: "PAYMENT_LINK_PAID",
+                link: "/webhooks/payment-link-paid",
+              },
+              {
+                text: "PAYMENT_LINK_FAILED",
+                link: "/webhooks/payment-link-failed",
+              },
+              {
+                text: "PAYMENT_LINK_CANCELLED",
+                link: "/webhooks/payment-link-cancelled",
+              },
             ],
           },
         ],
@@ -145,4 +199,4 @@ export default defineConfig({
     ["meta", { name: "theme-color", content: "#e63946" }],
     ["link", { rel: "icon", href: "/images/logo.png", type: "image/png" }],
   ],
-})
+});

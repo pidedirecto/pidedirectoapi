@@ -18,20 +18,22 @@ Response Status Code 200
 
 The response of this API will be a list of the following object
 
-| Body Parameter                        | Type          | Description                                           |
-| ------------------------------------- | ------------- | ----------------------------------------------------- |
-| posBusinessDayId                      | string (UUID) | Unique identifier of the posBusinessDay created.      |
-| openedAt                              | string (Date) | Date the order last modified.                         |
-| closedAt                              | string (Date) | undefined                                             |
-| orders                                | number        | The number of orders consider by the pos business day |
-| totalWithTaxes                        | number        | The total amount of the orders including taxes        |
-| totalWithoutTaxes                     | number        | The total amount of the orders discounting the taxes  |
-| totalByPaymentMethod                  | Array         | undefined                                             |
-| totalByPaymentMethod[i].paymentMethod | string        | The name of the paymentMethod                         |
-| totalByPaymentMethod[i].total         | number        | The total corresponding to the payment method         |
-| orderTaxes                            | Array         | undefined                                             |
-| orderTaxes[i].taxName                 | string        | The name of the applied tax                           |
-| orderTaxes[i].total                   | number        | The total corresponding to the tax applied            |
+| Body Parameter | Type | Description |
+| -------------- | ---- | ----------- |
+| posBusinessDayId | string (UUID) | Unique identifier of the posBusinessDay created. |
+| openedAt | string (Date) | Date the order last modified. |
+| closedAt | string (Date) | undefined |
+| orders | number | The number of orders consider by the pos business day |
+| totalWithTaxes | number | The total amount of the orders including taxes |
+| totalWithoutTaxes | number | The total amount of the orders discounting the taxes |
+| totalByPaymentMethod | Array | undefined |
+| &nbsp;&nbsp;[i] | Object | A payment method total |
+| &nbsp;&nbsp;&nbsp;&nbsp;paymentMethod | string | The name of the paymentMethod |
+| &nbsp;&nbsp;&nbsp;&nbsp;total | number | The total corresponding to the payment method |
+| orderTaxes | Array | undefined |
+| &nbsp;&nbsp;[i] | Object | An order tax |
+| &nbsp;&nbsp;&nbsp;&nbsp;taxName | string | The name of the applied tax |
+| &nbsp;&nbsp;&nbsp;&nbsp;total | number | The total corresponding to the tax applied |
 
 ## Errors
 
