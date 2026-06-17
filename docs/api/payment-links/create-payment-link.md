@@ -2,6 +2,9 @@
 title: POST createPaymentLink
 ---
 
+# POST createPaymentLink {#post-createpaymentlink}
+
+
 Use this API method to create a payment link. The payment link created will not be linked to any order. Currently, the
 only way to create an order with paymentLink is only creating a delivery order, see [createDeliveryorder](/api/orders/create-delivery-order).
 

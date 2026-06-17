@@ -2,6 +2,9 @@
 title: Getting Started
 ---
 
+# Getting Started {#getting-started}
+
+
 To test the order/delivery status updates you will need install a test version of
 the PideDirecto Drivers App and register as a driver.
 

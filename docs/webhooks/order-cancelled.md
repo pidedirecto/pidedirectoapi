@@ -2,6 +2,9 @@
 title: ORDER_CANCELLED
 ---
 
+# ORDER_CANCELLED {#order-cancelled}
+
+
 This event is emitted when order is cancelled.
 
 ## Request body

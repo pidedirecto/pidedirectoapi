@@ -2,6 +2,9 @@
 title: ORDER_PREPARED
 ---
 
+# ORDER_PREPARED {#order-prepared}
+
+
 This event is emitted when the kitchen (KDS) marks an order as prepared.
 
 ## Request body

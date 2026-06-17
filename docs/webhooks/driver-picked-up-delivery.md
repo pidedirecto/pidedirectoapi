@@ -2,6 +2,9 @@
 title: DRIVER_PICKED_UP_DELIVERY
 ---
 
+# DRIVER_PICKED_UP_DELIVERY {#driver-picked-up-delivery}
+
+
 This event is emitted when a driver pressed picked up at store button in drivers app.
 
 ## Request body

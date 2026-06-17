@@ -2,6 +2,9 @@
 title: PAYMENT_LINK_FAILED
 ---
 
+# PAYMENT_LINK_FAILED {#payment-link-failed}
+
+
 This event is emitted when a paymentLink is paid.
 
 ## Request body

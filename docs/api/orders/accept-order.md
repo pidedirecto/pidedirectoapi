@@ -2,6 +2,9 @@
 title: POST acceptOrder
 ---
 
+# POST acceptOrder {#post-acceptorder}
+
+
 Use this API method to accept an order that was ordered from PideDirecto webpage or app.
 Orders can only be accepted as long as the customer did not cancel the order (as long as order status is NEW).
 If store cannot accept an order it has to be rejected, see [POST rejectOrder](/api/orders/reject-order) api call.

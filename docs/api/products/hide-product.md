@@ -2,6 +2,9 @@
 title: POST hideProduct
 ---
 
+# POST hideProduct {#post-hideproduct}
+
+
 Use this API method to change the product visibility.
 
 ## Request

@@ -2,6 +2,9 @@
 title: Changelog
 ---
 
+# Changelog {#changelog}
+
+
 ## 2026
 
 ### 2026-06-15

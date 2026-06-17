@@ -2,6 +2,9 @@
 title: DRIVER_ACCEPTED_DELIVERY
 ---
 
+# DRIVER_ACCEPTED_DELIVERY {#driver-accepted-delivery}
+
+
 This event is emitted when a driver accepted the delivery of an order.
 
 ## Request body

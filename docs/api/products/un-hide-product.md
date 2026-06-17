@@ -2,6 +2,9 @@
 title: POST unHideProduct
 ---
 
+# POST unHideProduct {#post-unhideproduct}
+
+
 Use this API method to change the product visibility.
 
 ## Request

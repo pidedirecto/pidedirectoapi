@@ -2,6 +2,9 @@
 title: Authentication
 ---
 
+# Authentication {#authentication}
+
+
 ## API Key
 
 You need a Private API Key that you use for accessing our API for all stores.

@@ -2,6 +2,9 @@
 title: POST createPromoCode
 ---
 
+# POST createPromoCode {#post-createpromocode}
+
+
 Use this API method to create a promo code.
 
 ## Request

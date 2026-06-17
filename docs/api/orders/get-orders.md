@@ -2,6 +2,9 @@
 title: POST getOrders
 ---
 
+# POST getOrders {#post-getorders}
+
+
 Use this API method to get info from multiple orders in a date range.
 
 ## Request

@@ -2,6 +2,9 @@
 title: DRIVER_CANCELLED
 ---
 
+# DRIVER_CANCELLED {#driver-cancelled}
+
+
 This event is emitted when a driver who accepted the delivery for some reason will not deliver the delivery.
 It does not mean that the order is cancelled or rejected. However when order is cancelled or rejected this event will also be emitted if a driver has accepted the delivery already.
 To react on order cancelled or rejected listen to event types ORDER_CANCELLED and ORDER_REJECTED instead.

@@ -2,6 +2,9 @@
 title: ORDER_REJECTED
 ---
 
+# ORDER_REJECTED {#order-rejected}
+
+
 This event is will be emitted when an order with status NEW is rejected by the store.
 Note that this event is not emitted for delivery orders since they are already in state ACCEPTED when created.
 

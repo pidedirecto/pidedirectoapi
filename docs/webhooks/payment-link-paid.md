@@ -2,6 +2,9 @@
 title: PAYMENT_LINK_PAID
 ---
 
+# PAYMENT_LINK_PAID {#payment-link-paid}
+
+
 This event is emitted when a paymentLink is paid.
 
 ## Request body

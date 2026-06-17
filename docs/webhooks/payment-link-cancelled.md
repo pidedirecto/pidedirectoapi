@@ -2,6 +2,9 @@
 title: PAYMENT_LINK_CANCELLED
 ---
 
+# PAYMENT_LINK_CANCELLED {#payment-link-cancelled}
+
+
 This event is emitted when a paymentLink is paid.
 
 ## Request body

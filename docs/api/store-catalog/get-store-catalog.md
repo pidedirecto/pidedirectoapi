@@ -2,6 +2,9 @@
 title: POST getStoreCatalog
 ---
 
+# POST getStoreCatalog {#post-getstorecatalog}
+
+
 Use this API method to get the catalog information of a store, including store details, brand information, payment methods and product cancellation reasons.
 
 ## Request

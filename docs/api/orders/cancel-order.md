@@ -2,6 +2,9 @@
 title: POST cancelOrder
 ---
 
+# POST cancelOrder {#post-cancelorder}
+
+
 Use this API method to cancel an order. Orders can only be cancelled if no driver has accepted the order.
 As soon as a driver has accepted the order or order is already cancelled/rejected/completed/delivered an error with name `OrderCannotBeCancelled` will be returned.
 

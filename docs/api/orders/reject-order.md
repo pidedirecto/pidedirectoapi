@@ -2,6 +2,9 @@
 title: POST rejectOrder
 ---
 
+# POST rejectOrder {#post-rejectorder}
+
+
 Use this API method to reject an order that was ordered from PideDirecto webpage or app.
 Orders can only be rejected as long as the customer did not reject the order (as long as order status is NEW).
 If store cannot reject an order it has to be accepted, see [POST rejectOrder](/api/orders/reject-order) api call.

@@ -2,6 +2,9 @@
 title: POST createDeliveryOrder
 ---
 
+# POST createDeliveryOrder {#post-createdeliveryorder}
+
+
 Use this API method to request a delivery.  
 Make sure to call [getDeliveryEstimate](/api/orders/get-delivery-estimate) in advance if you wish to confirm the delivery cost with your customer before creating the order.
 Then when creating order pass the `deliveryEstimateId`.

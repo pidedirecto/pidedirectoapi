@@ -2,6 +2,9 @@
 title: HTTP Status Codes and Errors
 ---
 
+# HTTP Status Codes and Errors {#http-status-codes-and-errors}
+
+
 All API endpoints return the following status codes along with the
 `Content-Type: application/json` header.
 

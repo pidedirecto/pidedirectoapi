@@ -2,6 +2,9 @@
 title: POST getStoreMenu
 ---
 
+# POST getStoreMenu {#post-getstoremenu}
+
+
 Use this API method to retrieve the store menu
 
 ## Request

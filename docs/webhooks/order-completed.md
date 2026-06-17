@@ -2,6 +2,9 @@
 title: ORDER_COMPLETED
 ---
 
+# ORDER_COMPLETED {#order-completed}
+
+
 This event is emitted when a driver pressed delivered to client button in drivers app.
 
 ## Request body

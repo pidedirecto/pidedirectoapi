@@ -2,6 +2,9 @@
 title: POST completeOrder
 ---
 
+# POST completeOrder {#post-completeorder}
+
+
 Use this API method to complete an order. The order must be in status **ACCEPTED** and must not have pending separated orders; otherwise the request may fail.
 
 ## Request

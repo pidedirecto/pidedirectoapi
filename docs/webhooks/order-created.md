@@ -2,6 +2,9 @@
 title: ORDER_CREATED
 ---
 
+# ORDER_CREATED {#order-created}
+
+
 This event is will be emitted when a new order is created.
 
 ## Request body

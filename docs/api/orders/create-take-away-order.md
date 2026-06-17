@@ -2,6 +2,9 @@
 title: POST createTakeAwayOrder
 ---
 
+# POST createTakeAwayOrder {#post-createtakeawayorder}
+
+
 Use this API method to request a takeaway order.
 
 ## Request

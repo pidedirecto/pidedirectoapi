@@ -2,6 +2,9 @@
 title: POST getDeliveryEstimate
 ---
 
+# POST getDeliveryEstimate {#post-getdeliveryestimate}
+
+
 If you want to create a delivery order you can use this API method to get a delivery estimate with driving duration or delivery cost before creating the order with [createDeliveryOrder](/api/orders/create-delivery-order) API method.
 Then pass the `deliveryEstimateId` when calling the [createDeliveryOrder](/api/orders/create-delivery-order) API method to create an order with the guaranteed the delivery cost.
 If you don't care about the driving duration or a guaranteed delivery cost you can skip calling this API and call [createDeliveryOrder](/api/orders/create-delivery-order) without passing a `deliveryEstimateId`.

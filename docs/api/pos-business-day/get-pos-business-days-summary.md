@@ -2,6 +2,9 @@
 title: POST getPosBusinessDaysSummary
 ---
 
+# POST getPosBusinessDaysSummary {#post-getposbusinessdayssummary}
+
+
 Use this api to get info from multiple posBusinessDays in the date range.
 
 ## Request

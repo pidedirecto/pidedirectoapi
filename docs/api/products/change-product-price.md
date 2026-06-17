@@ -2,6 +2,9 @@
 title: POST changeProductPrice
 ---
 
+# POST changeProductPrice {#post-changeproductprice}
+
+
 Use this API method to change the product price.
 
 ## Request

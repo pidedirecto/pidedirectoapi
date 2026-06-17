@@ -2,6 +2,9 @@
 title: DRIVER_ARRIVED_AT_STORE
 ---
 
+# DRIVER_ARRIVED_AT_STORE {#driver-arrived-at-store}
+
+
 This event is emitted when a driver pressed arrived at the store button in drivers app.
 
 ## Request body

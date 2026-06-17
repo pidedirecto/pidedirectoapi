@@ -2,6 +2,9 @@
 title: POST uploadStoreMenuV2
 ---
 
+# POST uploadStoreMenuV2 {#post-uploadstoremenuv2}
+
+
 Use this API method to upload a group of products to a store.
 
 ## Request

@@ -2,6 +2,9 @@
 title: POST getOrder
 ---
 
+# POST getOrder {#post-getorder}
+
+
 Use this API method to get info from an order.
 
 ## Request

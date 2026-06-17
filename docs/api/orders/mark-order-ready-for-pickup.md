@@ -2,6 +2,9 @@
 title: POST markOrderReadyForPickup
 ---
 
+# POST markOrderReadyForPickup {#post-markorderreadyforpickup}
+
+
 Use this API method to mark an order as ready for pickup. The order must be in status **ACCEPTED**; otherwise the request may fail.
 
 ## Request

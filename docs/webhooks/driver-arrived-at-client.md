@@ -2,6 +2,9 @@
 title: DRIVER_ARRIVED_AT_CLIENT
 ---
 
+# DRIVER_ARRIVED_AT_CLIENT {#driver-arrived-at-client}
+
+
 This event is emitted when a driver pressed arrived at client button in drivers app.
 
 ## Request body
