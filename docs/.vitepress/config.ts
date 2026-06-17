@@ -187,7 +187,7 @@ export default defineConfig({
       },
       {
         text: "Changelog",
-        items: [{ text: "Changelog", link: "/changelog" }],
+        link: "/changelog",
       },
     ],
     socialLinks: [],
