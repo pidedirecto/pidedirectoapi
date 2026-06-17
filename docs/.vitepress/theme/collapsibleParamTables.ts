@@ -77,10 +77,6 @@ function linkParents(rows: ParamRow[]): void {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Toggle buttons
-// ---------------------------------------------------------------------------
-
 function addToggleButton(row: ParamRow): void {
   const nameCell = row.element.cells[0];
   if (!nameCell || nameCell.querySelector(`.${CSS.toggle}`)) return;
@@ -114,10 +110,6 @@ function setToggleExpanded(button: HTMLButtonElement, expanded: boolean): void {
     expanded ? "Collapse nested fields" : "Expand nested fields",
   );
 }
-
-// ---------------------------------------------------------------------------
-// Visibility
-// ---------------------------------------------------------------------------
 
 function applyRowVisibility(rows: ParamRow[]): void {
   const hiddenIndexes = new Set<number>();
