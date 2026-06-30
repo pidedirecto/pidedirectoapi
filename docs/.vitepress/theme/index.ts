@@ -1,5 +1,7 @@
 import DefaultTheme from "vitepress/theme";
 import Layout from "./Layout.vue";
+import EnvironmentUrls from "./components/EnvironmentUrls.vue";
+import EndpointUrlBar from "./components/EndpointUrlBar.vue";
 import "./custom.css";
 
 const redirects: Record<string, string> = {
@@ -9,7 +11,10 @@ const redirects: Record<string, string> = {
 export default {
   extends: DefaultTheme,
   Layout,
-  enhanceApp({ router }) {
+  enhanceApp({ app, router }) {
+    app.component("EnvironmentUrls", EnvironmentUrls);
+    app.component("EndpointUrlBar", EndpointUrlBar);
+
     router.onBeforeRouteChange = (to: string) => {
       const path = to.replace(/\.html$/i, "").split("#")[0];
       const target = redirects[path];

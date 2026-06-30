@@ -7,6 +7,8 @@ title: Environments
 
 There is a TEST and a PRODUCTION environment you can use to validate your integration.
 
+<EnvironmentUrls />
+
 You will receive a TEST version of our PideDirecto Drivers App and urls to access the test version PideDirecto Admin in our test environment.
 You will need an Android device to be able to test the delivery part.
 
