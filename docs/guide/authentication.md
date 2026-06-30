@@ -10,6 +10,8 @@ title: Authentication
 You need a Private API Key that you use for accessing our API for all stores.
 API Key has to be sent in Header: 'x-api-key'
 
+See [Environments](/guide/environments) for TEST and PRODUCTION base URLs.
+
 There is one API Key for the TEST environment and another for PRODUCTION environment.
 The API Keys are private and should only be used from server.
 If your credentials gets compromised you we can create you a new one and invalidate the old one at any time.
