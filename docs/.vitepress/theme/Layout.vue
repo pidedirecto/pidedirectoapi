@@ -22,7 +22,7 @@ watch(() => route.path, run);
 
 <template>
   <Layout>
-    <template #doc-top>
+    <template #doc-before>
       <EndpointUrlBar v-if="isApiPage" />
     </template>
   </Layout>

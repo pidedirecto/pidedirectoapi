@@ -15,6 +15,10 @@ export type ApiEnvironmentId = keyof typeof API_ENVIRONMENTS;
 export const DEFAULT_ENVIRONMENT: ApiEnvironmentId = "test";
 export const ENV_STORAGE_KEY = "pidedirecto-docs-env";
 
+export function buildEndpointPath(methodName: string): string {
+  return `/${methodName}`;
+}
+
 export function buildEndpointUrl(
   envId: ApiEnvironmentId,
   methodName: string,

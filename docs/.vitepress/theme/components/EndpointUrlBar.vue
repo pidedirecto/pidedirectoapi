@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { useData } from "vitepress";
+import { computed, ref, onMounted, watch, nextTick } from "vue";
+import { useData, useRoute } from "vitepress";
 import {
-  buildEndpointUrl,
+  buildEndpointPath,
   parseMethodFromTitle,
 } from "../../environments";
-import { useSelectedEnvironment } from "../composables/useSelectedEnvironment";
-import type { ApiEnvironmentId } from "../../environments";
 
 const { frontmatter } = useData();
-const { selectedEnv, setSelectedEnv, environments } = useSelectedEnvironment();
-const environmentList = Object.values(environments);
+const route = useRoute();
+const rootRef = ref<HTMLElement | null>(null);
 const copied = ref(false);
 
 const methodName = computed(() => {
@@ -19,15 +17,32 @@ const methodName = computed(() => {
   return parseMethodFromTitle(title);
 });
 
-const endpointUrl = computed(() => {
+const endpointPath = computed(() => {
   if (!methodName.value) return null;
-  return buildEndpointUrl(selectedEnv.value, methodName.value);
+  return buildEndpointPath(methodName.value);
 });
 
-async function copyUrl(): Promise<void> {
-  if (!endpointUrl.value) return;
+function placeAfterTitle(): void {
+  nextTick(() => {
+    const root = rootRef.value;
+    if (!root) return;
+
+    const h1 = document.querySelector(".content-container .vp-doc h1");
+    if (!h1) return;
+
+    if (h1.nextElementSibling !== root) {
+      h1.insertAdjacentElement("afterend", root);
+    }
+  });
+}
+
+onMounted(placeAfterTitle);
+watch(() => route.path, placeAfterTitle);
+
+async function copyPath(): Promise<void> {
+  if (!endpointPath.value) return;
   try {
-    await navigator.clipboard.writeText(endpointUrl.value);
+    await navigator.clipboard.writeText(endpointPath.value);
     copied.value = true;
     setTimeout(() => {
       copied.value = false;
@@ -39,33 +54,18 @@ async function copyUrl(): Promise<void> {
 </script>
 
 <template>
-  <div v-if="endpointUrl" class="endpoint-url-bar">
-    <span class="endpoint-url-bar__label">Endpoint URL</span>
-    <select
-      class="endpoint-url-bar__select"
-      :value="selectedEnv"
-      aria-label="Environment"
-      @change="
-        setSelectedEnv(
-          ($event.target as HTMLSelectElement).value as ApiEnvironmentId,
-        )
-      "
-    >
-      <option v-for="env in environmentList" :key="env.id" :value="env.id">
-        {{ env.label }}
-      </option>
-    </select>
-    <code class="endpoint-url-bar__url">
-      <span class="endpoint-url-bar__method">POST</span>
-      {{ endpointUrl }}
-    </code>
+  <div
+    v-if="endpointPath"
+    ref="rootRef"
+    class="endpoint-path"
+  >
+    <code class="endpoint-path__url">{{ endpointPath }}</code>
     <button
       type="button"
-      class="endpoint-url-bar__copy"
-      :class="{ 'endpoint-url-bar__copy--copied': copied }"
-      @click="copyUrl"
-    >
-      {{ copied ? "Copied!" : "Copy" }}
-    </button>
+      class="endpoint-path__copy"
+      :class="{ 'endpoint-path__copy--copied': copied }"
+      :aria-label="copied ? 'Copied' : 'Copy endpoint path'"
+      @click="copyPath"
+    />
   </div>
 </template>
