@@ -111,7 +111,6 @@ All errors returned by API returns at least the following
 | message        | string | A readable description about the error in english |
 
 Here is a list of unique general errors that be returned in all API endpoints.
-Check the documentation for a specific endpoint to see other Error Names specific to that endpoint.
 
 | HTTP Status Codes           | Error Name        | Description                                                                                                                |
 | --------------------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------- |
@@ -2235,7 +2234,7 @@ Here is a list of unique errors that be returned for this API endpoint.
 | HTTP Status Codes | Error Name | Description |
 | --------------------------- | ---------------------- | ---------------------------------------------------------------------------------------- |
 | 400 - Bad Request | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request |
-| 400 - Bad Request | CancelOrderWithPaymentTerminalRefundError | See errors[].code: NO_KUSHKI_TERMINAL_PAYMENT, MULTIPLE_KUSHKI_TERMINAL_PAYMENTS, PAYMENT_TERMINAL_ID_MISSING |
+| 400 - Bad Request | CancelOrderWithPaymentTerminalRefundError | Errors[].code: NO_KUSHKI_TERMINAL_PAYMENT, MULTIPLE_KUSHKI_TERMINAL_PAYMENTS, PAYMENT_TERMINAL_ID_MISSING |
 | 422 - Unprocessable Entity | CancelOrderWithPaymentTerminalRefundError | Kushki refund declined (errors[].code = KUSHKI_REFUND_DECLINED) |
 | 500 - Internal Server Error | UnknownError | An unknown server error has occurred, try again. |
 
