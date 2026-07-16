@@ -2214,8 +2214,6 @@ Use this API method to refund the Kushki payment terminal charge linked to an or
 | -------------- | ---- | ----------- |
 | orderId | string | Unique identifier of the order in PideDirecto |
 | reason | string | Same values as [POST cancelOrder](#post-cancelorder) |
-| mock | Object | TEST only. Optional |
-| mock.paymentTerminalPaymentStatus | string ( "PAID" "FAILED" ) | TEST only |
 
 #### Response Success
 
