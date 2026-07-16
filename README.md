@@ -38,6 +38,7 @@
   - [Event Type ORDER_CREATED](#event-type-order_created)
   - [Event Type ORDER_REJECTED](#event-type-order_rejected)
   - [Event Type ORDER_ACCEPTED](#event-type-order_accepted)
+  - [Event Type ORDER_PREPARED](#event-type-order_prepared)
   - [Event Type ORDER_CANCELLED](#event-type-order_cancelled)
   - [Event Type DRIVER_ACCEPTED_DELIVERY](#event-type-driver_accepted_delivery)
   - [Event Type DRIVER_ARRIVED_AT_STORE](#event-type-driver_arrived_at_store)
@@ -1292,6 +1293,7 @@ Response Status Code 200
 | customerAddress.street                                                                                  | string                                                                                                                        | Street name and number of the delivery address.                                                                                                                                                                                                                                                                             |
 | customerAddress.instructions                                                                            | string                                                                                                                        | undefined                                                                                                                                                                                                                                                                                                                   |
 | orderStatus                                                                                             | string ( "NEW" "ACCEPTED" )                                                                                                   | Order status. If order is made from PideDirecto webpage or app it will be in status "NEW" and needs to be either accepted or rejected by API acceptOrder or rejectOrder or in PideDirecto Admin. Otherwise if created by the API createDeliveryOrder or from PideDirecto Admin by the store it will have status "ACCEPTED". |
+| kitchenStatus                                                                                           | string ( "PREPARING" "PREPARED" "PARTIALLY_PREPARED" )                                                                        | Kitchen status of the order. Indicates preparation progress in the kitchen display system (KDS). Can be "PREPARING", "PREPARED" or "PARTIALLY_PREPARED".                                                                                                                                                                    |
 | orderType                                                                                               | string ( "TAKE_AWAY_ORDER" "DELIVERY_ORDER" )                                                                                 | The type of the order.                                                                                                                                                                                                                                                                                                      |
 | orderItems                                                                                              | Array                                                                                                                         | All order items ordered in this order.                                                                                                                                                                                                                                                                                      |
 | orderItems[i]                                                                                           | Object                                                                                                                        | An order item.                                                                                                                                                                                                                                                                                                              |
@@ -1409,6 +1411,7 @@ Response:
   "storeId": "91bdaf57-50f3-4fd6-984e-0397840a6487",
   "externalOrderId": "id-adda5465234234",
   "orderStatus": "NEW",
+  "kitchenStatus": "PREPARING",
   "orderType": "DELIVERY_ORDER",
   "pickupTime": "2021-10-05T14:00:00Z",
   "storeName": "Burger Heaven",
@@ -1512,11 +1515,12 @@ Use this API method to get info from multiple orders in a date range.
 
 #### Request
 
-| Body Parameter | Type          | Description                                   |
-| -------------- | ------------- | --------------------------------------------- |
-| storeId        | string (UUID) | Unique identifier of the store in PideDirecto |
-| startDate      | Date          | undefined                                     |
-| endDate        | Date          | undefined                                     |
+| Body Parameter | Type                                                                                                                                                                                                                  | Description                                                                                        |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| storeId        | string (UUID)                                                                                                                                                                                                         | Unique identifier of the store in PideDirecto                                                      |
+| startDate      | Date                                                                                                                                                                                                                  | Start of the date range (inclusive).                                                               |
+| endDate        | Date                                                                                                                                                                                                                  | End of the date range (exclusive).                                                                 |
+| orderStatus    | string ( "NEW" "CANCELLED" "REJECTED" "ACCEPTED" "COMPLETE" "PENDING" "RETURNING" "RETURNED" "RETURNED_BY_CUSTOMER" "MERGED" "CLOSED" ) | Optional. Filter orders by status. When omitted, orders of all statuses in the date range are returned. |
 
 #### Response Success
 
@@ -1549,6 +1553,7 @@ The response of this API will be a list of the following object
 | customerAddress.street                                                                                  | string                                                                                                                        | Street name and number of the delivery address.                                                                                                                                                                                                                                                                             |
 | customerAddress.instructions                                                                            | string                                                                                                                        | undefined                                                                                                                                                                                                                                                                                                                   |
 | orderStatus                                                                                             | string ( "NEW" "ACCEPTED" )                                                                                                   | Order status. If order is made from PideDirecto webpage or app it will be in status "NEW" and needs to be either accepted or rejected by API acceptOrder or rejectOrder or in PideDirecto Admin. Otherwise if created by the API createDeliveryOrder or from PideDirecto Admin by the store it will have status "ACCEPTED". |
+| kitchenStatus                                                                                           | string ( "PREPARING" "PREPARED" "PARTIALLY_PREPARED" )                                                                        | Kitchen status of the order. Indicates preparation progress in the kitchen display system (KDS). Can be "PREPARING", "PREPARED" or "PARTIALLY_PREPARED".                                                                                                                                                                    |
 | orderType                                                                                               | string ( "TAKE_AWAY_ORDER" "DELIVERY_ORDER" )                                                                                 | The type of the order.                                                                                                                                                                                                                                                                                                      |
 | orderItems                                                                                              | Array                                                                                                                         | All order items ordered in this order.                                                                                                                                                                                                                                                                                      |
 | orderItems[i]                                                                                           | Object                                                                                                                        | An order item.                                                                                                                                                                                                                                                                                                              |
@@ -1641,8 +1646,8 @@ Here is a list of unique errors that be returned for this API endpoint.
 
 | HTTP Status Codes           | Error Name           | Description                                                                              |
 | --------------------------- | -------------------- | ---------------------------------------------------------------------------------------- |
-| 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request |
-| 500 - Internal Server Error | UnknownError         | - An unknown server error has occurred, try again.                                       |
+| 400 - Bad Request           | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request - orderStatus is not a valid OrderStatus |
+| 500 - Internal Server Error | UnknownError         | - An unknown server error has occurred, try again.                                                                              |
 
 #### Example
 
@@ -1652,7 +1657,8 @@ Request:
 {
   "storeId": "8ab03a24-e63f-4296-a8a3-4a8cf6709e15",
   "startDate": "2021-09-15T19:32:37Z",
-  "endDate": "2021-10-15T19:32:37Z"
+  "endDate": "2021-10-15T19:32:37Z",
+  "orderStatus": "NEW"
 }
 ```
 
@@ -1667,6 +1673,7 @@ Response:
     "storeId": "91bdaf57-50f3-4fd6-984e-0397840a6487",
     "externalOrderId": "id-adda13289134546",
     "orderStatus": "NEW",
+    "kitchenStatus": "PREPARING",
     "orderType": "DELIVERY_ORDER",
     "pickupTime": "2021-10-05T14:00:00Z",
     "storeName": "Burger Heaven",
@@ -2961,6 +2968,32 @@ Note that this event is not emitted for delivery orders since they are already i
 }
 ```
 
+### Event Type ORDER_PREPARED
+
+This event is emitted when the kitchen (KDS) marks an order as prepared.
+
+| Body Parameter  | Type                       | Description                                             |
+| --------------- | -------------------------- | ------------------------------------------------------- |
+| orderId         | string (UUID)              | Unique identifier of the order in pidedirecto           |
+| storeId         | string (UUID)              | The Store Id for the store that is sending the delivery |
+| externalOrderId | string                     | undefined                                               |
+| eventType       | string ("ORDER_PREPARED")  | Type of the event                                       |
+| occurredAt      | string (Date)              | The date time when the event occurred                   |
+| preparedAt      | string (Date)              | The date time when the order was marked as prepared     |
+
+#### Example
+
+```json
+{
+  "orderId": "37d13197-0fa5-4d0b-85ad-ae06dd40177a",
+  "storeId": "38981f83-853c-4193-a3c2-97f05582e0ad",
+  "externalOrderId": "id-283789500217743",
+  "eventType": "ORDER_PREPARED",
+  "occurredAt": "2021-09-15T19:32:37Z",
+  "preparedAt": "2021-09-15T19:35:00Z"
+}
+```
+
 ### Event Type ORDER_CANCELLED
 
 This event is emitted when order is cancelled.
@@ -3243,6 +3276,10 @@ plot
 ### 2026-07-15
 
 - API - Added [POST cancelOrderWithPaymentTerminalRefund](#post-cancelorderwithpaymentterminalrefund)
+### 2026-06-15
+
+- API - Added `kitchenStatus` to [POST getOrder](#post-getorder) and [POST getOrders](#post-getorders) response.
+- DOCS - Updated [POST getOrder](#post-getorder) and [POST getOrders](#post-getorders) response to include `kitchenStatus`.
 
 ### 2026-04-25
 
@@ -3478,3 +3515,8 @@ plot
 
 - API - Removed `store.deliveryTime` from getStoreCatalog response.
 - DOCS - Updated getStoreCatalog response documentation and example to omit delivery time.
+
+### 2026-06-15
+
+- API - Added optional orderStatus parameter to getOrders endpoint to filter orders by status.
+- DOCS - Updated getOrders request to document orderStatus filter parameter.
