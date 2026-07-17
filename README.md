@@ -22,6 +22,7 @@
   - [POST createDeliveryOrder](#post-createdeliveryorder)
   - [POST createTakeAwayOrder](#post-createTakeAwayOrder)
   - [POST cancelOrder](#post-cancelorder)
+  - [POST cancelOrderWithPaymentTerminalRefund](#post-cancelorderwithpaymentterminalrefund)
   - [POST markOrderReadyForPickup](#post-markorderreadyforpickup)
   - [POST completeOrder](#post-completeorder)
   - [POST getDriverPosition](#post-getdriverposition)
@@ -111,7 +112,6 @@ All errors returned by API returns at least the following
 | message        | string | A readable description about the error in english |
 
 Here is a list of unique general errors that be returned in all API endpoints.
-Check the documentation for a specific endpoint to see other Error Names specific to that endpoint.
 
 | HTTP Status Codes           | Error Name        | Description                                                                                                                |
 | --------------------------- | ----------------- | -------------------------------------------------------------------------------------------------------------------------- |
@@ -2210,6 +2210,65 @@ Request:
 }
 ```
 
+### POST cancelOrderWithPaymentTerminalRefund
+
+Use this API method to refund the Kushki payment terminal charge linked to an order and reject the order. For orders paid with Kushki terminal (e.g. kiosk), including COMPLETE orders that cannot use [POST cancelOrder](#post-cancelorder).
+
+#### Request
+
+| Body Parameter | Type | Description |
+| -------------- | ---- | ----------- |
+| orderId | string | Unique identifier of the order in PideDirecto |
+| reason | string | Same values as [POST cancelOrder](#post-cancelorder) |
+
+#### Response Success
+
+Response Status Code 200
+
+| Body Parameter | Type | Description |
+| -------------- | ---- | ----------- |
+| orderId | string | Unique identifier of the order in PideDirecto |
+| orderStatus | string | Order status after the operation |
+| paymentTerminalPaymentId | string | Original terminal payment id on the order |
+| refundPaymentTerminalPaymentId | string | Terminal refund payment id |
+| orderRejectedAt | string (Date) | undefined |
+| refundedAt | string (Date) | undefined |
+
+#### Response Error
+
+Here is a list of unique errors that be returned for this API endpoint.
+
+| HTTP Status Codes | Error Name | Description |
+| --------------------------- | ---------------------- | ---------------------------------------------------------------------------------------- |
+| 400 - Bad Request | InvalidArgumentError | - Required parameter not sent in request - Parameter type is not correct in sent request |
+| 400 - Bad Request | CancelOrderWithPaymentTerminalRefundError | Errors[].code: NO_KUSHKI_TERMINAL_PAYMENT, MULTIPLE_KUSHKI_TERMINAL_PAYMENTS, PAYMENT_TERMINAL_ID_MISSING |
+| 422 - Unprocessable Entity | CancelOrderWithPaymentTerminalRefundError | Kushki refund declined (errors[].code = KUSHKI_REFUND_DECLINED) |
+| 500 - Internal Server Error | UnknownError | An unknown server error has occurred, try again. |
+
+#### Example
+
+Request:
+
+```json
+{
+  "orderId": "4a86de79-e4a6-4ba9-8052-566646041334",
+  "reason": "OTHER"
+}
+```
+
+Response:
+
+```json
+{
+  "orderId": "4a86de79-e4a6-4ba9-8052-566646041334",
+  "orderStatus": "REJECTED",
+  "paymentTerminalPaymentId": "3a0f50aa-c622-4461-b3fa-94fb14d3dd59",
+  "refundPaymentTerminalPaymentId": "2a86266a-0bfb-411f-9f5d-f47ae453a271",
+  "orderRejectedAt": "2026-07-15T00:47:26.355Z",
+  "refundedAt": "2026-07-15T00:47:26.221Z"
+}
+```
+
 ### POST markOrderReadyForPickup
 
 Use this API method to mark an order as ready for pickup. The order must be in status **ACCEPTED**; otherwise the request may fail.
@@ -3213,6 +3272,9 @@ plot
 
 ## Changelog
 
+### 2026-07-15
+
+- API - Added [POST cancelOrderWithPaymentTerminalRefund](#post-cancelorderwithpaymentterminalrefund)
 ### 2026-06-15
 
 - API - Added `kitchenStatus` to [POST getOrder](#post-getorder) and [POST getOrders](#post-getorders) response.
