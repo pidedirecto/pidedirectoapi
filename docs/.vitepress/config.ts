@@ -74,6 +74,10 @@ export default defineConfig({
               },
               { text: "cancelOrder", link: "/api/orders/cancel-order" },
               {
+                text: "cancelOrderWithPaymentTerminalRefund",
+                link: "/api/orders/cancel-order-with-payment-terminal-refund",
+              },
+              {
                 text: "markOrderReadyForPickup",
                 link: "/api/orders/mark-order-ready-for-pickup",
               },

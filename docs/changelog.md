@@ -7,6 +7,11 @@ title: Changelog
 
 ## 2026
 
+### 2026-07-15
+
+- API - Added [POST cancelOrderWithPaymentTerminalRefund](/api/orders/cancel-order-with-payment-terminal-refund).
+- DOCS - Added [POST cancelOrderWithPaymentTerminalRefund](/api/orders/cancel-order-with-payment-terminal-refund) endpoint documentation.
+
 ### 2026-06-15
 
 - API - Added `kitchenStatus` to [POST getOrder](/api/orders/get-order) and [POST getOrders](/api/orders/get-orders) response.
